@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #004080; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 Incoming Leads</h1>
+    <p>This data is pulled directly from your database.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Service</th>
+                <th>Message</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            </tbody>
+    </table>
+
+    <script>
+        // When the page loads, fetch the data
+        fetch('/api/clients')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('table-body');
+                
+                // Loop through each client and add a row to the table
+                data.forEach(client => {
+                    const row = `<tr>
+                        <td>${client.id}</td>
+                        <td><strong>${client.name}</strong></td>
+                        <td>${client.email}</td>
+                        <td>${client.service}</td>
+                        <td>${client.message}</td>
+                        <td>${new Date(client.createdAt).toLocaleDateString()}</td>
+                    </tr>`;
+                    table.innerHTML += row;
+                });
+            })
+            .catch(error => console.error('Error loading data:', error));
+    </script>
+
+</body>
+</html>
