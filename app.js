@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -8,11 +9,33 @@ const app = express();
 const PORT = 3000;
 
 // --- 1. SETUP DATABASE CONNECTION ---
-// IMPORTANT: Replace 'YOUR_PASSWORD' with the password you used for pgAdmin
-const sequelize = new Sequelize('kas_db', 'postgres', '1234', {
-    host: 'localhost',
-    dialect: 'postgres'
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'postgres',
+    logging: false
 });
+
+// Function to ensure database exists
+async function ensureDatabaseExists() {
+    const sequelizeNoDb = new Sequelize('postgres', process.env.DB_USER, process.env.DB_PASSWORD, {
+        host: process.env.DB_HOST,
+        dialect: 'postgres',
+        logging: false
+    });
+    
+    try {
+        await sequelizeNoDb.query(`CREATE DATABASE ${process.env.DB_NAME}`);
+        console.log(`✅ Database '${process.env.DB_NAME}' created!`);
+    } catch (err) {
+        if (err.message.includes('already exists')) {
+            console.log(`✅ Database '${process.env.DB_NAME}' already exists!`);
+        } else {
+            console.error("Error creating database:", err.message);
+        }
+    } finally {
+        await sequelizeNoDb.close();
+    }
+}
 
 // Define the 'Client' table
 const Client = sequelize.define('Client', {
@@ -23,9 +46,15 @@ const Client = sequelize.define('Client', {
 });
 
 // Sync database (creates the table if it doesn't exist)
-sequelize.sync()
-    .then(() => console.log("✅ Database connected and synced!"))
-    .catch(err => console.log("❌ Error connecting to database:", err));
+async function startServer() {
+    await ensureDatabaseExists();
+    
+    await sequelize.sync()
+        .then(() => console.log("✅ Database connected and synced!"))
+        .catch(err => console.log("❌ Error connecting to database:", err));
+}
+
+startServer();
 
 // --- 2. MIDDLEWARE ---
 app.use(express.static(path.join(__dirname, 'frontend')));
@@ -36,6 +65,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
+});
+
 app.post('/contact', async (req, res) => {
     const { name, email, service, message } = req.body;
 
@@ -44,18 +77,18 @@ app.post('/contact', async (req, res) => {
         await Client.create({ name, email, service, message });
         console.log("Data saved to Database!");
 
-        // B. SEND EMAIL (Replace with your real Gmail and App Password)
+        // B. SEND EMAIL
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'chowhanvishanthraj@gmail.com',
-                pass: 'chowhan.2001' 
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD
             }
         });
 
         const mailOptions = {
-            from: 'chowhanvishanthraj@gmail.com',
-            to: 'chowhanvishanthraj@gmail.com', 
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_TO, 
             subject: `New Lead: ${name} (${service})`,
             text: `Name: ${name}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`
         };
@@ -73,17 +106,25 @@ app.post('/contact', async (req, res) => {
     }
 });
 // --- API ROUTE: Get All Clients ---
-// This acts as your "API" that sends raw data
 app.get('/api/clients', async (req, res) => {
     try {
-        // 1. Ask the database for all entries in the 'Client' table
         const allClients = await Client.findAll();
-        
-        // 2. Send the data back as JSON (not HTML)
         res.json(allClients);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Something went wrong fetching data" });
+    }
+});
+
+// --- API ROUTE: Delete Client ---
+app.delete('/api/clients/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Client.destroy({ where: { id } });
+        res.json({ message: 'Client deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error deleting client" });
     }
 });
 app.listen(PORT, () => {

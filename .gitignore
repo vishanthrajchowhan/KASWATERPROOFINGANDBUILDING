@@ -1,2 +1,10 @@
-node_modules/
+# Environment variables
 .env
+
+# Databases
+database.sqlite
+*.sqlite
+*.db
+
+# Node
+node_modules/

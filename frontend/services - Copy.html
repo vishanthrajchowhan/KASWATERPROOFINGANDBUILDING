@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - KAS Waterproofing & Building Services</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .services-page {
+            padding-top: 20px;
+        }
+
+        .services-hero {
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.85) 0%, rgba(0, 82, 163, 0.85) 100%), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .services-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .services-hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .services-wrapper {
+            background: #f8f9fa;
+            padding: 80px 50px;
+        }
+
+        .services-header {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+
+        .services-header h2 {
+            font-size: 2.5rem;
+            color: #003366;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .services-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .service-card-content {
+            padding: 35px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: #003366;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            flex: 1;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .service-features li {
+            padding: 6px 0;
+            color: #555;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features li:before {
+            content: '✓';
+            color: #003366;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .service-btn {
+            display: inline-block;
+            background: #ff9900;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            text-align: center;
+            align-self: flex-start;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .service-btn:hover {
+            background: #ff8500;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .services-hero h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-wrapper {
+                padding: 40px 20px;
+            }
+
+            .service-card-image {
+                height: 220px;
+            }
+
+            .service-card-content {
+                padding: 25px;
+            }
+
+            .service-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo-dark.png" alt="KAS Waterproofing">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#contact" class="btn-quote">Request a Quote</a></li>
+        </ul>
+    </nav>
+
+    <div class="services-hero">
+        <div>
+            <h1>Our Services</h1>
+            <p>Professional Solutions for Waterproofing, Construction & Painting</p>
+        </div>
+    </div>
+
+    <div class="services-wrapper">
+        <div class="services-header">
+            <h2>Our Services</h2>
+            <p>KAS Waterproofing & Building Services offers comprehensive expertise to meet all your construction, waterproofing, painting, and related service needs. Explore our professional services below.</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- Construction Service -->
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Construction Services" class="service-card-image">
+                <div class="service-card-content">
+                    <h3>Construction Services</h3>
+                    <p>From building foundations to roofing, we handle every aspect of construction. Our expertise covers renovations, structural repairs, and masonry works.</p>
+                    <ul class="service-features">
+                        <li>Foundation Work</li>
+                        <li>Structural Repairs</li>
+                        <li>Roofing Installation</li>
+                        <li>Renovations & Remodeling</li>
+                    </ul>
+                    <a href="index.html#contact" class="service-btn">Request a Quote</a>
+                </div>
+            </div>
+
+            <!-- Waterproofing Service -->
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1577092918826-19d4d7f5c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Waterproofing Services" class="service-card-image">
+                <div class="service-card-content">
+                    <h3>Waterproofing Services</h3>
+                    <p>Protect your property with advanced waterproofing for walls, roofs, basements, and more. Our solutions include coatings, sealants, and crack repairs.</p>
+                    <ul class="service-features">
+                        <li>Wall Waterproofing</li>
+                        <li>Basement Waterproofing</li>
+                        <li>Roof Waterproofing</li>
+                        <li>Window & Door Sealing</li>
+                    </ul>
+                    <a href="index.html#contact" class="service-btn">Request a Quote</a>
+                </div>
+            </div>
+
+            <!-- Painting Service -->
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1578926314433-c6e7ad7eb744?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Painting Services" class="service-card-image">
+                <div class="service-card-content">
+                    <h3>Painting Services</h3>
+                    <p>Transform interiors and exteriors with high-quality painting and coatings. We specialize in weather-resistant finishes, custom designs, and durable results.</p>
+                    <ul class="service-features">
+                        <li>Interior Painting</li>
+                        <li>Exterior Painting</li>
+                        <li>Commercial Coating</li>
+                        <li>Protective Coatings</li>
+                    </ul>
+                    <a href="index.html#contact" class="service-btn">Request a Quote</a>
+                </div>
+            </div>
+
+            <!-- Other Related Services -->
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Other Services" class="service-card-image">
+                <div class="service-card-content">
+                    <h3>Other Related Services</h3>
+                    <p>Complementary services like demolition, inspections, and pressure washing. We ensure your project is proposed, assessed, and completed to perfection.</p>
+                    <ul class="service-features">
+                        <li>Demolition Services</li>
+                        <li>Site Inspections</li>
+                        <li>Pressure Washing</li>
+                        <li>Quality Assurance</li>
+                    </ul>
+                    <a href="index.html#contact" class="service-btn">Request a Quote</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 KAS Waterproofing & Building Services LLC</p>
+    </footer>
+</body>
+</html>
