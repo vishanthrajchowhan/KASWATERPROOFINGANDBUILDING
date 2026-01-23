@@ -1,0 +1,166 @@
+<!-- Carousel Section (Squarespace-style) -->
+<div class="carousel-section">
+  <div class="carousel-container">
+    <button class="carousel-arrow left" id="carouselPrev">&#10094;</button>
+    <div class="carousel-track-wrapper">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img src="images/gallery/construction/con1.jpg.jpeg" alt="Construction Project 1">
+          <div class="carousel-caption">Modern Construction</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/gallery/painting/paint1.jpg.jpeg" alt="Painting Project 1">
+          <div class="carousel-caption">Premium Painting</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/gallery/waterproofing/wp1.jpg.jpeg" alt="Waterproofing Project 1">
+          <div class="carousel-caption">Advanced Waterproofing</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/gallery/construction/con2.jpg.jpeg" alt="Construction Project 2">
+          <div class="carousel-caption">Structural Excellence</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/gallery/painting/paint2.jpg.jpeg" alt="Painting Project 2">
+          <div class="carousel-caption">Exterior Painting</div>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/gallery/waterproofing/wp2.jpg.jpeg" alt="Waterproofing Project 2">
+          <div class="carousel-caption">Industrial Waterproofing</div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-arrow right" id="carouselNext">&#10095;</button>
+  </div>
+</div>
+
+<!-- Carousel Styles -->
+<style>
+.carousel-section {
+  background: linear-gradient(120deg, #181f2a 0%, #232b3e 100%);
+  padding: 80px 0 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel-container {
+  position: relative;
+  width: 900px;
+  max-width: 98vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+.carousel-track-wrapper {
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: 0 8px 40px 0 rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.08);
+  flex: 1;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.7s cubic-bezier(.4,2,.3,1);
+  will-change: transform;
+}
+.carousel-slide {
+  min-width: 420px;
+  max-width: 420px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  margin: 0 18px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+  overflow: hidden;
+}
+.carousel-slide img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+}
+.carousel-caption {
+  background: rgba(24,31,42,0.85);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 18px 0 14px 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 0 0 18px 18px;
+  letter-spacing: 0.5px;
+}
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  color: #233a66;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+  transition: background 0.2s, color 0.2s;
+}
+.carousel-arrow:hover {
+  background: #3a7bd5;
+  color: #fff;
+}
+.carousel-arrow.left {
+  left: -60px;
+}
+.carousel-arrow.right {
+  right: -60px;
+}
+@media (max-width: 1100px) {
+  .carousel-container { width: 98vw; }
+  .carousel-slide, .carousel-slide img { min-width: 320px; max-width: 320px; height: 220px; }
+  .carousel-arrow.left { left: -30px; }
+  .carousel-arrow.right { right: -30px; }
+}
+@media (max-width: 700px) {
+  .carousel-slide, .carousel-slide img { min-width: 220px; max-width: 220px; height: 140px; }
+  .carousel-arrow { width: 36px; height: 36px; font-size: 1.3rem; }
+  .carousel-arrow.left { left: -10px; }
+  .carousel-arrow.right { right: -10px; }
+}
+</style>
+
+<!-- Carousel Script -->
+<script>
+const track = document.getElementById('carouselTrack');
+const slides = Array.from(track.children);
+const prevBtn = document.getElementById('carouselPrev');
+const nextBtn = document.getElementById('carouselNext');
+let currentIndex = 0;
+const slideWidth = slides[0].getBoundingClientRect().width + 36; // slide + margin
+
+function updateCarousel() {
+  track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % slides.length;
+  updateCarousel();
+});
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+  updateCarousel();
+});
+
+// Auto-slide every 4 seconds
+setInterval(() => {
+  currentIndex = (currentIndex + 1) % slides.length;
+  updateCarousel();
+}, 4000);
+</script>

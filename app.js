@@ -1,132 +1,280 @@
-require('dotenv').config();
+// ============================
+// 1. ENV & DEPENDENCIES
+// ============================
+require('dotenv').config(); 
+
+const OpenAI = require("openai");
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const { Sequelize, DataTypes } = require('sequelize');
 
-const app = express();
-const PORT = 3000;
-
-// --- 1. SETUP DATABASE CONNECTION ---
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-    logging: false
-});
-
-// Function to ensure database exists
-async function ensureDatabaseExists() {
-    const sequelizeNoDb = new Sequelize('postgres', process.env.DB_USER, process.env.DB_PASSWORD, {
-        host: process.env.DB_HOST,
-        dialect: 'postgres',
-        logging: false
-    });
-    
-    try {
-        await sequelizeNoDb.query(`CREATE DATABASE ${process.env.DB_NAME}`);
-        console.log(`✅ Database '${process.env.DB_NAME}' created!`);
-    } catch (err) {
-        if (err.message.includes('already exists')) {
-            console.log(`✅ Database '${process.env.DB_NAME}' already exists!`);
-        } else {
-            console.error("Error creating database:", err.message);
-        }
-    } finally {
-        await sequelizeNoDb.close();
-    }
+function hasAllEnv(keys) {
+  return keys.every((k) => typeof process.env[k] === 'string' && process.env[k].trim().length > 0);
 }
 
-// Define the 'Client' table
-const Client = sequelize.define('Client', {
-    name: { type: DataTypes.STRING, allowNull: false },
-    email: { type: DataTypes.STRING, allowNull: false },
-    service: { type: DataTypes.STRING },
-    message: { type: DataTypes.TEXT }
-});
+// ============================
+// 2. OPENAI SETUP
+// ============================
+const hasOpenAI = hasAllEnv(['OPENAI_API_KEY']);
+const openai = hasOpenAI
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
-// Sync database (creates the table if it doesn't exist)
+// ============================
+// 3. EXPRESS SETUP
+// ============================
+const app = express();
+const PORT = Number(process.env.PORT) || 3000;
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+// ============================
+// 4. DATABASE SETUP
+// ============================
+const hasDbConfig = hasAllEnv(['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST']);
+const sequelize = hasDbConfig
+  ? new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+      host: process.env.DB_HOST,
+      dialect: 'postgres',
+      logging: false
+    })
+  : null;
+
+// Ensure database exists
+async function ensureDatabaseExists() {
+  if (!hasDbConfig) return;
+  const sequelizeNoDb = new Sequelize(
+    'postgres',
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+      host: process.env.DB_HOST,
+      dialect: 'postgres',
+      logging: false
+    }
+  );
+
+  try {
+    await sequelizeNoDb.query(`CREATE DATABASE ${process.env.DB_NAME}`);
+    console.log(`✅ Database '${process.env.DB_NAME}' created`);
+  } catch (err) {
+    if (err.message.includes('already exists')) {
+      console.log(`✅ Database '${process.env.DB_NAME}' already exists`);
+    } else {
+      console.error("❌ Database error:", err.message);
+    }
+  } finally {
+    await sequelizeNoDb.close();
+  }
+}
+
+// Client model
+const Client = sequelize
+  ? sequelize.define('Client', {
+      name: { type: DataTypes.STRING, allowNull: false },
+      email: { type: DataTypes.STRING, allowNull: false },
+      service: { type: DataTypes.STRING },
+      message: { type: DataTypes.TEXT }
+    })
+  : null;
+
+// Start DB
 async function startServer() {
+  if (!sequelize) {
+    console.log("ℹ️  DB config missing; starting without database features.");
+    return;
+  }
+
+  try {
     await ensureDatabaseExists();
-    
-    await sequelize.sync()
-        .then(() => console.log("✅ Database connected and synced!"))
-        .catch(err => console.log("❌ Error connecting to database:", err));
+    await sequelize.sync();
+    console.log("✅ Database connected & synced");
+  } catch (err) {
+    console.error("❌ Database init failed; starting without database features.", err?.message || err);
+  }
 }
 
 startServer();
 
-// --- 2. MIDDLEWARE ---
-app.use(express.static(path.join(__dirname, 'frontend')));
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// --- 3. ROUTES ---
+// ============================
+// 5. ROUTES (PAGES)
+// ============================
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
 });
 
+
+
+
+// ============================
+// 6. CONTACT FORM
+// ============================
 app.post('/contact', async (req, res) => {
-    const { name, email, service, message } = req.body;
+  const { name, email, service, message } = req.body;
 
-    try {
-        // A. SAVE TO POSTGRESQL
-        await Client.create({ name, email, service, message });
-        console.log("Data saved to Database!");
+  try {
+    const hasEmailConfig = hasAllEnv(['EMAIL_USER', 'EMAIL_PASSWORD', 'EMAIL_TO']);
 
-        // B. SEND EMAIL
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD
-            }
-        });
-
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_TO, 
-            subject: `New Lead: ${name} (${service})`,
-            text: `Name: ${name}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`
-        };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) console.log("Email failed:", error);
-            else console.log("Email sent.");
-        });
-
-        res.redirect('/success.html');
-
-    } catch (error) {
-        console.error("Error saving to database:", error);
-        res.send("<h1>Error!</h1><p>Could not save data.</p>");
+    if (!Client && !hasEmailConfig) {
+      return res
+        .status(503)
+        .send("Contact service isn't configured. Please set DB_* and/or EMAIL_* environment variables.");
     }
+
+    if (Client) {
+      await Client.create({ name, email, service, message });
+    }
+
+    if (hasEmailConfig) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD
+        }
+      });
+
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_TO,
+        subject: `New Lead: ${name} (${service})`,
+        text: `Name: ${name}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`
+      });
+    }
+
+    return res.redirect('/success.html');
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error saving contact");
+  }
 });
-// --- API ROUTE: Get All Clients ---
+
+// ============================
+// 7. ADMIN APIs
+// ============================
 app.get('/api/clients', async (req, res) => {
-    try {
-        const allClients = await Client.findAll();
-        res.json(allClients);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Something went wrong fetching data" });
-    }
+  if (!Client) {
+    return res.status(503).json({ error: "Database isn't configured." });
+  }
+  const clients = await Client.findAll();
+  return res.json(clients);
 });
 
-// --- API ROUTE: Delete Client ---
 app.delete('/api/clients/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        await Client.destroy({ where: { id } });
-        res.json({ message: 'Client deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error deleting client" });
-    }
+  if (!Client) {
+    return res.status(503).json({ error: "Database isn't configured." });
+  }
+  await Client.destroy({ where: { id: req.params.id } });
+  return res.json({ message: "Client deleted" });
 });
+
+// ============================
+// 8. 🤖 AI CHAT API (IMPORTANT)
+// ============================
+app.post("/api/chat", async (req, res) => {
+  const userMessage = req.body.message;
+
+  if (!userMessage) {
+    return res.status(400).json({ error: "Message is required" });
+  }
+
+  if (!openai) {
+    return res.status(503).json({ error: "AI isn't configured. Set OPENAI_API_KEY." });
+  }
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `
+You are a professional AI assistant for KAS Waterproofing & Building Services LLC.
+
+Location: Plantation, FL
+Phone: 954-982-2809
+Email: kaspaintingllc@gmail.com
+
+Services:
+- Waterproofing
+- Construction
+- Painting
+- Other services (pressure washing, inspections, demolition)
+
+Rules:
+- Be friendly & professional
+- Answer clearly
+- Encourage users to request a quote
+`
+        },
+        {
+          role: "user",
+          content: userMessage
+        }
+      ]
+    });
+
+    res.json({
+      reply: completion.choices[0].message.content
+    });
+
+  } catch (error) {
+    console.error("AI Error:", error);
+    res.status(500).json({ error: "AI service error" });
+  }
+});
+
+// ============================
+// 8B. GALLERY DESCRIPTION API
+// ============================
+app.post("/api/generate-description", async (req, res) => {
+  const { title, category } = req.body;
+
+  if (!title || !category) {
+    return res.status(400).json({ error: "Title and category are required" });
+  }
+
+  if (!openai) {
+    return res.status(503).json({ error: "AI isn't configured. Set OPENAI_API_KEY." });
+  }
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `You are a professional copywriter for KAS Waterproofing & Building Services LLC. Write engaging, professional descriptions for portfolio images. Keep descriptions to 2-3 sentences. Highlight quality, expertise, and results. Be specific about the work shown in the image without mentioning visual elements.`
+        },
+        {
+          role: "user",
+          content: `Write a professional description for a ${category} project titled: "${title}". Focus on the quality of work, materials used, and benefits to the client.`
+        }
+      ]
+    });
+
+    res.json({
+      description: completion.choices[0].message.content
+    });
+
+  } catch (error) {
+    console.error("Description Generation Error:", error);
+    res.status(500).json({ error: "Failed to generate description" });
+  }
+});
+
+// ============================
+// 9. SERVER (MUST BE LAST)
+// ============================
 app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

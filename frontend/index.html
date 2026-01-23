@@ -7,7 +7,51 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
+
+
+<script>
+  const navbar = document.querySelector('.navbar');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+</script>
+
+
+
 <body>
+
+    <!-- Chat Toggle Button -->
+<div id="chat-toggle">
+  💬 Ask KAS
+</div>
+
+<!-- Chat Widget -->
+<div id="chat-widget" class="closed">
+  <div id="chat-header">
+    💬 Ask KAS
+    <span id="chat-close">✕</span>
+  </div>
+
+  <div id="chat-messages"></div>
+
+  <div id="chat-input">
+    <input
+      type="text"
+      id="chat-text"
+      placeholder="Type your question..."
+    />
+    <button id="send-btn">Send</button>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+
 
     <nav class="navbar">
         <div class="logo">
@@ -17,30 +61,59 @@
 </div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="#gallery">Gallery</a></li>
+            <li class="nav-item has-mega">
+  <a href="services.html">Services</a>
+  <div class="mega-menu">
+    <div class="mega-column">
+      <h4>Waterproofing</h4>
+      <a href="waterproofing.html">Basement Waterproofing</a>
+      <a href="waterproofing.html">Roof Waterproofing</a>
+      <a href="waterproofing.html">Window Sealing</a>
+      <a href="waterproofing.html">Foundation Protection</a>
+    </div>
+    <div class="mega-column">
+      <h4>Construction</h4>
+      <a href="construction.html">Structural Repairs</a>
+      <a href="construction.html">Renovations</a>
+      <a href="construction.html">Concrete Work</a>
+      <a href="construction.html">Commercial Projects</a>
+    </div>
+    <div class="mega-column">
+      <h4>Painting</h4>
+      <a href="painting.html">Interior Painting</a>
+      <a href="painting.html">Exterior Painting</a>
+      <a href="painting.html">Industrial Coatings</a>
+    </div>
+  </div>
+</li>
+
+            <li><a href="gallery.html">Gallery</a></li>
             <li><a href="#contact" class="btn-quote">Request a Quote</a></li>
         </ul>
     </nav>
 
     <header id="home" class="hero">
-        <div class="hero-content">
-            <h1>Expert solutions for waterproofing & construction</h1>
+        <video class="hero-bg-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-modern-skyscraper-buildings-in-the-city-1-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-box">
+            <h1>Expert solutions for waterproofing & building</h1>
             <p>Protect and enhance your property with our trusted expertise in commercial, residential, and industrial projects.</p>
-            <a href="#contact" class="btn-main">Schedule a Consultation</a>
+            <a href="#contact" class="btn-main">Schedule a Free site visit</a>
         </div>
     </header>
     <section class="stats-bar">
         <div class="stats-container">
             <div class="stat-box">
                 <h2 class="stat-number">15+</h2>
-                <h3>Years of Expertise</h3>
-                <p>Delivering quality services you can trust.</p>
+                <h3>Years of Proven Expertise</h3>
+                <p>Built on quality workmanship, safety, and professional standards.</p>
             </div>
             <div class="stat-box">
                 <h2 class="stat-number">1,000+</h2>
-                <h3>Projects Completed</h3>
-                <p>Across commercial, residential, and industrial sectors.</p>
+                <h3>Projects Nationwide</h3>
+                <p>Serving residential, commercial, and industrial clients across the USA.</p>
             </div>
             <div class="stat-box">
                 <h2 class="stat-number">700+</h2>
@@ -53,20 +126,38 @@
     <section id="services" class="services">
         <h2>Our Services</h2>
         <div class="service-grid">
-            <div class="card">
-                <i class="fa-solid fa-helmet-safety"></i>
+            <div class="card service-card animate-service" style="animation-delay:0.1s">
+                <div class="service-icon-large"><i class="fa-solid fa-city"></i></div>
                 <h3>Construction Services</h3>
-                <p>Foundations, roofing, renovations, and structural repairs.</p>
+                <ul class="service-list">
+                    <li>Foundation & Structural Work</li>
+                    <li>Roofing & Framing</li>
+                    <li>Concrete Work</li>
+                    <li>General Contracting</li>
+                </ul>
+                <button class="service-btn">Request a Quote</button>
             </div>
-            <div class="card">
-                <i class="fa-solid fa-droplet-slash"></i>
-                <h3>Waterproofing</h3>
-                <p>Advanced waterproofing for walls, roofs, basements, and windows.</p>
+            <div class="card service-card animate-service" style="animation-delay:0.3s">
+                <div class="service-icon-large"><i class="fa-solid fa-water"></i></div>
+                <h3>Waterproofing Services</h3>
+                <ul class="service-list">
+                    <li>Basement Waterproofing</li>
+                    <li>Wall Sealing</li>
+                    <li>Roof Waterproofing</li>
+                    <li>Window Sealing</li>
+                </ul>
+                <button class="service-btn">Request a Quote</button>
             </div>
-            <div class="card">
-                <i class="fa-solid fa-paint-roller"></i>
+            <div class="card service-card animate-service" style="animation-delay:0.5s">
+                <div class="service-icon-large"><i class="fa-solid fa-paint-roller"></i></div>
                 <h3>Painting Services</h3>
-                <p>High-quality interior and exterior painting and coatings.</p>
+                <ul class="service-list">
+                    <li>Interior Painting</li>
+                    <li>Exterior Painting</li>
+                    <li>Commercial Painting</li>
+                    <li>Surface Preparation</li>
+                </ul>
+                <button class="service-btn">Request a Quote</button>
             </div>
         </div>
     </section>
@@ -129,7 +220,7 @@
             <div class="window-grid">
                 <div class="window-item">
                     <div class="img-circle-container">
-                        <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Glass to Metal Sealing Application">
+                        <img src="images/glass-to-metal.jpg" alt="Glass to Metal Waterproofing">
                     </div>
                     <h3>Glass to Metal</h3>
                     <p>Expert sealing where glass meets metal frames, providing a strong, flexible, and durable barrier against elements.</p>
@@ -137,7 +228,7 @@
 
                 <div class="window-item">
                     <div class="img-circle-container">
-                        <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Metal to Metal Joint Detail">
+                        <img src="images/metal-to-metal.jpg" alt="Metal to Metal Joint Detail">
                     </div>
                     <h3>Metal to Metal</h3>
                     <p>Precise waterproofing for metal-to-metal frame joints to ensure long-lasting corrosion protection.</p>
@@ -145,7 +236,7 @@
 
                 <div class="window-item">
                     <div class="img-circle-container">
-                        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Metal Frame to Concrete Wall">
+                        <img src="images/metal-to-concrete.jpg" alt="Metal Frame to Concrete Wall">
                     </div>
                     <h3>Metal to Concrete</h3>
                     <p>Reliable structural sealing between metal frames and concrete surfaces to prevent water penetration at the perimeter.</p>
@@ -155,6 +246,58 @@
     </section>
 
     <section id="contact" class="contact">
+        <!-- Book a Consultation Banner (more visually appealing) -->
+        <div style="
+            background: linear-gradient(90deg, #f8fafc 60%, #e0f7fa 100%);
+            padding: 48px 0 32px 0;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            border-radius: 22px;
+            margin-bottom: 28px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        ">
+            <div style="font-size:2.5rem; color:#1a3a4a; margin-bottom:10px;">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <h2 style="
+                font-size: 2.6rem;
+                font-weight: 800;
+                color: #1a3a4a;
+                margin-bottom: 10px;
+                letter-spacing: 1px;
+            ">
+            Book a Consultation
+            </h2>
+            <p style="
+                font-size: 1.25rem;
+                color: #222;
+                margin-bottom: 22px;
+                font-weight: 500;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            ">
+            We invite you to schedule a consultation or visit our website for additional information. Our experts are available to provide professional guidance and solutions for your requirements.
+            </p>
+            <a href="#contactForm" style="
+                display: inline-block;
+                background: #1a3a4a;
+                color: #fff;
+                padding: 14px 36px;
+                border-radius: 24px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                text-decoration: none;
+                box-shadow: 0 2px 8px #0002;
+                transition: background 0.2s;
+            " onmouseover="this.style.background='#355353'" onmouseout="this.style.background='#1a3a4a'">
+            Schedule Now
+            </a>
+        </div>
+
         <h2>Request a Quote</h2>
         <div class="contact-container">
             <form id="contactForm" action="/contact" method="POST">
@@ -170,10 +313,35 @@
                 <button type="submit">Send Message</button>
             </form>
             <div class="contact-info">
-                <p><strong>Location:</strong> 319 S State Rd. 7 Plantation, FL 33317</p>
-                <p><strong>Phone:</strong> 954-982-2809</p>
-                <p><strong>Email:</strong> Kaspaintingllc@gmail.com</p>
-            </div>
+  <div class="contact-item">
+    <span class="icon">📍</span>
+    <div>
+      <h4>Location</h4>
+      <p>319 S State Rd. 7<br>Plantation, FL 33317</p>
+    </div>
+  </div>
+
+  <div class="contact-item">
+    <span class="icon">📞</span>
+    <div>
+      <h4>Phone</h4>
+      <p><a href="tel:19549822809">954-982-2809</a></p>
+    </div>
+  </div>
+
+  <div class="contact-item">
+    <span class="icon">✉️</span>
+    <div>
+      <h4>Email</h4>
+      <p>
+        <a href="mailto:kaspaintingllc@gmail.com">
+          kaspaintingllc@gmail.com
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
         </div>
     </section>
 
@@ -182,4 +350,6 @@
     </footer>
 
 </body>
+<script src="script.js"></script>
 </html>
+

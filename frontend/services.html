@@ -10,7 +10,9 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">KAS</div>
+            <div class="logo">
+                <img src="logo-dark.png" alt="KAS Waterproofing Logo" style="height:40px;vertical-align:middle;">
+            </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html" class="active">Services</a></li>
@@ -21,10 +23,8 @@
 
     <!-- Hero Section -->
     <section class="services-hero">
-        <div class="hero-content">
-            <h1>Our Services</h1>
-            <p>Professional solutions for all your construction and waterproofing needs</p>
-        </div>
+        <h1 class="services-hero-title">Our Services</h1>
+        <p class="services-hero-desc">Professional solutions for all your construction and waterproofing needs</p>
     </section>
 
     <!-- Services Grid -->
@@ -32,75 +32,70 @@
         <div class="container">
             <div class="services-grid">
                 <!-- Service 1: Construction Services -->
-                <div class="service-card">
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.1s">
                     <div class="service-image">
                         <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=500&fit=crop" alt="Construction Services">
                     </div>
                     <div class="service-content">
                         <h3>Construction Services</h3>
-                        <p>Expert construction solutions tailored to your project requirements. From foundation work to complete builds, we deliver quality craftsmanship.</p>
                         <ul class="features-list">
-                            <li>✓ Foundation & Structural Work</li>
-                            <li>✓ Roofing & Framing</li>
-                            <li>✓ Concrete Work</li>
-                            <li>✓ General Contracting</li>
+                            <li>Foundation & Structural Work</li>
+                            <li>Roofing & Framing</li>
+                            <li>Concrete Work</li>
+                            <li>General Contracting</li>
                         </ul>
-                        <a href="index.html#contact" class="btn-request">Request a Quote</a>
+                        <a href="index.html#contact" class="service-btn">Request a Quote</a>
                     </div>
                 </div>
 
                 <!-- Service 2: Waterproofing Services -->
-                <div class="service-card">
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.3s">
                     <div class="service-image">
                         <img src="images/waterproofing.webp" alt="Waterproofing Services">
-
                     </div>
                     <div class="service-content">
                         <h3>Waterproofing Services</h3>
-                        <p>Advanced waterproofing solutions to protect your property from water damage. We use industry-leading materials and techniques.</p>
                         <ul class="features-list">
-                            <li>✓ Basement Waterproofing</li>
-                            <li>✓ Wall Sealing</li>
-                            <li>✓ Roof Waterproofing</li>
-                            <li>✓ Window Sealing</li>
+                            <li>Basement Waterproofing</li>
+                            <li>Wall Sealing</li>
+                            <li>Roof Waterproofing</li>
+                            <li>Window Sealing</li>
                         </ul>
-                        <a href="index.html#contact" class="btn-request">Request a Quote</a>
+                        <a href="index.html#contact" class="service-btn">Request a Quote</a>
                     </div>
                 </div>
 
                 <!-- Service 3: Painting Services -->
-                <div class="service-card">
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.5s">
                     <div class="service-image">
                         <img src="images/painting.webp" alt="Painting Services">
                     </div>
                     <div class="service-content">
                         <h3>Painting Services</h3>
-                        <p>Professional painting services for residential and commercial properties. High-quality finishes that transform your spaces.</p>
                         <ul class="features-list">
-                            <li>✓ Interior Painting</li>
-                            <li>✓ Exterior Painting</li>
-                            <li>✓ Commercial Painting</li>
-                            <li>✓ Surface Preparation</li>
+                            <li>Interior Painting</li>
+                            <li>Exterior Painting</li>
+                            <li>Commercial Painting</li>
+                            <li>Surface Preparation</li>
                         </ul>
-                        <a href="index.html#contact" class="btn-request">Request a Quote</a>
+                        <a href="index.html#contact" class="service-btn">Request a Quote</a>
                     </div>
                 </div>
 
                 <!-- Service 4: Other Related Services -->
-                <div class="service-card">
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.7s">
                     <div class="service-image">
                         <img src="images/otherrelated.webp" alt="Related Services">
                     </div>
                     <div class="service-content">
                         <h3>Other Related Services</h3>
-                        <p>We offer a comprehensive range of additional services to meet all your building and property maintenance needs.</p>
                         <ul class="features-list">
-                            <li>✓ Demolition</li>
-                            <li>✓ Property Inspection</li>
-                            <li>✓ Pressure Washing</li>
-                            <li>✓ Repair & Maintenance</li>
+                            <li>Demolition</li>
+                            <li>Property Inspection</li>
+                            <li>Pressure Washing</li>
+                            <li>Repair & Maintenance</li>
                         </ul>
-                        <a href="index.html#contact" class="btn-request">Request a Quote</a>
+                        <a href="index.html#contact" class="service-btn">Request a Quote</a>
                     </div>
                 </div>
             </div>
@@ -173,13 +168,13 @@
             margin-top: 60px;
         }
 
-        .hero-content h1 {
+        .services-hero-title {
             font-size: 3.5rem;
             margin-bottom: 10px;
             font-weight: 700;
         }
 
-        .hero-content p {
+        .services-hero-desc {
             font-size: 1.3rem;
             opacity: 0.95;
         }

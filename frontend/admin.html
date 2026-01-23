@@ -5,12 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
-        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #004080; color: white; }
-        tr:hover { background-color: #f1f1f1; }
-        h1 { color: #333; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; box-shadow: 0 8px 32px rgba(0,64,128,0.08); border-radius: 12px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eaeaea; }
+        th { background: linear-gradient(90deg, #004080 0%, #0074d9 100%); color: white; letter-spacing: 1px; font-size: 1.05em; }
+        tr { transition: background 0.3s, box-shadow 0.3s; }
+        tr:hover { background-color: #eaf6ff; box-shadow: 0 2px 12px rgba(0,64,128,0.08); }
+        h1 { color: #004080; font-weight: 700; font-size: 2.2em; margin-bottom: 8px; letter-spacing: 1px; }
+        .fade-in-row {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: fadeInUp 0.7s cubic-bezier(.4,2,.6,1) forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -39,10 +51,9 @@
             .then(response => response.json())
             .then(data => {
                 const table = document.getElementById('table-body');
-                
-                // Loop through each client and add a row to the table
-                data.forEach(client => {
-                    const row = `<tr>
+                // Loop through each client and add a row to the table with animation
+                data.forEach((client, i) => {
+                    const row = `<tr class="fade-in-row" style="animation-delay:${i * 0.12}s">
                         <td>${client.id}</td>
                         <td><strong>${client.name}</strong></td>
                         <td>${client.email}</td>
