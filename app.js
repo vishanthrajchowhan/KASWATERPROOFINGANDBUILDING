@@ -1,7 +1,7 @@
 // ============================
 // 1. ENV & DEPENDENCIES
 // ============================
-require('dotenv').config(); 
+require('dotenv').config();
 
 const OpenAI = require("openai");
 const express = require('express');
@@ -9,6 +9,17 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const { Sequelize, DataTypes } = require('sequelize');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
+
+// Log environment configuration
+console.log("ENV LOADED:", {
+  DB_TYPE: process.env.DB_TYPE || 'sqlite (default)',
+  DB_PATH: process.env.DB_PATH || 'database.sqlite',
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY ? '✓ Set' : '✗ Missing',
+  EMAIL_USER: process.env.EMAIL_USER ? '✓ Set' : '✗ Missing'
+});
 
 function hasAllEnv(keys) {
   return keys.every((k) => typeof process.env[k] === 'string' && process.env[k].trim().length > 0);
@@ -35,18 +46,26 @@ app.use(express.static(path.join(__dirname, 'frontend')));
 // ============================
 // 4. DATABASE SETUP
 // ============================
-const hasDbConfig = hasAllEnv(['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST']);
-const sequelize = hasDbConfig
-  ? new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+// Support both PostgreSQL and SQLite
+const useSQLite = process.env.DB_TYPE === 'sqlite' || !hasAllEnv(['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST']);
+const dbPath = process.env.DB_PATH || 'database.sqlite';
+
+const sequelize = useSQLite
+  ? new Sequelize({
+      dialect: 'sqlite',
+      storage: dbPath,
+      logging: false
+    })
+  : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
       host: process.env.DB_HOST,
       dialect: 'postgres',
       logging: false
-    })
-  : null;
+    });
 
-// Ensure database exists
+// Ensure database exists (PostgreSQL only)
 async function ensureDatabaseExists() {
-  if (!hasDbConfig) return;
+  if (useSQLite) return;
+  
   const sequelizeNoDb = new Sequelize(
     'postgres',
     process.env.DB_USER,
@@ -84,17 +103,12 @@ const Client = sequelize
 
 // Start DB
 async function startServer() {
-  if (!sequelize) {
-    console.log("ℹ️  DB config missing; starting without database features.");
-    return;
-  }
-
   try {
     await ensureDatabaseExists();
     await sequelize.sync();
-    console.log("✅ Database connected & synced");
+    console.log(`✅ Database (${useSQLite ? 'SQLite' : 'PostgreSQL'}) connected & synced`);
   } catch (err) {
-    console.error("❌ Database init failed; starting without database features.", err?.message || err);
+    console.error("❌ Database init failed; contact service will fallback to SQLite.", err?.message || err);
   }
 }
 
@@ -123,40 +137,74 @@ app.post('/contact', async (req, res) => {
   try {
     const hasEmailConfig = hasAllEnv(['EMAIL_USER', 'EMAIL_PASSWORD', 'EMAIL_TO']);
 
-    if (!Client && !hasEmailConfig) {
-      return res
-        .status(503)
-        .send("Contact service isn't configured. Please set DB_* and/or EMAIL_* environment variables.");
-    }
-
+    // Always try to save to database (SQLite fallback if needed)
     if (Client) {
-      await Client.create({ name, email, service, message });
+      try {
+        await Client.create({ name, email, service, message });
+        console.log(`✅ Contact saved to database: ${name}`);
+      } catch (dbErr) {
+        console.error("⚠️  Database save failed, attempting SQLite fallback...", dbErr.message);
+        // Fallback to SQLite if PostgreSQL fails
+        saveLead({ name, email, service, message });
+      }
+    } else {
+      // No Client model, save to SQLite directly
+      saveLead({ name, email, service, message });
     }
 
+    // Try to send email if configured
     if (hasEmailConfig) {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD
-        }
-      });
+      try {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
+          }
+        });
 
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_TO,
-        subject: `New Lead: ${name} (${service})`,
-        text: `Name: ${name}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`
-      });
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: process.env.EMAIL_TO,
+          subject: `New Lead: ${name} (${service})`,
+          text: `Name: ${name}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`
+        });
+        console.log(`✅ Email sent for contact: ${name}`);
+      } catch (emailErr) {
+        console.error("⚠️  Email failed (contact still saved):", emailErr.message);
+      }
     }
 
     return res.redirect('/success.html');
 
   } catch (error) {
-    console.error(error);
+    console.error("❌ Contact error:", error);
     res.status(500).send("Error saving contact");
   }
 });
+
+// SQLite fallback for contacts
+function saveLead(data) {
+  const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+      console.error("SQLite error:", err.message);
+      return;
+    }
+
+    db.run(
+      `INSERT INTO Clients (name, email, service, message, createdAt, updatedAt) VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))`,
+      [data.name, data.email, data.service, data.message],
+      function(err) {
+        if (err) {
+          console.error("SQLite insert error:", err.message);
+        } else {
+          console.log(`✅ Contact saved to SQLite: ${data.name}`);
+        }
+        db.close();
+      }
+    );
+  });
+}
 
 // ============================
 // 7. ADMIN APIs

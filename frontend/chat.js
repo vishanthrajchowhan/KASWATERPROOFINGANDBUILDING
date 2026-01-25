@@ -3,23 +3,25 @@ console.log("✅ Chat JS Loaded");
 const chatToggle = document.getElementById("chat-toggle");
 const chatWidget = document.getElementById("chat-widget");
 const chatClose = document.getElementById("chat-close");
-
-chatToggle.addEventListener("click", () => {
-  chatWidget.classList.remove("closed");
-});
-
-chatClose.addEventListener("click", () => {
-  chatWidget.classList.add("closed");
-});
-
-
-console.log("✅ Chat JS Loaded");
-
 const sendBtn = document.getElementById("send-btn");
 const input = document.getElementById("chat-text");
 const messages = document.getElementById("chat-messages");
 
+// Safety checks: null guards for DOM elements
+if (chatToggle) {
+  chatToggle.addEventListener("click", () => {
+    if (chatWidget) chatWidget.classList.remove("closed");
+  });
+}
+
+if (chatClose) {
+  chatClose.addEventListener("click", () => {
+    if (chatWidget) chatWidget.classList.add("closed");
+  });
+}
+
 function addMessage(text, type) {
+  if (!messages) return;
   const div = document.createElement("div");
   div.className = `chat-message ${type}`;
   div.textContent = text;
@@ -28,6 +30,7 @@ function addMessage(text, type) {
 }
 
 async function sendMessage() {
+  if (!input) return;
   const text = input.value.trim();
   if (!text) return;
 
@@ -42,17 +45,19 @@ async function sendMessage() {
     });
 
     const data = await res.json();
-    addMessage(data.reply, "bot");
+    addMessage(data.reply || "No response", "bot");
   } catch (err) {
+    console.error("Chat error:", err);
     addMessage("Error contacting server.", "bot");
   }
 }
 
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
+if (sendBtn) {
+  sendBtn.addEventListener("click", sendMessage);
+}
 
-
-
-// Gallery rendering logic removed from chat.js. Now handled only in gallery.html.
+if (input) {
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
+}
