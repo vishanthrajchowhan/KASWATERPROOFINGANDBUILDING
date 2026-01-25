@@ -6,6 +6,14 @@
     }
   },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index.js" }
-  ]
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/gallery", "destination": "/gallery.html" },
+    { "source": "/construction", "destination": "/pages/construction.html" },
+    { "source": "/painting", "destination": "/pages/painting.html" },
+    { "source": "/waterproofing", "destination": "/pages/waterproofing.html" },
+    { "source": "/admin", "destination": "/pages/admin.html" },
+    { "source": "/carousel", "destination": "/pages/carousel.html" }
+  ],
+  "cleanUrls": true
 }
