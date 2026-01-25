@@ -8,44 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navbar (copied from index.html) -->
-    <nav class="navbar">
-        <div class="logo">
-            <a href="index.html">
-                <img src="logo-dark.png" alt="KAS Waterproofing">
-            </a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html#home">Home</a></li>
-            <li class="nav-item has-mega">
-                <a href="services.html">Services</a>
-                <div class="mega-menu">
-                    <div class="mega-column">
-                        <h4>Waterproofing</h4>
-                        <a href="waterproofing.html">Basement Waterproofing</a>
-                        <a href="waterproofing.html">Roof Waterproofing</a>
-                        <a href="waterproofing.html">Window Sealing</a>
-                        <a href="waterproofing.html">Foundation Protection</a>
-                    </div>
-                    <div class="mega-column">
-                        <h4>Construction</h4>
-                        <a href="construction.html">Structural Repairs</a>
-                        <a href="construction.html">Renovations</a>
-                        <a href="construction.html">Concrete Work</a>
-                        <a href="construction.html">Commercial Projects</a>
-                    </div>
-                    <div class="mega-column">
-                        <h4>Painting</h4>
-                        <a href="painting.html">Interior Painting</a>
-                        <a href="painting.html">Exterior Painting</a>
-                        <a href="painting.html">Industrial Coatings</a>
-                    </div>
-                </div>
-            </li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="index.html#contact" class="btn-quote">Request a Quote</a></li>
-        </ul>
-    </nav>
+    <!-- Common Header Include -->
+    <div id="header"></div>
+    <script>
+      fetch('header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Optionally, set active class based on current page
+          const path = window.location.pathname.split('/').pop();
+          document.querySelectorAll('.nav-links a').forEach(a => {
+            if (a.getAttribute('href') === path) a.classList.add('active');
+          });
+        });
+    </script>
 
     <header class="hero" style="background: #111;">
         <div class="hero-box" style="padding-top: 80px;">

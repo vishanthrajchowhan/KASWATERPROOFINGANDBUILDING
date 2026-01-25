@@ -7,24 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="logo-dark.png" alt="KAS Waterproofing Logo" style="height:40px;vertical-align:middle;">
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html" class="active">Services</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+        <!-- Common Header Include -->
+        <div id="header"></div>
+        <script>
+            fetch('header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header').innerHTML = html;
+                    // Optionally, set active class based on current page
+                    const path = window.location.pathname.split('/').pop();
+                    document.querySelectorAll('.nav-links a').forEach(a => {
+                        if (a.getAttribute('href') === path) a.classList.add('active');
+                    });
+                });
+        </script>
 
     <!-- Hero Section -->
     <section class="services-hero">
-        <h1 class="services-hero-title">Our Services</h1>
-        <p class="services-hero-desc">Professional solutions for all your construction and waterproofing needs</p>
+        <div class="services-hero-box">
+            <h1>Our Services</h1>
+            <p>Professional solutions for all your construction, painting, and waterproofing needs</p>
+        </div>
     </section>
 
     <!-- Services Grid -->
@@ -49,9 +52,9 @@
                 </div>
 
                 <!-- Service 2: Waterproofing Services -->
-                <div class="service-card glassy-card animate-service" style="animation-delay:0.3s">
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.2s">
                     <div class="service-image">
-                        <img src="images/waterproofing.webp" alt="Waterproofing Services">
+                        <img src="images/other/waterproofing.webp" alt="Waterproofing Services">
                     </div>
                     <div class="service-content">
                         <h3>Waterproofing Services</h3>
@@ -66,9 +69,9 @@
                 </div>
 
                 <!-- Service 3: Painting Services -->
-                <div class="service-card glassy-card animate-service" style="animation-delay:0.5s">
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.3s">
                     <div class="service-image">
-                        <img src="images/painting.webp" alt="Painting Services">
+                        <img src="images/other/Painting.webp" alt="Painting Services">
                     </div>
                     <div class="service-content">
                         <h3>Painting Services</h3>
@@ -82,10 +85,44 @@
                     </div>
                 </div>
 
-                <!-- Service 4: Other Related Services -->
-                <div class="service-card glassy-card animate-service" style="animation-delay:0.7s">
+                <!-- Service 4: Flooring Solutions -->
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.4s">
                     <div class="service-image">
-                        <img src="images/otherrelated.webp" alt="Related Services">
+                        <img src="https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&h=500&fit=crop" alt="Home Remodeling">
+                    </div>
+                    <div class="service-content">
+                        <h3>Home Remodeling</h3>
+                        <ul class="features-list">
+                            <li>Kitchen & Bathroom Renovation</li>
+                            <li>Room Additions & Expansions</li>
+                            <li>Flooring & Tiling</li>
+                            <li>Interior & Exterior Upgrades</li>
+                        </ul>
+                        <a href="index.html#contact" class="service-btn">Request a Quote</a>
+                    </div>
+                </div>
+
+                <!-- Service 5: Exterior Cleaning & Restoration -->
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.5s">
+                    <div class="service-image">
+                        <img src="images/other/Co&res.png" alt="Commercial & Residential Services">
+                    </div>
+                    <div class="service-content">
+                        <h3>Commercial & Residential Services</h3>
+                        <ul class="features-list">
+                            <li>Office & Retail Buildouts</li>
+                            <li>Apartment & Condo Renovations</li>
+                            <li>Custom Home Improvements</li>
+                            <li>Facility Maintenance & Upgrades</li>
+                        </ul>
+                        <a href="index.html#contact" class="service-btn">Request a Quote</a>
+                    </div>
+                </div>
+
+                <!-- Service 6: Other Related Services -->
+                <div class="service-card glassy-card animate-service" style="animation-delay:0.6s">
+                    <div class="service-image">
+                        <img src="images/other/otherrelated.webp" alt="Related Services">
                     </div>
                     <div class="service-content">
                         <h3>Other Related Services</h3>
@@ -157,26 +194,64 @@
 
     <style>
         .services-hero {
-            background: linear-gradient(135deg, rgba(0, 51, 102, 0.8) 0%, rgba(0, 82, 163, 0.8) 100%), 
-                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop') center/cover;
-            height: 400px;
+            position: relative;
+            min-height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            color: white;
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.82) 0%, rgba(0, 82, 163, 0.82) 100%),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop') center/cover;
+            color: #fff;
             margin-top: 60px;
         }
 
-        .services-hero-title {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
+        .services-hero-box {
+            background: rgba(30, 30, 34, 0.92); /* deep charcoal */
+            border: 2.5px solid #ffb300; /* gold accent */
+            box-shadow: 0 8px 32px 0 rgba(255,193,7,0.13), 0 0 0 4px #ffb30033;
+            border-radius: 22px;
+            padding: 48px 32px 32px 32px;
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(2px);
+            animation: floatIn 1.1s cubic-bezier(.4,2,.6,1) both;
         }
 
-        .services-hero-desc {
-            font-size: 1.3rem;
-            opacity: 0.95;
+        .services-hero-box h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 32px rgba(0,0,0,0.18), 0 1px 0 #233a66;
+        }
+
+        .services-hero-box p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.96;
+            text-shadow: 0 2px 16px rgba(0,0,0,0.12);
+        }
+
+        @keyframes floatIn {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+                box-shadow: none;
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.03);
+                box-shadow: 0 16px 48px 0 rgba(58,123,213,0.22);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                box-shadow: 0 8px 32px 0 rgba(58,123,213,0.18), 0 0 0 4px #3a7bd533;
+            }
         }
 
         .services-section {
@@ -186,27 +261,32 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
             margin-top: 40px;
         }
 
         .service-card {
-            background: white;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #fffde7 0%, #f8f9fa 100%);
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 24px 0 rgba(0,0,0,0.10);
+            transition: transform 0.3s cubic-bezier(.4,2,.3,1), box-shadow 0.3s cubic-bezier(.4,2,.3,1);
+            border: 1.5px solid #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 48px 0 rgba(255,193,7,0.13), 0 2px 8px 0 rgba(0,0,0,0.10);
+            border-color: #ffb300;
         }
 
         .service-image {
             width: 100%;
-            height: 250px;
+            height: 220px;
             overflow: hidden;
         }
 
@@ -214,27 +294,32 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(.4,2,.3,1);
         }
 
         .service-card:hover .service-image img {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         .service-content {
-            padding: 30px;
+            padding: 28px 26px 22px 26px;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .service-content h3 {
-            font-size: 1.5rem;
-            color: #003366;
+            font-size: 1.35rem;
+            color: #ffb300;
             margin-bottom: 15px;
-            border-bottom: 3px solid #ff9900;
+            border-bottom: 2.5px solid #ffb300;
             padding-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
         }
 
         .service-content p {
-            color: #666;
+            color: #555;
             margin-bottom: 20px;
             line-height: 1.6;
         }
@@ -248,7 +333,7 @@
         .features-list li {
             color: #555;
             padding: 8px 0;
-            font-size: 0.95rem;
+            font-size: 0.97rem;
             border-bottom: 1px solid #eee;
         }
 
@@ -256,23 +341,26 @@
             border-bottom: none;
         }
 
-        .btn-request {
+        .service-btn {
             display: inline-block;
-            background: linear-gradient(135deg, #ff9900, #ffb300);
-            color: white;
+            background: linear-gradient(135deg, #ffb300, #ffcc80);
+            color: #003366;
             padding: 12px 30px;
             border-radius: 5px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            transition: all 0.3s cubic-bezier(.4,2,.3,1);
+            font-weight: 700;
             border: none;
             cursor: pointer;
+            font-size: 1.05rem;
+            margin-top: auto;
         }
 
-        .btn-request:hover {
-            background: linear-gradient(135deg, #ffb300, #ff9900);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
+        .service-btn:hover {
+            background: linear-gradient(135deg, #ffcc80, #ffb300);
+            color: #232b38;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 5px 15px rgba(255, 179, 0, 0.18);
         }
 
         .cta-section {
@@ -302,7 +390,7 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(.4,2,.3,1);
             border: none;
             cursor: pointer;
         }
@@ -313,19 +401,13 @@
             box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .services-grid {
                 grid-template-columns: 1fr;
             }
-
-            .hero-content h1 {
-                font-size: 2rem;
+            .services-hero-title {
+                font-size: 2.2rem;
             }
-
-            .hero-content p {
-                font-size: 1rem;
-            }
-
             .services-hero {
                 height: 250px;
                 margin-top: 50px;
@@ -333,4 +415,24 @@
         }
     </style>
 </body>
+
+        <!-- Chat Toggle Button -->
+        <div id="chat-toggle">
+            💬 Ask KAS
+        </div>
+
+        <!-- Chat Widget -->
+        <div id="chat-widget" class="closed">
+            <div id="chat-header">
+                💬 Ask KAS
+                <span id="chat-close">✕</span>
+            </div>
+            <div id="chat-messages"></div>
+            <div id="chat-input">
+                <input type="text" id="chat-text" placeholder="Type your question..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+
+        <script src="chat.js"></script>
 </html>

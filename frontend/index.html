@@ -53,44 +53,20 @@
 <script src="chat.js"></script>
 
 
-    <nav class="navbar">
-        <div class="logo">
-    <a href="#home">
-        <img src="logo-dark.png" alt="KAS Waterproofing">
-    </a>
-</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li class="nav-item has-mega">
-  <a href="services.html">Services</a>
-  <div class="mega-menu">
-    <div class="mega-column">
-      <h4>Waterproofing</h4>
-      <a href="waterproofing.html">Basement Waterproofing</a>
-      <a href="waterproofing.html">Roof Waterproofing</a>
-      <a href="waterproofing.html">Window Sealing</a>
-      <a href="waterproofing.html">Foundation Protection</a>
-    </div>
-    <div class="mega-column">
-      <h4>Construction</h4>
-      <a href="construction.html">Structural Repairs</a>
-      <a href="construction.html">Renovations</a>
-      <a href="construction.html">Concrete Work</a>
-      <a href="construction.html">Commercial Projects</a>
-    </div>
-    <div class="mega-column">
-      <h4>Painting</h4>
-      <a href="painting.html">Interior Painting</a>
-      <a href="painting.html">Exterior Painting</a>
-      <a href="painting.html">Industrial Coatings</a>
-    </div>
-  </div>
-</li>
-
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="#contact" class="btn-quote">Request a Quote</a></li>
-        </ul>
-    </nav>
+    <!-- Common Header Include -->
+    <div id="header"></div>
+    <script>
+      fetch('header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Optionally, set active class based on current page
+          const path = window.location.pathname.split('/').pop();
+          document.querySelectorAll('.nav-links a').forEach(a => {
+            if (a.getAttribute('href') === path) a.classList.add('active');
+          });
+        });
+    </script>
 
     <header id="home" class="hero">
         <video class="hero-bg-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80">
@@ -163,7 +139,7 @@
     </section>
     <section class="why-choose-us">
         <div class="why-choose-header">
-            <img src="logo-dark.png" alt="KAS Waterproofing Logo" class="section-logo">
+            <img src="images/logo/logo-dark.png" alt="KAS Waterproofing Logo" class="section-logo">
             <h2>Why Choose KAS Waterproofing & Building Services</h2>
             <p>At KAS Waterproofing & Building Services, we deliver top-notch solutions with a commitment to excellence, customer satisfaction, and safety. Trust us to protect your property.</p>
         </div>
@@ -269,7 +245,7 @@
                 margin-bottom: 10px;
                 letter-spacing: 1px;
             ">
-            Book a Consultation
+            Book a Free Consultation
             </h2>
             <p style="
                 font-size: 1.25rem;
@@ -302,8 +278,10 @@
         <div class="contact-container">
             <form id="contactForm" action="/contact" method="POST">
                 <input type="text" name="name" placeholder="Your Name" required>
+                <input type="tel" name="phone" placeholder="Your Phone Number" pattern="[0-9\-\+\s\(\)]{7,}" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <select name="service">
+                    <option value="" disabled selected>Select Service</option>
                     <option value="Waterproofing">Waterproofing</option>
                     <option value="Construction">Construction</option>
                     <option value="Painting">Painting</option>
@@ -334,8 +312,8 @@
     <div>
       <h4>Email</h4>
       <p>
-        <a href="mailto:kaspaintingllc@gmail.com">
-          kaspaintingllc@gmail.com
+        <a href="mailto:ingrid@kaswaterproofingbuilding.com">
+          ingrid@kaswaterproofingbuilding.com
         </a>
       </p>
     </div>

@@ -216,7 +216,7 @@ body { color: #333; line-height: 1.6; }
   .stat-box:nth-child(1) .stat-number { color: #ffb347; }
   .stat-box:nth-child(2) .stat-number { color: #ffb347; }
   .stat-box:nth-child(3) .stat-number { color: #ffb347; }
-}
+
 
 .stat-box h3 {
     font-size: 1.5rem;
@@ -540,9 +540,10 @@ body { color: #333; line-height: 1.6; }
   }
 
 .why-card:hover {
-    background: rgba(255,255,255,0.28);
-    box-shadow: 0 16px 48px 0 rgba(0,0,0,0.22);
-    border-color: #3a7bd5;
+    background: linear-gradient(135deg, #ffe082 0%, #ffd54f 100%);
+    box-shadow: 0 16px 48px 0 rgba(255,193,7,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+    border-color: #ffb300;
+    transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
 .card-icon {
@@ -1006,7 +1007,7 @@ footer {
     50% { transform: translateY(-18px); }
     100% { transform: translateY(0px); }
   }
-}
+
 
 /* Circular Image Styling */
 .img-circle-container {
@@ -1030,9 +1031,10 @@ footer {
 
 /* Hover Effect */
 .window-item:hover .img-circle-container {
-    transform: scale(1.09) rotate(-2deg);
-    border-color: #ff5f6d;
-    box-shadow: 0 16px 48px 0 rgba(255,95,109,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+    transform: scale(1.08) translateY(-10px);
+    border-color: #ffb300;
+    box-shadow: 0 12px 36px 0 rgba(255,193,7,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+    background: linear-gradient(135deg, #fffde7 0%, #ffe082 100%);
 }
 
 /* Text Styling */
@@ -1093,22 +1095,28 @@ footer {
   background: #f5f5f5;
 }
 
-.message {
+
+.chat-message {
   margin-bottom: 8px;
-  padding: 8px 10px;
+  padding: 10px 14px;
   border-radius: 8px;
-  max-width: 85%;
-  font-size: 14px;
+  max-width: 90%;
+  font-size: 1.08rem;
+  word-break: break-word;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-
-.user {
+.chat-message.user {
   background: #f4c430;
+  color: #1a2740;
   align-self: flex-end;
+  font-weight: 600;
 }
-
-.bot {
-  background: #e0e0e0;
+.chat-message.bot {
+  background: #233a66;
+  color: #fff;
   align-self: flex-start;
+  font-weight: 500;
 }
 
 #chat-input {
