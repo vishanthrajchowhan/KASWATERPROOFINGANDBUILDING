@@ -122,7 +122,27 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'admin.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'admin.html'));
+});
+
+app.get('/gallery', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'gallery.html'));
+});
+
+app.get('/services', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'services.html'));
+});
+
+app.get('/construction', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'construction.html'));
+});
+
+app.get('/painting', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'painting.html'));
+});
+
+app.get('/waterproofing', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'waterproofing.html'));
 });
 
 
