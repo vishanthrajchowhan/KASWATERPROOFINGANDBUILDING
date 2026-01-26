@@ -130,7 +130,40 @@ app.post('/contact', async (req, res) => {
   const { name, email, service, message } = req.body;
 
   try {
+    // Save to database
     await Client.create({ name, email, service, message });
+
+    // Send email notification
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD && process.env.EMAIL_TO) {
+      try {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
+          }
+        });
+
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: process.env.EMAIL_TO,
+          subject: `New Contact Form Submission - ${service}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Service:</strong> ${service}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message}</p>
+          `
+        });
+
+        console.log(`✅ Email sent for contact: ${name}`);
+      } catch (emailErr) {
+        console.error("⚠️ Email failed (contact still saved):", emailErr.message);
+      }
+    }
+
     res.redirect('/success.html');
   } catch (err) {
     console.error(err);
