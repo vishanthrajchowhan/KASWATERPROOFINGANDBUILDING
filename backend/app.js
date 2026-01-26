@@ -22,7 +22,9 @@ const PORT = Number(process.env.PORT) || 3000;
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'frontend')));
+// Serve the real frontend folder (one level up)
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
+app.use(express.static(FRONTEND_DIR));
 
 // ============================
 // 3. ENV CHECK
@@ -88,53 +90,32 @@ sequelize.sync().then(() => {
 // 6. PAGE ROUTES
 // ============================
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 
 app.get('/gallery', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'gallery.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'gallery.html'));
 });
 
 app.get('/services', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'services.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'services.html'));
 });
 
 app.get('/construction', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'construction.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'construction.html'));
 });
 
 app.get('/painting', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'painting.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'painting.html'));
 });
 
 app.get('/waterproofing', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'waterproofing.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'waterproofing.html'));
 });
 
 app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'admin.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'admin.html'));
 });
-
-
-// ============================
-// 7. CONTACT FORM
-// ============================
-app.post('/contact', async (req, res) => {
-  const { name, email, service, message } = req.body;
-
-  try {
-    await Client.create({ name, email, service, message });
-    res.redirect('/success.html');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Contact error");
-  }
-});
-
-// ============================
-// 8. 🤖 CHAT API (FIXED)
-// ============================
-app.post("/api/chat", async (req, res) => {
   const userMessage = req.body.message;
 
   console.log("💬 CHAT RECEIVED:", userMessage);
