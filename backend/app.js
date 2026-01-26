@@ -87,13 +87,34 @@ sequelize.sync().then(() => {
 // ============================
 // 6. PAGE ROUTES
 // ============================
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, 'frontend', 'index.html'))
-);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+});
 
-app.get('/admin', (req, res) =>
-  res.sendFile(path.join(__dirname, 'frontend', 'admin.html'))
-);
+app.get('/gallery', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'gallery.html'));
+});
+
+app.get('/services', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'services.html'));
+});
+
+app.get('/construction', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'construction.html'));
+});
+
+app.get('/painting', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'painting.html'));
+});
+
+app.get('/waterproofing', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'waterproofing.html'));
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'admin.html'));
+});
+
 
 // ============================
 // 7. CONTACT FORM
