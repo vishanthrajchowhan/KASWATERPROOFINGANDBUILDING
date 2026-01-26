@@ -116,6 +116,26 @@ app.get('/waterproofing', (req, res) => {
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'admin.html'));
 });
+
+// ============================
+// 7. CONTACT FORM
+// ============================
+app.post('/contact', async (req, res) => {
+  const { name, email, service, message } = req.body;
+
+  try {
+    await Client.create({ name, email, service, message });
+    res.redirect('/success.html');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Contact error");
+  }
+});
+
+// ============================
+// 8. 🤖 CHAT API (FIXED)
+// ============================
+app.post("/api/chat", async (req, res) => {
   const userMessage = req.body.message;
 
   console.log("💬 CHAT RECEIVED:", userMessage);
