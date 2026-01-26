@@ -2,7 +2,7 @@
 // 1. ENV & DEPENDENCIES
 // ============================
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const OpenAI = require("openai");
 const express = require('express');
@@ -71,7 +71,13 @@ const sequelize = useSQLite
       {
         host: process.env.DB_HOST,
         dialect: 'postgres',
-        logging: false
+        logging: false,
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false
+          }
+        }
       }
     );
 
@@ -93,28 +99,28 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
 });
 
-app.get('/gallery', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'gallery.html'));
+app.get('/services', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'services.html'));
 });
 
-app.get('/services', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'services.html'));
+app.get('/gallery', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'gallery.html'));
 });
 
 app.get('/construction', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'construction.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'construction.html'));
 });
 
 app.get('/painting', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'painting.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'painting.html'));
 });
 
 app.get('/waterproofing', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'waterproofing.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'waterproofing.html'));
 });
 
 app.get('/admin', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'admin.html'));
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'admin.html'));
 });
 
 // ============================
