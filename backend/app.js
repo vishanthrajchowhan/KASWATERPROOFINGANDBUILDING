@@ -131,7 +131,7 @@ app.post('/contact', async (req, res) => {
 
   try {
     // Save to database
-    await Client.create({ name, email, service, message });
+     Client.create({ name, email, service, message });
 
     // Send email notification
     if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD && process.env.EMAIL_TO) {
@@ -144,7 +144,7 @@ app.post('/contact', async (req, res) => {
           }
         });
 
-        await transporter.sendMail({
+         transporter.sendMail({
           from: process.env.EMAIL_USER,
           to: process.env.EMAIL_TO,
           subject: `New Contact Form Submission - ${service}`,
