@@ -4,7 +4,6 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
-const OpenAI = require("openai");
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
@@ -30,7 +29,7 @@ app.use(express.static(FRONTEND_DIR));
 // 3. ENV CHECK
 // ============================
 console.log("ENV STATUS:", {
-  OPENAI_API_KEY: process.env.OPENAI_API_KEY ? "✓ SET" : "✗ MISSING",
+  // FIXED: No AI keys required for chat (rule-based, always available)
   EMAIL_USER: process.env.EMAIL_USER ? "✓ SET" : "✗ MISSING",
   DB_TYPE: process.env.DB_TYPE || "sqlite"
 });
@@ -40,12 +39,67 @@ function hasAllEnv(keys) {
 }
 
 // ============================
-// 4. OPENAI SETUP
+// 4. CHATBOT RULES (FIXED)
 // ============================
-const hasOpenAI = hasAllEnv(['OPENAI_API_KEY']);
-const openai = hasOpenAI
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-  : null;
+// FIXED: Pure rule-based responses so chat never depends on external APIs
+const BUSINESS_INFO = {
+  company: "KAS Waterproofing & Building Services LLC",
+  phone: "954-982-2809",
+  email: "kaspaintingllc@gmail.com",
+  location: "319 S State Rd 7, Plantation, FL 33317",
+  services: {
+    waterproofing: "We offer waterproofing for basements, roofs, wall sealing, and window sealing. For details, contact +1-954-982-2809 or email ingrid@kaswaterproofingbuilding.com.",
+    construction: "We provide construction services including foundation, roofing, framing, concrete, and general contracting. For details, contact +1-954-982-2809 or email ingrid@kaswaterproofingbuilding.com.",
+    painting: "We handle interior, exterior, and commercial painting services. For details, contact +1-954-982-2809 or email ingrid@kaswaterproofingbuilding.com."
+  }
+};
+
+function getChatReply(message) {
+  // FIXED: Normalize input for reliable keyword matching
+  const text = (message || "").toLowerCase();
+
+  if (!text.trim()) {
+    return "Please type a message so I can help you.";
+  }
+
+  // Greetings
+  if (/(\bhi\b|\bhello\b|\bhey\b|good morning|good afternoon|good evening)/i.test(text)) {
+    return `Hi! I'm Ask KAS. How can we help you today?`;
+  }
+
+  // Services
+  if (/waterproof|basement|roof|wall sealing|window sealing/i.test(text)) {
+    return BUSINESS_INFO.services.waterproofing;
+  }
+
+  if (/construction|foundation|framing|concrete|general contracting|build|remodel/i.test(text)) {
+    return BUSINESS_INFO.services.construction;
+  }
+
+  if (/paint|painting|interior|exterior|commercial painting/i.test(text)) {
+    return BUSINESS_INFO.services.painting;
+  }
+
+  // Contact info
+  if (/phone|call|number|contact/i.test(text)) {
+    return `You can call us at ${BUSINESS_INFO.phone}.`;
+  }
+
+  if (/email|mail/i.test(text)) {
+    return `You can email us at ${BUSINESS_INFO.email}.`;
+  }
+
+  if (/location|address|where are you|where located/i.test(text)) {
+    return `Our location is ${BUSINESS_INFO.location}.`;
+  }
+
+  if (/quote|price|pricing|estimate|cost/i.test(text)) {
+    return `We can provide a quote. Please call ${BUSINESS_INFO.phone} or email ${BUSINESS_INFO.email}.`;
+  }
+
+  // FIXED: Safe fallback for unknown questions
+  return `Please call ${BUSINESS_INFO.phone} for immediate assistance.`;
+}
 
 // ============================
 // 5. DATABASE SETUP
@@ -179,56 +233,15 @@ app.post("/api/chat", async (req, res) => {
 
   console.log("💬 CHAT RECEIVED:", userMessage);
 
-  if (!userMessage) {
-    return res.json({
-      reply: "Please type a message so I can help you."
-    });
-  }
-
-  if (!openai) {
-    return res.json({
-      reply:
-        "I'm temporarily offline. Please call 954-982-2809 or email kaspaintingllc@gmail.com."
-    });
-  }
-
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: `
-You are a professional assistant for KAS Waterproofing & Building Services LLC.
-
-Location: Plantation, FL
-Phone: 954-982-2809
-Email: kaspaintingllc@gmail.com
-
-Services:
-- Waterproofing
-- Construction
-- Painting
-
-Be friendly, professional, and helpful.
-Encourage users to request a quote.
-`
-        },
-        { role: "user", content: userMessage }
-      ]
-    });
-
-    const reply =
-      completion?.choices?.[0]?.message?.content ||
-      "Thanks for reaching out! Please call 954-982-2809 for immediate help.";
-
-    res.json({ reply });
-
+    // FIXED: Rule-based chatbot (no external APIs, always available)
+    const reply = getChatReply(userMessage);
+    return res.json({ reply });
   } catch (err) {
-    console.error("❌ OpenAI Error:", err.message);
-    res.json({
-      reply:
-        "I'm having trouble responding right now. Please call 954-982-2809."
+    // FIXED: Never crash; always return fallback message
+    console.error("❌ Chat Error:", err.message);
+    return res.json({
+      reply: "Please call 954-982-2809 for immediate assistance."
     });
   }
 });
