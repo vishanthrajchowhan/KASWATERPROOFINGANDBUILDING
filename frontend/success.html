@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <title>Thank You!</title>
     <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
+    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        body { text-align: center; padding: 50px; font-family: sans-serif; background: #f4f4f4; }
+        body { text-align: center; padding: 50px; padding-top: 140px; font-family: sans-serif; background: #f4f4f4; }
         h1 { color: #28a745; font-size: 50px; }
         p { font-size: 20px; color: #555; }
         a { text-decoration: none; background: #004080; color: white; padding: 10px 20px; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <h1>✅ Message Sent!</h1>
+    <div id="header"></div>
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+            });
+    </script>
+
+    <h1>Message Sent!</h1>
     <p>Thanks for contacting KAS Waterproofing. We will get back to you shortly.</p>
     <br>
     <a href="/">Return to Home</a>

@@ -1,14 +1,70 @@
 {
-  "version": 2,
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
-    { "source": "/services", "destination": "/services.html" },
-    { "source": "/gallery", "destination": "/gallery.html" },
-    { "source": "/construction", "destination": "/pages/construction.html" },
-    { "source": "/painting", "destination": "/pages/painting.html" },
-    { "source": "/waterproofing", "destination": "/pages/waterproofing.html" },
-    { "source": "/admin", "destination": "/pages/admin.html" },
-    { "source": "/carousel", "destination": "/pages/carousel.html" }
-  ],
-  "cleanUrls": true
+    "version":  2,
+    "rewrites":  [
+                     {
+                         "source":  "/api/(.*)",
+                         "destination":  "/api/index.js"
+                     },
+                     {
+                         "source":  "/services",
+                         "destination":  "/pages/services.html"
+                     },
+                     {
+                         "source":  "/service",
+                         "destination":  "/pages/services.html"
+                     },
+                     {
+                         "source":  "/gallery",
+                         "destination":  "/pages/gallery.html"
+                     },
+                     {
+                         "source":  "/projects/professional-waterproofing-application",
+                         "destination":  "/pages/project-waterproofing-application.html"
+                     },
+                     {
+                         "source":  "/projects/advanced-waterproof-coating-system",
+                         "destination":  "/pages/project-waterproof-coating-system.html"
+                     },
+                     {
+                         "source":  "/projects/premium-interior-painting",
+                         "destination":  "/pages/project-premium-interior-painting.html"
+                     },
+                     {
+                         "source":  "/projects/exterior-painting-excellence",
+                         "destination":  "/pages/project-exterior-painting-excellence.html"
+                     },
+                     {
+                         "source":  "/projects/modern-construction-work",
+                         "destination":  "/pages/project-modern-construction-work.html"
+                     },
+                     {
+                         "source":  "/projects/building-project-execution",
+                         "destination":  "/pages/project-building-project-execution.html"
+                     },
+                     {
+                         "source":  "/contact",
+                         "destination":  "/pages/contact.html"
+                     },
+                     {
+                         "source":  "/construction",
+                         "destination":  "/pages/construction.html"
+                     },
+                     {
+                         "source":  "/painting",
+                         "destination":  "/pages/painting.html"
+                     },
+                     {
+                         "source":  "/waterproofing",
+                         "destination":  "/pages/waterproofing.html"
+                     },
+                     {
+                         "source":  "/admin",
+                         "destination":  "/pages/admin.html"
+                     },
+                     {
+                         "source":  "/carousel",
+                         "destination":  "/pages/carousel.html"
+                     }
+                 ],
+    "cleanUrls":  true
 }

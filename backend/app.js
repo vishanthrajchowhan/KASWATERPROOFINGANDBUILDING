@@ -11,6 +11,9 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const crypto = require('crypto');
+const { detectIntent } = require('../server/utils/chatIntents');
+const { knowledgeBase } = require('../server/utils/chatKnowledge');
+const { getResponseForIntent } = require('../server/utils/chatResponses');
 
 // ============================
 // 2. EXPRESS SETUP (FIXED)
@@ -62,66 +65,17 @@ function hasAllEnv(keys) {
 }
 
 // ============================
-// 5. CHATBOT RULES (FIXED)
+// 5. CHATBOT INTENTS & LEAD FLOW
 // ============================
-// FIXED: Pure rule-based responses so chat never depends on external APIs
-const BUSINESS_INFO = {
-  company: "KAS Waterproofing & Building Services LLC",
-  phone: "954-982-2809",
-  email: "kaspaintingllc@gmail.com",
-  location: "319 S State Rd 7, Plantation, FL 33317",
-  services: {
-    waterproofing: "We offer waterproofing for basements, roofs, wall sealing, and window sealing. For details, contact +1-954-982-2809 or email ingrid@kaswaterproofingbuilding.com.",
-    construction: "We provide construction services including foundation, roofing, framing, concrete, and general contracting. For details, contact +1-954-982-2809 or email ingrid@kaswaterproofingbuilding.com.",
-    painting: "We handle interior, exterior, and commercial painting services. For details, contact +1-954-982-2809 or email ingrid@kaswaterproofingbuilding.com."
-  }
-};
+const leadSessions = new Map();
 
-function getChatReply(message) {
-  // FIXED: Normalize input for reliable keyword matching
-  const text = (message || "").toLowerCase();
+function getSessionId(req) {
+  return String(req.body.sessionId || req.headers['x-session-id'] || req.ip || 'unknown');
+}
 
-  if (!text.trim()) {
-    return "Please type a message so I can help you.";
-  }
-
-  // Greetings
-  if (/(\bhi\b|\bhello\b|\bhey\b|good morning|good afternoon|good evening)/i.test(text)) {
-    return `Hi! I'm Ask KAS. How can we help you today?`;
-  }
-
-  // Services
-  if (/waterproof|basement|roof|wall sealing|window sealing/i.test(text)) {
-    return BUSINESS_INFO.services.waterproofing;
-  }
-
-  if (/construction|foundation|framing|concrete|general contracting|build|remodel/i.test(text)) {
-    return BUSINESS_INFO.services.construction;
-  }
-
-  if (/paint|painting|interior|exterior|commercial painting/i.test(text)) {
-    return BUSINESS_INFO.services.painting;
-  }
-
-  // Contact info
-  if (/phone|call|number|contact/i.test(text)) {
-    return `You can call us at ${BUSINESS_INFO.phone}.`;
-  }
-
-  if (/email|mail/i.test(text)) {
-    return `You can email us at ${BUSINESS_INFO.email}.`;
-  }
-
-  if (/location|address|where are you|where located/i.test(text)) {
-    return `Our location is ${BUSINESS_INFO.location}.`;
-  }
-
-  if (/quote|price|pricing|estimate|cost/i.test(text)) {
-    return `We can provide a quote. Please call ${BUSINESS_INFO.phone} or email ${BUSINESS_INFO.email}.`;
-  }
-
-  // FIXED: Safe fallback for unknown questions
-  return `Please call ${BUSINESS_INFO.phone} for immediate assistance.`;
+function extractPhone(text) {
+  const match = String(text).match(/\+?\d[\d\s\-()]{6,}/);
+  return match ? match[0].trim() : '';
 }
 
 // ============================
@@ -171,6 +125,13 @@ const Client = sequelize.define('Client', {
   }
 });
 
+const Lead = sequelize.define('Lead', {
+  name: { type: DataTypes.STRING, allowNull: false },
+  phone: { type: DataTypes.STRING, allowNull: false },
+  service: { type: DataTypes.STRING, allowNull: true },
+  message: { type: DataTypes.TEXT, allowNull: true }
+});
+
 sequelize.sync().then(() => {
   console.log("✅ Database ready");
 });
@@ -186,8 +147,42 @@ app.get('/services', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'services.html'));
 });
 
+
+app.get('/service', (req, res) => {
+  res.redirect('/services');
+});
+
+
 app.get('/gallery', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'gallery.html'));
+});
+
+app.get('/projects/professional-waterproofing-application', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-waterproofing-application.html'));
+});
+
+app.get('/projects/advanced-waterproof-coating-system', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-waterproof-coating-system.html'));
+});
+
+app.get('/projects/premium-interior-painting', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-premium-interior-painting.html'));
+});
+
+app.get('/projects/exterior-painting-excellence', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-exterior-painting-excellence.html'));
+});
+
+app.get('/projects/modern-construction-work', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-modern-construction-work.html'));
+});
+
+app.get('/projects/building-project-execution', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-building-project-execution.html'));
+});
+
+app.get('/contact', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'contact.html'));
 });
 
 app.get('/construction', (req, res) => {
@@ -302,19 +297,71 @@ app.post('/contact', async (req, res) => {
 // 10. 🤖 CHAT API (FIXED)
 // ============================
 app.post("/api/chat", async (req, res) => {
-  const userMessage = req.body.message;
+  const userMessage = String(req.body.message || '').trim();
+  const sessionId = getSessionId(req);
 
   console.log("💬 CHAT RECEIVED:", userMessage);
 
+  if (!userMessage) {
+    return res.json({
+      reply: "I'm happy to help! Could you please provide more details about your project?"
+    });
+  }
+
   try {
-    // FIXED: Rule-based chatbot (no external APIs, always available)
-    const reply = getChatReply(userMessage);
+    const leadState = leadSessions.get(sessionId);
+
+    if (leadState) {
+      if (leadState.step === 'name') {
+        leadState.lead.name = userMessage;
+        leadState.step = 'phone';
+        return res.json({ reply: `Thanks, ${userMessage}. What's the best phone number to reach you?` });
+      }
+
+      if (leadState.step === 'phone') {
+        const phone = extractPhone(userMessage);
+        if (!phone) {
+          return res.json({ reply: 'Please share a phone number (digits only is fine).'});
+        }
+        leadState.lead.phone = phone;
+        leadState.step = 'service';
+        return res.json({
+          reply: 'Which service do you need (Construction, Waterproofing, Painting, Remodeling, or Commercial Projects)?'
+        });
+      }
+
+      if (leadState.step === 'service') {
+        leadState.lead.service = userMessage;
+        leadState.lead.message = leadState.lead.message || 'Quote request via chat.';
+
+        await Lead.create({
+          name: leadState.lead.name,
+          phone: leadState.lead.phone,
+          service: leadState.lead.service,
+          message: leadState.lead.message
+        });
+
+        leadSessions.delete(sessionId);
+        return res.json({
+          reply: `Thank you! Your request is received. We'll contact you shortly. You can also call ${knowledgeBase.phone}.`
+        });
+      }
+    }
+
+    const intent = detectIntent(userMessage);
+    if (intent === 'quote_request') {
+      leadSessions.set(sessionId, {
+        step: 'name',
+        lead: { message: userMessage }
+      });
+    }
+
+    const reply = getResponseForIntent(intent, knowledgeBase);
     return res.json({ reply });
   } catch (err) {
-    // FIXED: Never crash; always return fallback message
     console.error("❌ Chat Error:", err.message);
     return res.json({
-      reply: "Please call 954-982-2809 for immediate assistance."
+      reply: `Please call ${knowledgeBase.phone} for immediate assistance.`
     });
   }
 });
@@ -371,3 +418,4 @@ app.put('/api/clients/:id/status', requireAuth, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
+

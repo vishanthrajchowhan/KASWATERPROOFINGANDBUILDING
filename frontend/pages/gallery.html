@@ -3,399 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery - KAS Waterproofing & Building Services</title>
+    <title>Portfolio - KAS Waterproofing & Building Services</title>
     <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #181d23 0%, #232b38 100%);
-            color: #e3e6eb;
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            font-size: 1.08rem;
-            letter-spacing: 0.01em;
-        }
-
-        .gallery-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .gallery-header h1 {
-            font-size: 3rem;
-            color: #e3e6eb;
-            margin-bottom: 10px;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            text-shadow: 0 2px 16px #000a;
-        }
-
-        .gallery-header p {
-            font-size: 1.2rem;
-            color: #b0b8c9;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
-        }
-
-        .gallery-category {
-            margin-bottom: 60px;
-        }
-
-        .category-title {
-            font-size: 2rem;
-            color: #ffb300;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #ffb300;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-        }
-
-        .category-icon {
-            font-size: 2.5rem;
-            color: #ffb300;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .gallery-item {
-            background: linear-gradient(135deg, #232b38 0%, #232b38 60%, #181d23 100%);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 5px 24px 0 rgba(0,0,0,0.18);
-            transition: all 0.3s cubic-bezier(.4,2,.3,1);
-            cursor: pointer;
-            border: 1.5px solid #232b38;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 16px 48px 0 rgba(255,193,7,0.13), 0 2px 8px 0 rgba(0,0,0,0.10);
-            border-color: #ffb300;
-        }
-
-        .gallery-item-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-            filter: brightness(0.98) contrast(1.08);
-        }
-
-        .gallery-item-content {
-            padding: 22px 22px 18px 22px;
-        }
-
-        .gallery-item-title {
-            font-size: 1.25rem;
-            color: #ffb300;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-        }
-
-        .gallery-item-description {
-            font-size: 1.01rem;
-            color: #e3e6eb;
-            line-height: 1.6;
-            text-align: justify;
-            font-weight: 400;
-        }
-
-        .gallery-item-meta {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            font-size: 0.92rem;
-            color: #b0b8c9;
-            flex-wrap: wrap;
-        }
-
-        .gallery-tag {
-            display: inline-block;
-            background-color: #232b38;
-            color: #ffb300;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 0.92rem;
-            font-weight: 500;
-            border: 1px solid #ffb30033;
-        }
-
-        .lightbox {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.93);
-            animation: fadeIn 0.3s;
-        }
-
-        .lightbox.open {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lightbox-content {
-            position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
-            animation: slideIn 0.3s;
-        }
-
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-            border-radius: 10px;
-            box-shadow: 0 2px 16px #000a;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            font-size: 2rem;
-            color: #ffb300;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 10px;
-            transition: color 0.2s;
-        }
-
-        .lightbox-close:hover {
-            color: #fff;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .gallery-header h1 {
-                font-size: 2rem;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .category-title {
-                font-size: 1.5rem;
-            }
-
-            .lightbox-close {
-                top: -30px;
-                font-size: 1.5rem;
-            }
-        }
-
-        .loading-text {
-            text-align: center;
-            color: #b0b8c9;
-            font-size: 0.95rem;
-            margin-top: 10px;
-        }
-
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background-color: #232b38;
-            color: #ffb300;
-            padding: 3px 8px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            border: 1px solid #ffb30033;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/gallery-luxe.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+<body class="portfolio-premium">
+    <div id="chat-toggle">Ask KAS</div>
 
+    <div id="chat-widget" class="closed">
+        <div id="chat-header">
+            Ask KAS
+            <span id="chat-close">x</span>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" id="chat-text" placeholder="Type your question...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
 
+    <script src="../assets/js/chat.js"></script>
 
-
-
-<body>
-    <!-- Chat Toggle Button -->
-<div id="chat-toggle">
-  💬 Ask KAS
-</div>
-
-<!-- Chat Widget -->
-<div id="chat-widget" class="closed">
-  <div id="chat-header">
-    💬 Ask KAS
-    <span id="chat-close">✕</span>
-  </div>
-
-  <div id="chat-messages"></div>
-
-  <div id="chat-input">
-    <input
-      type="text"
-      id="chat-text"
-      placeholder="Type your question..."
-    />
-    <button id="send-btn">Send</button>
-  </div>
-</div>
-
-<script src="../assets/js/chat.js"></script>
-
-        <!-- Common Header Include -->
-        <div id="header"></div>
-        <script>
-            fetch('../header.html')
-                .then(res => res.text())
-                .then(html => {
-                    document.getElementById('header').innerHTML = html;
-                    // Optionally, set active class based on current page
-                    const path = window.location.pathname.split('/').pop();
-                    document.querySelectorAll('.nav-links a').forEach(a => {
-                        if (a.getAttribute('href') === path) a.classList.add('active');
-                    });
+    <div id="header"></div>
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+                const path = window.location.pathname.split('/').pop();
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    if (a.getAttribute('href') === path) a.classList.add('active');
                 });
-        </script>
+            });
+    </script>
 
-    <!-- Gallery Header -->
-    <div class="gallery-container">
-        <div class="gallery-header">
-            <h1>Our Work Gallery</h1>
-            <p>Explore our portfolio of professional waterproofing, painting, and construction projects. Each project showcases our commitment to excellence and customer satisfaction.</p>
-        </div>
-
-        <!-- Waterproofing Section -->
-        <div class="gallery-category">
-            <h2 class="category-title">
-                <i class="fa-solid fa-droplet category-icon"></i>
-                Waterproofing Projects
-            </h2>
-            <div class="gallery-grid" id="waterproofing-grid">
-                <div class="gallery-item">
-                    <img src="images/gallery/waterproofing/wp1.jpg" alt="Professional Waterproofing Application" class="gallery-item-image">
-                    <div class="gallery-item-content">
-                        <h3 class="gallery-item-title">Professional Waterproofing Application</h3>
-                        <p class="gallery-item-description">This professional waterproofing project demonstrates our expertise in protecting structures from moisture damage. Using advanced materials and proven techniques, we ensure long-lasting protection for your property investment.</p>
-                        <div class="gallery-item-meta">
-                            <span class="gallery-tag">Commercial</span><span class="gallery-tag">Residential</span>
-                        </div>
+    <main class="portfolio-container">
+        
+        <!-- 1️⃣ CINEMATIC HERO SECTION -->
+        <section class="hero-portfolio">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <span class="hero-label">PROJECT PORTFOLIO</span>
+                    <h1 class="hero-headline">Our Signature Work</h1>
+                    <p class="hero-subtext">Explore completed waterproofing, painting and construction projects delivered with precision and long-term durability.</p>
+                    <div class="hero-buttons">
+                        <a href="/contact" class="btn-primary-gold">Request a Quote</a>
+                        <a href="#projects" class="btn-ghost-white">Browse Projects</a>
                     </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/waterproofing/wp2.jpg" alt="Advanced Waterproof Coating System" class="gallery-item-image">
-                    <div class="gallery-item-content">
-                        <h3 class="gallery-item-title">Advanced Waterproof Coating System</h3>
-                        <p class="gallery-item-description">This professional waterproofing project demonstrates our expertise in protecting structures from moisture damage. Using advanced materials and proven techniques, we ensure long-lasting protection for your property investment.</p>
-                        <div class="gallery-item-meta">
-                            <span class="gallery-tag">Industrial</span><span class="gallery-tag">Protection</span>
-                        </div>
+                <div class="hero-right">
+                    <div class="hero-featured-image">
+                        <img src="/images/gallery/construction/con2.jpg" alt="Featured Project">
+                        <div class="hero-image-overlay"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Painting Section -->
-        <div class="gallery-category">
-            <h2 class="category-title">
-                <i class="fa-solid fa-paint-roller category-icon"></i>
-                Painting Services
-            </h2>
-            <div class="gallery-grid" id="painting-grid">
-                <div class="gallery-item">
-                    <img src="images/gallery/painting/paint1.jpg" alt="Premium Interior Painting" class="gallery-item-image">
-                    <div class="gallery-item-content">
-                        <h3 class="gallery-item-title">Premium Interior Painting</h3>
-                        <p class="gallery-item-description">Our "Premium Interior Painting" project showcases our commitment to superior craftsmanship and attention to detail. Utilizing high-quality, low-VOC paints, we ensured not only a flawless finish but also a healthier indoor environment for our client. The result is a vibrant, inviting space that enhances the overall aesthetic and value of the property, demonstrating our expertise in transforming interiors into luxurious retreats.</p>
-                        <div class="gallery-item-meta">
-                            <span class="gallery-tag">Interior</span><span class="gallery-tag">Residential</span>
+                    <div class="hero-stats-float">
+                        <div class="stat-card glass-effect">
+                            <div class="stat-number">120+</div>
+                            <div class="stat-label">Projects Completed</div>
                         </div>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/painting/paint2.jpg" alt="Exterior Painting Excellence" class="gallery-item-image">
-                    <div class="gallery-item-content">
-                        <h3 class="gallery-item-title">Exterior Painting Excellence</h3>
-                        <p class="gallery-item-description">Our painting services transform spaces with precision and quality. From surface preparation to final touches, we deliver flawless finishes that enhance both aesthetics and durability of your property.</p>
-                        <div class="gallery-item-meta">
-                            <span class="gallery-tag">Exterior</span><span class="gallery-tag">Commercial</span>
+                        <div class="stat-card glass-effect">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Client Satisfaction</div>
+                        </div>
+                        <div class="stat-card glass-effect">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Core Services</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Construction Section -->
-        <div class="gallery-category">
-            <h2 class="category-title">
-                <i class="fa-solid fa-helmet-safety category-icon"></i>
-                Construction Projects
-            </h2>
-            <div class="gallery-grid" id="construction-grid">
-                <div class="gallery-item">
-                    <img src="images/gallery/construction/con1.jpg" alt="Modern Construction Work" class="gallery-item-image">
-                    <div class="gallery-item-content">
-                        <h3 class="gallery-item-title">Modern Construction Work</h3>
-                        <p class="gallery-item-description">This construction project showcases our commitment to structural excellence and craftsmanship. Our team handles every detail with precision to deliver results that exceed expectations.</p>
-                        <div class="gallery-item-meta">
-                            <span class="gallery-tag">Structural</span><span class="gallery-tag">Renovation</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/construction/con2.jpg" alt="Building Project Execution" class="gallery-item-image">
-                    <div class="gallery-item-content">
-                        <h3 class="gallery-item-title">Building Project Execution</h3>
-                        <p class="gallery-item-description">This construction project showcases our commitment to structural excellence and craftsmanship. Our team handles every detail with precision to deliver results that exceed expectations.</p>
-                        <div class="gallery-item-meta">
-                            <span class="gallery-tag">Commercial</span><span class="gallery-tag">Development</span>
-                        </div>
-                    </div>
+        <!-- 2️⃣ FILTER BAR -->
+        <section class="filter-section" id="projects">
+            <div class="filter-container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="waterproofing">Waterproofing</button>
+                    <button class="filter-btn" data-filter="painting">Painting</button>
+                    <button class="filter-btn" data-filter="construction">Construction</button>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="lightbox">
-        <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-            <img id="lightbox-image" class="lightbox-image" src="" alt="">
-        </div>
-    </div>
+        <!-- 3️⃣ PREMIUM PROJECT GRID -->
+        <section class="projects-grid-section">
+            <div class="projects-grid">
+                
+                <!-- Waterproofing Projects -->
+                <article class="project-card-premium" data-category="waterproofing">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/waterproofing/wp1.jpg" alt="Professional Waterproofing Application">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Waterproofing</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Professional Waterproofing Application</h3>
+                                <p class="project-excerpt">Precision waterproofing for critical joints and facade transitions</p>
+                                <a href="/projects/professional-waterproofing-application" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 KAS Waterproofing & Building Services LLC</p>
-    </footer>
+                <article class="project-card-premium" data-category="waterproofing">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/waterproofing/wp2.jpg" alt="Advanced Waterproof Coating System">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Waterproofing</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Advanced Waterproof Coating System</h3>
+                                <p class="project-excerpt">Engineered coating delivering durable moisture resistance</p>
+                                <a href="/projects/advanced-waterproof-coating-system" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
 
-    <!-- Gallery is now hardcoded in HTML. All JS gallery rendering removed. -->
+                <!-- Painting Projects -->
+                <article class="project-card-premium" data-category="painting">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/painting/Interior.jpg" alt="Premium Interior Painting">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Painting</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Premium Interior Painting</h3>
+                                <p class="project-excerpt">High-end interior repaint with premium coatings and seamless finish</p>
+                                <a href="/projects/premium-interior-painting" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card-premium" data-category="painting">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/painting/paint2.jpg" alt="Exterior Painting Excellence">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Painting</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Exterior Painting Excellence</h3>
+                                <p class="project-excerpt">Weather-resilient exterior coating with elevated curb appeal</p>
+                                <a href="/projects/exterior-painting-excellence" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Construction Projects -->
+                <article class="project-card-premium" data-category="construction">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/construction/con1.jpg" alt="Modern Construction Work">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Construction</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Modern Construction Work</h3>
+                                <p class="project-excerpt">Structured build delivery with technical workmanship excellence</p>
+                                <a href="/projects/modern-construction-work" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card-premium" data-category="construction">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/construction/con2.jpg" alt="Building Project Execution">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Construction</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Building Project Execution</h3>
+                                <p class="project-excerpt">Comprehensive lifecycle management with strict quality oversight</p>
+                                <a href="/projects/building-project-execution" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 4️⃣ FEATURED PROJECT SECTION -->
+        <section class="featured-project-section">
+            <div class="featured-content">
+                <div class="featured-left">
+                    <img src="/images/gallery/waterproofing/wp1.jpg" alt="Commercial Roof Waterproofing">
+                </div>
+                <div class="featured-right glass-effect">
+                    <span class="featured-label">FEATURED PROJECT</span>
+                    <h2 class="featured-title">Commercial Roof Waterproofing – Plantation FL</h2>
+                    <div class="featured-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📋</div>
+                            <div class="detail-content">
+                                <h4>Scope of Work</h4>
+                                <p>Complete membrane installation, joint sealing, and protective coating application</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">🛠️</div>
+                            <div class="detail-content">
+                                <h4>Materials Used</h4>
+                                <p>Premium elastomeric membranes, polyurethane sealants, and UV-resistant coatings</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-content">
+                                <h4>Completion Time</h4>
+                                <p>Delivered in 3 weeks with zero weather delays</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/contact" class="btn-primary-gold">Request Similar Project</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5️⃣ TRUST SECTION -->
+        <section class="trust-section">
+            <h2 class="trust-title">Trusted by Homeowners & Businesses Across South Florida</h2>
+            <div class="trust-cards">
+                <div class="trust-card glass-effect">
+                    <div class="trust-icon">🏡</div>
+                    <h3>Residential Projects</h3>
+                    <p>Homes protected with precision waterproofing and premium finishes</p>
+                </div>
+                <div class="trust-card glass-effect">
+                    <div class="trust-icon">🏢</div>
+                    <h3>Commercial Projects</h3>
+                    <p>Business facilities built to last with professional-grade materials</p>
+                </div>
+                <div class="trust-card glass-effect">
+                    <div class="trust-icon">✅</div>
+                    <h3>Licensed & Insured</h3>
+                    <p>Fully certified with comprehensive liability and workers' compensation coverage</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6️⃣ FINAL CTA SECTION -->
+        <section class="final-cta-section">
+            <div class="cta-background-pattern"></div>
+            <div class="cta-content">
+                <h2 class="cta-headline">Ready to Start Your Project?</h2>
+                <p class="cta-subtext">Get a detailed quote tailored to your specific needs. Our team will work with you from planning to completion.</p>
+                <a href="/contact" class="btn-cta-large">Request a Free Quote</a>
+            </div>
+        </section>
+
+        <footer class="portfolio-footer">
+            <p>© 2026 KAS Waterproofing & Building Services LLC. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+
+    <!-- FILTER & ANIMATION SCRIPT -->
+    <script src="../assets/js/gallery-premium.js"></script>
 </body>
 </html>
 

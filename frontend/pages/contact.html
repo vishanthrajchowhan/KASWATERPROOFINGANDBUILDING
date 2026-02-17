@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - KAS Waterproofing & Building</title>
+    <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div id="header"></div>
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('header').innerHTML = html;
+            });
+    </script>
+
+    <section class="services-hero contact-hero">
+        <div class="services-hero-box contact-hero-box">
+            <p class="hero-eyebrow">KAS WATERPROOFING & BUILDING SERVICES</p>
+            <h1>Contact Our Team</h1>
+            <p>From first consultation to final completion, we provide reliable guidance and professional execution for every project.</p>
+            <div class="hero-metrics">
+                <div class="metric-card">
+                    <strong>15+ Years</strong>
+                    <span>Field Expertise</span>
+                </div>
+                <div class="metric-card">
+                    <strong>1,000+</strong>
+                    <span>Projects Delivered</span>
+                </div>
+                <div class="metric-card">
+                    <strong>Fast Reply</strong>
+                    <span>Professional Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact contact-page-section">
+        <div class="contact-page-intro">
+            <p class="intro-eyebrow">HOW WE HELP</p>
+            <h2>Let Us Help You Build With Confidence</h2>
+            <p>
+                At KAS Waterproofing & Building Services, your project is managed with clear communication, dependable timelines,
+                and quality workmanship. Share your requirements and our team will recommend practical, cost-effective solutions
+                tailored to your property.
+            </p>
+            <div class="contact-highlights">
+                <span>Fast response</span>
+                <span>Licensed professionals</span>
+                <span>Clear project guidance</span>
+            </div>
+        </div>
+
+        <div class="contact-process">
+            <article class="process-card">
+                <h3>1. Tell Us Your Requirements</h3>
+                <p>Share your scope, timeline, and property details. We review every request carefully and provide clear next steps.</p>
+            </article>
+            <article class="process-card">
+                <h3>2. Receive Expert Recommendations</h3>
+                <p>Our team suggests the best approach for durability, safety, and budget efficiency based on your project goals.</p>
+            </article>
+            <article class="process-card">
+                <h3>3. Start With Confidence</h3>
+                <p>Once approved, we execute with disciplined project management, quality control, and dependable communication.</p>
+            </article>
+        </div>
+
+        <div class="contact-container">
+            <form id="contactForm" action="/contact" method="POST">
+                <h3 class="form-title">Request a Consultation</h3>
+                <p class="form-subtitle">Complete this form and our team will contact you shortly.</p>
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="tel" name="phone" placeholder="Your Phone Number" pattern="[0-9\-\+\s\(\)]{7,}" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <select name="service" required>
+                    <option value="" disabled selected>Select Service</option>
+                    <option value="Waterproofing">Waterproofing</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Painting">Painting</option>
+                    <option value="Other related services">Other related services</option>
+                </select>
+                <textarea name="message" placeholder="Tell us about your project..." required></textarea>
+                <button type="submit" class="send-btn">Send Message</button>
+            </form>
+
+            <aside class="contact-info premium-contact-card">
+                <p class="info-kicker">DIRECT SUPPORT</p>
+                <h3 class="info-title">Direct Contact</h3>
+                <p class="info-subtitle">Prefer to reach us directly? Use the details below.</p>
+
+                <a class="contact-row" href="https://maps.google.com/?q=319+S+State+Rd+7,+Plantation,+FL+33317" target="_blank" rel="noopener noreferrer">
+                    <span class="icon-tag">LOC</span>
+                    <span class="contact-copy">
+                        <strong>Location</strong>
+                        <small>319 S State Rd. 7, Plantation, FL 33317</small>
+                    </span>
+                    <span class="row-arrow">-></span>
+                </a>
+
+                <a class="contact-row" href="tel:19549822809">
+                    <span class="icon-tag">TEL</span>
+                    <span class="contact-copy">
+                        <strong>Phone</strong>
+                        <small>954-982-2809</small>
+                    </span>
+                    <span class="row-arrow">-></span>
+                </a>
+
+                <a class="contact-row" href="mailto:ingrid@kaswaterproofingbuilding.com">
+                    <span class="icon-tag">MAIL</span>
+                    <span class="contact-copy">
+                        <strong>Email</strong>
+                        <small>ingrid@kaswaterproofingbuilding.com</small>
+                    </span>
+                    <span class="row-arrow">-></span>
+                </a>
+            </aside>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2025 KAS Waterproofing & Building Services LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        body {
+            font-family: "Manrope", "Segoe UI", sans-serif;
+        }
+
+        .contact-hero {
+            min-height: 420px;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, rgba(8, 24, 48, 0.88) 0%, rgba(14, 45, 83, 0.82) 100%),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&h=700&fit=crop') center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(227, 178, 60, 0.14), transparent 45%);
+        }
+
+        .contact-hero-box {
+            max-width: 820px;
+            margin: 0 auto;
+            background: rgba(8, 24, 48, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            padding: 38px 32px;
+            backdrop-filter: blur(4px);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-hero-box h1 {
+            color: #ffffff;
+            margin-bottom: 14px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: 0.3px;
+            font-family: "Playfair Display", Georgia, serif;
+            font-weight: 700;
+        }
+
+        .contact-hero-box p {
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .hero-eyebrow {
+            color: #e3b23c;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            margin-bottom: 10px;
+        }
+
+        .hero-metrics {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            padding: 12px 10px;
+        }
+
+        .metric-card strong {
+            display: block;
+            color: #ffffff;
+            font-size: 1.02rem;
+            font-weight: 800;
+        }
+
+        .metric-card span {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.82rem;
+        }
+
+        .contact-page-section {
+            background: linear-gradient(180deg, #0b1f3a 0%, #10284a 100%);
+            padding-top: 70px;
+        }
+
+        .contact-page-intro {
+            max-width: 950px;
+            margin: 0 auto 44px;
+            text-align: center;
+        }
+
+        .intro-eyebrow {
+            color: #e3b23c;
+            font-size: 0.82rem;
+            letter-spacing: 1.4px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .contact-page-intro h2 {
+            margin-bottom: 12px;
+            font-size: clamp(2rem, 3.6vw, 3rem);
+            color: #ffffff;
+            font-family: "Playfair Display", Georgia, serif;
+        }
+
+        .contact-page-intro p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.08rem;
+            line-height: 1.85;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .contact-highlights {
+            margin-top: 24px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-highlights span {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(227, 178, 60, 0.14);
+            border: 1px solid rgba(227, 178, 60, 0.35);
+            color: #f5d78a;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .contact-process {
+            max-width: 1150px;
+            margin: 0 auto 28px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .process-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            padding: 18px 18px 16px;
+        }
+
+        .process-card h3 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 7px;
+        }
+
+        .process-card p {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        .contact-page-section .contact-container {
+            align-items: stretch;
+            gap: 28px;
+            max-width: 1150px;
+        }
+
+        .contact-page-section form,
+        .contact-page-section .contact-info {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.22);
+            border: 1px solid rgba(9, 31, 58, 0.08);
+        }
+
+        .form-title,
+        .info-title {
+            color: #0b1f3a;
+            margin: 0 0 6px;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .form-subtitle,
+        .info-subtitle {
+            margin: 0 0 14px;
+            color: #5a6678;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .contact-page-section form input,
+        .contact-page-section form select,
+        .contact-page-section form textarea {
+            background: #f7f9fc;
+            border: 1px solid #dae2ef;
+        }
+
+        .contact-page-section form .send-btn {
+            background: linear-gradient(120deg, #0b1f3a 0%, #163e6f 100%);
+            color: #ffffff;
+            box-shadow: 0 10px 26px rgba(11, 31, 58, 0.32);
+            letter-spacing: 0.7px;
+        }
+
+        .contact-page-section form .send-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(120deg, #173964 0%, #1f4e86 100%);
+        }
+
+        .contact-page-section .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            background: linear-gradient(170deg, #ffffff 0%, #f4f8ff 100%);
+        }
+
+        .premium-contact-card {
+            position: relative;
+            overflow: hidden;
+            gap: 12px;
+        }
+
+        .premium-contact-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0b1f3a 0%, #2b5f96 65%, #e3b23c 100%);
+        }
+
+        .info-kicker {
+            margin: 6px 0 0;
+            color: #2b5f96;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+        }
+
+        .contact-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 12px;
+            border: 1px solid #e3eaf6;
+            border-radius: 12px;
+            text-decoration: none;
+            background: #ffffff;
+            transition: all 0.25s ease;
+        }
+
+        .contact-row:hover {
+            border-color: #bfd0ea;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(17, 43, 76, 0.12);
+        }
+
+        .icon-tag {
+            min-width: 46px;
+            height: 34px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.67rem;
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            color: #ffffff;
+            background: linear-gradient(120deg, #0b1f3a 0%, #2b5f96 100%);
+        }
+
+        .contact-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+        }
+
+        .contact-copy strong {
+            color: #0b1f3a;
+            font-size: 1.03rem;
+            line-height: 1.2;
+        }
+
+        .contact-copy small {
+            color: #4b596e;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .row-arrow {
+            color: #7e8da6;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-page-section .contact-item h4 {
+            color: #0b1f3a;
+        }
+
+        .contact-page-section .contact-item p,
+        .contact-page-section .contact-item a {
+            color: #364152;
+        }
+
+        .contact-page-section .contact-item .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(120deg, #0b1f3a 0%, #2b5f96 100%);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        @media (max-width: 768px) {
+            .contact-hero {
+                min-height: 300px;
+            }
+
+            .contact-hero-box {
+                margin: 0 14px;
+                padding: 26px 18px;
+            }
+
+            .contact-page-section form,
+            .contact-page-section .contact-info {
+                padding: 20px;
+            }
+
+            .hero-metrics,
+            .contact-process {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
+
