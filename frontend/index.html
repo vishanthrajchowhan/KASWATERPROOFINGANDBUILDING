@@ -45,23 +45,8 @@
   </div>
 </div>
 
-<script src="assets/js/chat.js"></script>
-
-
     <!-- Common Header Include -->
     <div id="header"></div>
-    <script>
-      fetch('/header.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('header').innerHTML = html;
-          // Optionally, set active class based on current page
-          const path = window.location.pathname.split('/').pop();
-          document.querySelectorAll('.nav-links a').forEach(a => {
-            if (a.getAttribute('href') === path) a.classList.add('active');
-          });
-        });
-    </script>
 
     <header id="home" class="hero">
         <video class="hero-bg-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80">
@@ -452,6 +437,22 @@
         </div>
     </footer>
 
+    <!-- DOM-Related Scripts - Moved before closing body tag -->
+    <script src="assets/js/chat.js"></script>
+    
+    <script>
+      fetch('/header.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('header').innerHTML = html;
+          // Optionally, set active class based on current page
+          const path = window.location.pathname.split('/').pop();
+          document.querySelectorAll('.nav-links a').forEach(a => {
+            if (a.getAttribute('href') === path) a.classList.add('active');
+          });
+        });
+    </script>
+
     <!-- Navbar Scroll Handler -->
     <script>
       const navbar = document.querySelector('.navbar');
@@ -464,9 +465,9 @@
         }
       });
     </script>
-
+    
+    <script src="assets/js/script.js"></script>
 </body>
-<script src="assets/js/script.js"></script>
 
 
 
