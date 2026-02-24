@@ -265,7 +265,7 @@ body.luxe-page {
   width: 100%;
   border-radius: 20px;
   border: 1px solid var(--luxe-line);
-  min-height: 290px;
+  min-height: 360px;
   object-fit: cover;
 }
 
@@ -477,7 +477,7 @@ body.luxe-page {
 
   .luxe-collage img,
   .luxe-overview-image {
-    min-height: 220px;
+    min-height: 280px;
   }
 
   .luxe-impact-panel,
