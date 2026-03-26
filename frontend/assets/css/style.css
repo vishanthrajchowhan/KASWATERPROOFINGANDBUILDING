@@ -721,6 +721,61 @@ textarea {
   position: relative;
 }
 
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.google-review-card {
+  background: #fff;
+  border: 1px solid #eef1f5;
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+  text-align: left;
+}
+
+.google-review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.google-review-author {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.google-review-time {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #6e7b8a;
+}
+
+.google-review-stars {
+  color: #ffc107;
+  letter-spacing: 1px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.google-review-text {
+  margin: 0;
+  color: var(--text-dark);
+  line-height: 1.75;
+  font-size: 15px;
+}
+
+.google-reviews-empty {
+  grid-column: 1 / -1;
+  color: #5f6f81;
+}
+
 .testimonial-card {
   background: white;
   padding: 50px 40px;
@@ -1179,6 +1234,10 @@ footer p.copyright {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
   #chat-widget {
     width: 90vw;
     height: 70vh;
@@ -1204,5 +1263,9 @@ footer p.copyright {
   .contact-item {
     text-align: center;
     flex-direction: column;
+  }
+
+  .google-review-card {
+    padding: 20px;
   }
 }

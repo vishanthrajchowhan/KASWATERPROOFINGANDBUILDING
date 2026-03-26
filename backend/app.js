@@ -7,6 +7,7 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 const { Sequelize, DataTypes } = require('sequelize');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
@@ -28,6 +29,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve the real frontend folder (one level up)
 const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
 app.use(express.static(FRONTEND_DIR));
+
+const GOOGLE_PLACE_QUERY =
+  process.env.GOOGLE_PLACE_QUERY ||
+  'KAS Waterproofing and Building, 319 S State Rd 7, Plantation, FL 33317';
+const reviewsCache = {
+  expiresAt: 0,
+  payload: null
+};
 
 // ============================
 // 3. ADMIN PASSWORD & AUTH
@@ -294,7 +303,82 @@ app.post('/contact', async (req, res) => {
 });
 
 // ============================
-// 10. 🤖 CHAT API (FIXED)
+// 10. GOOGLE REVIEWS API
+// ============================
+app.get('/api/google-reviews', async (req, res) => {
+  try {
+    const now = Date.now();
+    if (reviewsCache.payload && now < reviewsCache.expiresAt) {
+      return res.json(reviewsCache.payload);
+    }
+
+    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+    if (!apiKey) {
+      return res.status(503).json({
+        error: 'Google Places API key is missing. Set GOOGLE_PLACES_API_KEY in .env.'
+      });
+    }
+
+    let placeId = process.env.GOOGLE_PLACE_ID;
+
+    if (!placeId) {
+      const findPlaceUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
+      const findPlaceResponse = await axios.get(findPlaceUrl, {
+        params: {
+          input: GOOGLE_PLACE_QUERY,
+          inputtype: 'textquery',
+          fields: 'place_id,name,formatted_address',
+          key: apiKey
+        },
+        timeout: 10000
+      });
+
+      placeId = findPlaceResponse.data?.candidates?.[0]?.place_id;
+      if (!placeId) {
+        return res.status(404).json({ error: 'Business listing not found on Google Places.' });
+      }
+    }
+
+    const detailsUrl = 'https://maps.googleapis.com/maps/api/place/details/json';
+    const detailsResponse = await axios.get(detailsUrl, {
+      params: {
+        place_id: placeId,
+        fields: 'name,rating,user_ratings_total,reviews,url',
+        reviews_sort: 'newest',
+        key: apiKey
+      },
+      timeout: 10000
+    });
+
+    const result = detailsResponse.data?.result || {};
+    const reviews = Array.isArray(result.reviews) ? result.reviews : [];
+
+    const payload = {
+      businessName: result.name || 'KAS Waterproofing and Building',
+      rating: result.rating || 0,
+      totalRatings: result.user_ratings_total || 0,
+      profileUrl: result.url || 'https://www.google.com/search?kgmid=/g/11yxj1zmlz&q=KAS+Waterproofing+and+Building',
+      reviews: reviews.slice(0, 6).map((review) => ({
+        authorName: review.author_name || 'Google User',
+        authorUrl: review.author_url || null,
+        profilePhotoUrl: review.profile_photo_url || null,
+        rating: review.rating || 0,
+        relativeTime: review.relative_time_description || '',
+        text: review.text || ''
+      }))
+    };
+
+    reviewsCache.payload = payload;
+    reviewsCache.expiresAt = now + (10 * 60 * 1000);
+    return res.json(payload);
+  } catch (error) {
+    console.error('❌ Google reviews fetch failed:', error.message);
+    return res.status(500).json({ error: 'Failed to fetch live Google reviews.' });
+  }
+});
+
+// ============================
+// 11. 🤖 CHAT API (FIXED)
 // ============================
 app.post("/api/chat", async (req, res) => {
   const userMessage = String(req.body.message || '').trim();
@@ -367,7 +451,7 @@ app.post("/api/chat", async (req, res) => {
 });
 
 // ============================
-// 11. ADMIN API - Get all clients (PROTECTED)
+// 12. ADMIN API - Get all clients (PROTECTED)
 // ============================
 app.get('/api/clients', requireAuth, async (req, res) => {
   try {
@@ -382,7 +466,7 @@ app.get('/api/clients', requireAuth, async (req, res) => {
 });
 
 // ============================
-// 12. ADMIN API - Update client status (PROTECTED)
+// 13. ADMIN API - Update client status (PROTECTED)
 // ============================
 app.put('/api/clients/:id/status', requireAuth, async (req, res) => {
   try {
@@ -413,9 +497,13 @@ app.put('/api/clients/:id/status', requireAuth, async (req, res) => {
 });
 
 // ============================
-// 13. SERVER START
+// 14. SERVER START
 // ============================
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
 

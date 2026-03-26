@@ -57,7 +57,7 @@
         <div class="hero-box">
             <h1>Expert solutions for waterproofing & building</h1>
             <p>Protect and enhance your property with our trusted expertise in commercial, residential, and industrial projects.</p>
-            <a href="#contact" class="btn-main">Schedule a Free site visit</a>
+            <a href="#contact" class="btn-main">Schedule a Free Site Visit</a>
         </div>
     </header>
     <section class="stats-bar">
@@ -307,75 +307,115 @@
     <!-- Testimonials Section -->
     <section class="testimonials">
         <div style="max-width: 1200px; margin: 0 auto;">
-            <div class="testimonials-label">TESTIMONIALS</div>
-            <h2>What Our Clients Are Saying</h2>
-            
-            <div class="testimonials-container">
-                <div class="testimonial-card" id="testimonial-1">
+            <div class="testimonials-label">LIVE GOOGLE REVIEWS</div>
+            <h2>What Clients Say on Google</h2>
+            <p id="reviews-meta" style="margin-bottom: 26px; color: #4b5a6b;">Loading latest reviews...</p>
+            <div class="reviews-grid" id="reviews-grid"></div>
+        </div>
+    </section>
+
+    <section class="testimonials" style="padding-top: 30px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="testimonials-label">FEATURED TESTIMONIALS</div>
+            <h2>More Client Success Stories</h2>
+            <div class="reviews-grid" style="margin-top: 26px;">
+                <article class="testimonial-card">
                     <div class="quote-mark">"</div>
-                    <p class="testimonial-text">KAS Waterproofing did an excellent job on our basement. The team was professional, clean, and finished on time. Our basement hasn't had a single leak since the work was completed. Highly recommended!</p>
+                    <p class="testimonial-text">KAS Waterproofing did an excellent job on our basement. The team was professional, clean, and finished on time. Our basement has not had a single leak since the work was completed.</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">👨‍💼</div>
+                        <div class="author-avatar">JM</div>
                         <div class="author-info">
-                            <p class="author-name">James M. – Homeowner</p>
-                            <div class="stars">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                            </div>
+                            <p class="author-name">James M. - Homeowner</p>
+                            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="testimonial-card hidden" id="testimonial-2">
+                <article class="testimonial-card">
                     <div class="quote-mark">"</div>
-                    <p class="testimonial-text">We've used KAS for multiple painting projects across our commercial properties. Their attention to detail and quality of work is outstanding. They're reliable, professional, and deliver exactly what they promise.</p>
+                    <p class="testimonial-text">We have used KAS for multiple painting projects across our commercial properties. Their attention to detail and quality of work is outstanding. They are reliable and deliver exactly what they promise.</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">👩‍💼</div>
+                        <div class="author-avatar">ST</div>
                         <div class="author-info">
-                            <p class="author-name">Sarah T. – Property Manager</p>
-                            <div class="stars">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                            </div>
+                            <p class="author-name">Sarah T. - Property Manager</p>
+                            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="testimonial-card hidden" id="testimonial-3">
+                <article class="testimonial-card">
                     <div class="quote-mark">"</div>
-                    <p class="testimonial-text">Our kitchen remodeling project exceeded expectations. The team communicated throughout the entire process and handled all the details with professionalism. The quality and craftsmanship are exceptional.</p>
+                    <p class="testimonial-text">Our kitchen remodeling project exceeded expectations. The team communicated throughout the entire process and handled every detail with professionalism. The final craftsmanship was exceptional.</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">👨‍🏫</div>
+                        <div class="author-avatar">RD</div>
                         <div class="author-info">
-                            <p class="author-name">Robert D. – Homeowner</p>
-                            <div class="stars">
-                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                            </div>
+                            <p class="author-name">Robert D. - Homeowner</p>
+                            <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                         </div>
                     </div>
-                </div>
-
-                <div class="testimonials-dots">
-                    <span class="dot active" onclick="showTestimonial(1)"></span>
-                    <span class="dot" onclick="showTestimonial(2)"></span>
-                    <span class="dot" onclick="showTestimonial(3)"></span>
-                </div>
+                </article>
             </div>
         </div>
     </section>
 
     <script>
-        function showTestimonial(n) {
-            // Hide all testimonials
-            document.getElementById('testimonial-1').classList.add('hidden');
-            document.getElementById('testimonial-2').classList.add('hidden');
-            document.getElementById('testimonial-3').classList.add('hidden');
-            
-            // Remove active class from all dots
-            document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
-            
-            // Show selected testimonial
-            document.getElementById('testimonial-' + n).classList.remove('hidden');
-            document.querySelectorAll('.dot')[n - 1].classList.add('active');
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
+
+        function buildStars(rating) {
+            const rounded = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+            return '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
+        }
+
+        function reviewCard(review) {
+            return `
+                <article class="google-review-card">
+                    <div class="google-review-header">
+                        <div>
+                            <p class="google-review-author">${escapeHtml(review.authorName)}</p>
+                            <p class="google-review-time">${escapeHtml(review.relativeTime || 'Google Review')}</p>
+                        </div>
+                        <div class="google-review-stars" aria-label="${Number(review.rating) || 0} star rating">${buildStars(review.rating)}</div>
+                    </div>
+                    <p class="google-review-text">${escapeHtml(review.text || 'Great experience with KAS Waterproofing & Building Services.')}</p>
+                </article>
+            `;
+        }
+
+        async function loadGoogleReviews() {
+            const meta = document.getElementById('reviews-meta');
+            const grid = document.getElementById('reviews-grid');
+
+            try {
+                const response = await fetch('/api/google-reviews');
+                if (!response.ok) {
+                    throw new Error('Failed to load reviews');
+                }
+
+                const data = await response.json();
+                const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+
+                meta.innerHTML = `Google rating: <strong>${data.rating || 'N/A'} / 5</strong> from <strong>${data.totalRatings || 0}</strong> reviews. <a href="${data.profileUrl}" target="_blank" rel="noopener noreferrer">View all on Google</a>`;
+
+                if (!reviews.length) {
+                    grid.innerHTML = '<p class="google-reviews-empty">No live reviews found yet. Check our Google profile for updates.</p>';
+                    return;
+                }
+
+                grid.innerHTML = reviews.map(reviewCard).join('');
+            } catch (error) {
+                meta.innerHTML = '<a href="https://www.google.com/search?kgmid=/g/11yxj1zmlz&q=KAS+Waterproofing+and+Building" target="_blank" rel="noopener noreferrer">View reviews on Google</a>';
+                grid.innerHTML = '';
+            }
+        }
+
+        loadGoogleReviews();
     </script>
 
     <footer>
@@ -403,6 +443,8 @@
                     <li><a href="/#gallery">Gallery</a></li>
                     <li><a href="/contact">Contact Us</a></li>
                     <li><a href="/contact">Request a Quote</a></li>
+                    <li><a href="https://www.google.com/search?kgmid=/g/11yxj1zmlz&q=KAS+Waterproofing+and+Building" target="_blank" rel="noopener noreferrer">Find us on Google</a></li>
+                    <li><a href="https://g.page/r/Ce-2aSISsSKhEAE/review" target="_blank" rel="noopener noreferrer">Leave a Review</a></li>
                 </ul>
             </div>
 
