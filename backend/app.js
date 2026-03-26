@@ -41,7 +41,7 @@ const reviewsCache = {
 // ============================
 // 3. ADMIN PASSWORD & AUTH
 // ============================
-const ADMIN_PASSWORD = '123456'; // Admin password
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const activeSessions = new Set(); // Store active session tokens
 
 // Generate a simple session token
@@ -218,6 +218,10 @@ app.get('/login', (req, res) => {
 // 8. ADMIN AUTHENTICATION
 // ============================
 app.post('/api/admin/login', (req, res) => {
+  if (!ADMIN_PASSWORD) {
+    return res.status(503).json({ success: false, message: 'Admin login is not configured' });
+  }
+
   const { password } = req.body;
   
   if (password === ADMIN_PASSWORD) {
