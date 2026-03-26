@@ -18,6 +18,7 @@
   /* Spacing */
   --radius-small: 8px;
   --radius-medium: 12px;
+  --radius-large: 18px;
 }
 
 /* ============================= */
@@ -39,6 +40,7 @@ body {
   color: var(--text-dark);
   line-height: 1.6;
   background: var(--white);
+  text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -47,7 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 section {
-  padding: 90px 6%;
+  padding: clamp(72px, 8vw, 100px) 6%;
 }
 
 /* ============================= */
@@ -176,21 +178,48 @@ section {
 }
 
 .hero h1 {
-  font-size: 48px;
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
   max-width: 650px;
   margin-bottom: 20px;
-  line-height: 1.3;
+  line-height: 1.15;
   margin-left: auto;
   margin-right: auto;
 }
 
 .hero p {
-  font-size: 18px;
+  font-size: 19px;
   color: rgba(255, 255, 255, 0.9);
-  max-width: 520px;
+  max-width: 620px;
   margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.hero-trust-strip {
+  background: linear-gradient(90deg, #10284a 0%, #123058 50%, #10284a 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 6%;
+}
+
+.hero-trust-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-trust-pill {
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(227, 178, 60, 0.36);
+  background: rgba(227, 178, 60, 0.1);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
 }
 
 /* ============================= */
@@ -237,13 +266,14 @@ section {
   background: var(--secondary);
   color: var(--primary);
   border: none;
-  border-radius: var(--radius-small);
-  padding: 14px 28px;
+  border-radius: 999px;
+  padding: 14px 30px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
+  box-shadow: 0 10px 24px rgba(227, 178, 60, 0.28);
 }
 
 .btn-main:hover {
@@ -276,8 +306,8 @@ section {
 /* ============================= */
 
 .stats-bar {
-  background: var(--primary);
-  padding: 70px 6%;
+  background: linear-gradient(160deg, #0b1f3a 0%, #0d2746 100%);
+  padding: 64px 6%;
   color: white;
   text-align: center;
 }
@@ -296,6 +326,7 @@ section {
   text-align: center;
   flex: 1;
   min-width: 220px;
+  padding: 6px 10px;
 }
 
 .stat-number {
@@ -345,7 +376,7 @@ section {
 
 .card {
   background: white;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-large);
   box-shadow: var(--shadow-soft);
   border: 1px solid #eef1f5;
   padding: 40px 32px;
@@ -1206,6 +1237,14 @@ footer p.copyright {
     font-size: 16px;
   }
 
+  .hero-trust-strip {
+    padding: 12px 4%;
+  }
+
+  .hero-trust-inner {
+    justify-content: flex-start;
+  }
+
   h2 {
     font-size: 28px !important;
   }
@@ -1258,6 +1297,11 @@ footer p.copyright {
 
   .hero h1 {
     font-size: 24px;
+  }
+
+  .hero-trust-pill {
+    width: 100%;
+    text-align: center;
   }
 
   .contact-item {

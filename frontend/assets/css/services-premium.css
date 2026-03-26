@@ -21,7 +21,7 @@ body.services-premium {
 }
 
 .services-hero-premium {
-  padding: 140px 6% 100px;
+  padding: 148px 6% 108px;
   background: radial-gradient(900px 480px at 8% 10%, rgba(212, 175, 55, 0.18), transparent 60%),
     linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
 }
@@ -57,7 +57,7 @@ body.services-premium {
 
 .hero-left p {
   color: rgba(255, 255, 255, 0.82);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   max-width: 540px;
 }
 
@@ -200,7 +200,7 @@ body.services-premium {
 }
 
 .service-block {
-  padding: 70px 6%;
+  padding: 78px 6%;
   background: var(--navy-dark);
 }
 
@@ -224,6 +224,8 @@ body.services-premium {
 
 .service-media img {
   width: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
   border-radius: 24px;
   box-shadow: var(--shadow-soft);
   transition: transform 0.6s ease;
@@ -237,6 +239,12 @@ body.services-premium {
   padding: 36px;
   border-radius: 24px;
   box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32);
 }
 
 .service-card h3 {
@@ -302,6 +310,12 @@ body.services-premium {
   padding: 26px;
   border-radius: 20px;
   text-align: left;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.trust-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.3);
 }
 
 .trust-card h3 {
@@ -316,7 +330,7 @@ body.services-premium {
 }
 
 .services-cta {
-  padding: 90px 6% 110px;
+  padding: 98px 6% 116px;
   background: linear-gradient(135deg, var(--gold), #e9c66a);
   color: var(--navy-dark);
   text-align: center;
@@ -365,6 +379,10 @@ body.services-premium {
     margin-top: 24px;
   }
 
+  .service-media img {
+    aspect-ratio: 16 / 10;
+  }
+
   .service-block.reverse .service-shell {
     direction: ltr;
   }
@@ -382,5 +400,13 @@ body.services-premium {
 
   .service-card {
     padding: 28px;
+  }
+
+  .services-hero-premium,
+  .service-block,
+  .services-trust,
+  .services-cta {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }

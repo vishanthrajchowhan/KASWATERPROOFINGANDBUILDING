@@ -9,12 +9,16 @@
   --luxe-text: #ebf1fa;
   --luxe-muted: #b8c7dc;
   --luxe-line: rgba(255, 255, 255, 0.14);
+  --luxe-radius: 30px;
+  --luxe-shadow-soft: 0 24px 56px rgba(0, 0, 0, 0.34);
+  --luxe-shadow-strong: 0 32px 72px rgba(0, 0, 0, 0.42);
 }
 
 body.luxe-page {
   margin: 0;
   color: var(--luxe-text);
   font-family: "Inter", "Segoe UI", sans-serif;
+  line-height: 1.7;
   background:
     radial-gradient(1100px 560px at 8% 0%, rgba(212, 171, 92, 0.14), transparent 48%),
     radial-gradient(980px 520px at 94% 4%, rgba(42, 82, 145, 0.2), transparent 46%),
@@ -43,7 +47,7 @@ body.luxe-page {
 
 .luxe-hero {
   position: relative;
-  padding: 84px 0 60px;
+  padding: clamp(72px, 7vw, 96px) 0 64px;
 }
 
 .luxe-hero-bg {
@@ -67,10 +71,10 @@ body.luxe-page {
 .luxe-story-glass {
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.04) 100%);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 30px;
+  border-radius: var(--luxe-radius);
   padding: 48px 44px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 32px 72px rgba(0, 0, 0, 0.42);
+  box-shadow: var(--luxe-shadow-strong);
 }
 
 .luxe-kicker {
@@ -98,8 +102,8 @@ body.luxe-page {
 
 .luxe-subtitle {
   margin: 24px 0 0;
-  font-size: 1.12rem;
-  line-height: 1.85;
+  font-size: clamp(1.02rem, 1.8vw, 1.14rem);
+  line-height: 1.9;
   max-width: 620px;
   color: rgba(235, 241, 250, 0.92);
 }
@@ -117,7 +121,13 @@ body.luxe-page {
   padding: 13px 24px;
   font-weight: 700;
   font-size: 0.92rem;
+  letter-spacing: 0.01em;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.luxe-btn:focus-visible {
+  outline: 2px solid rgba(231, 201, 135, 0.9);
+  outline-offset: 2px;
 }
 
 .luxe-btn-primary {
@@ -158,7 +168,7 @@ body.luxe-page {
   object-fit: cover;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.33);
+  box-shadow: var(--luxe-shadow-soft);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -195,6 +205,7 @@ body.luxe-page {
 
 .luxe-metric-item {
   padding: 34px 22px;
+  text-align: center;
 }
 
 .luxe-metric-item + .luxe-metric-item {
@@ -221,7 +232,7 @@ body.luxe-page {
 .luxe-impact,
 .luxe-testimonial,
 .luxe-final-cta {
-  padding: 108px 0;
+  padding: clamp(88px, 9vw, 114px) 0;
 }
 
 .luxe-overview-grid {
@@ -235,7 +246,7 @@ body.luxe-page {
   margin: 0;
   font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(2rem, 3.5vw, 3.5rem);
-  line-height: 1.12;
+  line-height: 1.14;
 }
 
 .luxe-section-title::after {
@@ -287,12 +298,13 @@ body.luxe-page {
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
   padding: 28px;
   backdrop-filter: blur(8px);
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .luxe-feature:hover {
   transform: translateY(-4px);
   border-color: rgba(212, 171, 92, 0.42);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
 }
 
 .luxe-icon {
@@ -317,6 +329,7 @@ body.luxe-page {
 .luxe-feature h3 {
   margin: 18px 0 8px;
   font-size: 1.24rem;
+  line-height: 1.35;
   color: #fff;
 }
 
@@ -331,7 +344,7 @@ body.luxe-page {
 }
 
 .luxe-impact-panel {
-  border-radius: 30px;
+  border-radius: var(--luxe-radius);
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
   padding: 46px;
@@ -397,14 +410,14 @@ body.luxe-page {
 }
 
 .luxe-final-panel {
-  border-radius: 30px;
+  border-radius: var(--luxe-radius);
   border: 1px solid rgba(212, 171, 92, 0.3);
   background:
     radial-gradient(620px 230px at 50% 0%, rgba(212, 171, 92, 0.16), transparent 72%),
     linear-gradient(140deg, rgba(13, 25, 42, 0.95) 0%, rgba(8, 15, 26, 0.95) 100%);
   text-align: center;
   padding: 64px 36px;
-  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.36);
+  box-shadow: var(--luxe-shadow-soft);
 }
 
 .luxe-final-panel h2 {
@@ -458,7 +471,7 @@ body.luxe-page {
   .luxe-impact,
   .luxe-testimonial,
   .luxe-final-cta {
-    padding: 84px 0;
+    padding: 80px 0;
   }
 
   .luxe-feature-grid,
