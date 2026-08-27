@@ -21,34 +21,7 @@
     </script>
 </head>
 <body class="portfolio-premium">
-    <div id="chat-toggle">Ask KAS</div>
-
-    <div id="chat-widget" class="closed">
-        <div id="chat-header">
-            Ask KAS
-            <span id="chat-close">x</span>
-        </div>
-        <div id="chat-messages"></div>
-        <div id="chat-input">
-            <input type="text" id="chat-text" placeholder="Type your question...">
-            <button id="send-btn">Send</button>
-        </div>
-    </div>
-
-    <script src="../assets/js/chat.js"></script>
-
     <div id="header"></div>
-    <script>
-        fetch('/header.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-                const path = window.location.pathname.split('/').pop();
-                document.querySelectorAll('.nav-links a').forEach(a => {
-                    if (a.getAttribute('href') === path) a.classList.add('active');
-                });
-            });
-    </script>
 
     <main class="portfolio-container">
         
@@ -135,7 +108,21 @@
                 <!-- Painting Projects -->
                 <article class="project-card-premium" data-category="painting">
                     <div class="project-image-container">
-                        <img src="/images/gallery/painting/Interior.jpg" alt="Premium Interior Painting">
+                        <img src="/images/projects/pensacola/gallery-thumbnail.png" alt="Commercial Building Exterior Restoration Pensacola">
+                        <div class="project-overlay">
+                            <span class="project-category-badge">Painting</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Pensacola Commercial Building Restoration</h3>
+                                <p class="project-excerpt">Exterior painting, waterproofing, and weatherproofing for a commercial facade upgrade.</p>
+                                <a href="/projects/pensacola-commercial-building-restoration" class="project-cta">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card-premium" data-category="painting">
+                    <div class="project-image-container">
+                        <img src="/images/gallery/painting/premium-interior-1.jpg" alt="Premium Interior Painting">
                         <div class="project-overlay">
                             <span class="project-category-badge">Painting</span>
                             <div class="project-info">
@@ -149,7 +136,7 @@
 
                 <article class="project-card-premium" data-category="painting">
                     <div class="project-image-container">
-                        <img src="/images/gallery/painting/paint2.jpg" alt="Exterior Painting Excellence">
+                        <img src="/images/gallery/painting/premium-exterior-1.jpg" alt="Exterior Painting Excellence">
                         <div class="project-overlay">
                             <span class="project-category-badge">Painting</span>
                             <div class="project-info">
@@ -262,15 +249,13 @@
             </div>
         </section>
 
-        <footer class="portfolio-footer">
-            <p>© 2026 KAS Waterproofing & Building Services LLC. All Rights Reserved.</p>
-            <p><a href="https://g.page/r/Ce-2aSISsSKhEAE/review" target="_blank" rel="noopener noreferrer">Leave a Review</a></p>
-        </footer>
-
     </main>
 
+    <div id="footer"></div>
+
     <!-- FILTER & ANIMATION SCRIPT -->
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
     <script src="../assets/js/gallery-premium.js"></script>
 </body>
 </html>
-

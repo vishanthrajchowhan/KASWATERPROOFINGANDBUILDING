@@ -22,14 +22,9 @@
 </head>
 <body class="luxe-page">
     <div id="header"></div>
-    <script>
-        fetch('/header.html').then(res => res.text()).then(html => {
-            document.getElementById('header').innerHTML = html;
-        });
-    </script>
 
     <main class="luxe-main">
-        <section class="luxe-hero" aria-labelledby="project-title" style="--luxe-hero-bg: url('/images/gallery/painting/paint1.jpg');">
+        <section class="luxe-hero" aria-labelledby="project-title" style="--luxe-hero-bg: url('/images/gallery/painting/premium-interior-1.jpg');">
             <div class="luxe-hero-bg" aria-hidden="true"></div>
             <div class="luxe-container">
                 <div class="luxe-hero-grid">
@@ -43,9 +38,9 @@
                         </div>
                     </div>
                     <div class="luxe-collage" aria-label="Project photo collage">
-                        <img src="/images/inte1.jpg" alt="Project detail image" class="luxe-collage-a">
-                        <img src="/images/All/Int3.jpg" alt="Project process image" class="luxe-collage-b">
-                        <img src="/images/gallery/painting/interiorpainting2.png" alt="Project finish image" class="luxe-collage-c">
+                        <img src="/images/gallery/painting/premium-interior-1.jpg" alt="Premium interior painting - elevator lobby finish" class="luxe-collage-a">
+                        <img src="/images/gallery/painting/premium-interior-4.jpg" alt="Premium interior painting - hallway finish detail" class="luxe-collage-b">
+                        <img src="/images/gallery/painting/premium-interior-3.jpg" alt="Premium interior painting - accent wall finish" class="luxe-collage-c">
                     </div>
                 </div>
             </div>
@@ -75,8 +70,8 @@
                     <p class="luxe-body-copy">The project required a high-end interior finish with strict cleanliness, color consistency, and schedule discipline. Our team coordinated surface prep, premium paint systems, and detail-first application to deliver a refined architectural result.</p>
                 </div>
                 <div class="luxe-overview-images">
-                    <img src="/images/inte2.jpg" alt="Project stage one" class="luxe-overview-image">
-                    <img src="/images/gallery/painting/interiorpainting1.png" alt="Project stage two" class="luxe-overview-image">
+                    <img src="/images/gallery/painting/premium-interior-5.jpg" alt="Premium interior painting - waiting area finish" class="luxe-overview-image">
+                    <img src="/images/gallery/painting/premium-interior-2.jpg" alt="Premium interior painting - corridor finish" class="luxe-overview-image">
                 </div>
             </div>
         </section>
@@ -128,5 +123,10 @@
             </div>
         </section>
     </main>
+
+    <div id="footer"></div>
+
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
 </body>
 </html>

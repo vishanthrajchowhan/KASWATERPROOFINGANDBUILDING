@@ -22,14 +22,9 @@
 </head>
 <body class="luxe-page">
     <div id="header"></div>
-    <script>
-        fetch('/header.html').then(res => res.text()).then(html => {
-            document.getElementById('header').innerHTML = html;
-        });
-    </script>
 
     <main class="luxe-main">
-        <section class="luxe-hero" aria-labelledby="project-title" style="--luxe-hero-bg: url('/images/gallery/painting/paint2.jpg');">
+        <section class="luxe-hero" aria-labelledby="project-title" style="--luxe-hero-bg: url('/images/gallery/painting/premium-exterior-1.jpg');">
             <div class="luxe-hero-bg" aria-hidden="true"></div>
             <div class="luxe-container">
                 <div class="luxe-hero-grid">
@@ -43,9 +38,9 @@
                         </div>
                     </div>
                     <div class="luxe-collage" aria-label="Project photo collage">
-                        <img src="/images/gallery/Our_p1.jpeg" alt="Project detail image" class="luxe-collage-a">
-                        <img src="/images/gallery/painting/paint1.jpg" alt="Project process image" class="luxe-collage-b">
-                        <img src="/images/All/Ext1.jpg" alt="Project finish image" class="luxe-collage-c">
+                        <img src="/images/gallery/painting/premium-exterior-1.jpg" alt="Premium exterior painting - building entrance finish" class="luxe-collage-a">
+                        <img src="/images/gallery/painting/premium-exterior-2.jpg" alt="Premium exterior painting - facade finish detail" class="luxe-collage-b">
+                        <img src="/images/projects/exterior-painting/exterior.jpg" alt="Premium exterior painting - medical office facade finish" class="luxe-collage-c">
                     </div>
                 </div>
             </div>
@@ -75,8 +70,8 @@
                     <p class="luxe-body-copy">This exterior scope demanded durability, finish clarity, and schedule control. KAS executed comprehensive cleaning, substrate treatment, and multi-stage coating to produce a premium look with resilient protection against climate exposure.</p>
                 </div>
                 <div class="luxe-overview-images">
-                    <img src="/images/gallery/Painting_1.jpeg" alt="Project stage one" class="luxe-overview-image">
-                    <img src="/images/gallery/Paint_2.jpeg" alt="Project stage two" class="luxe-overview-image">
+                    <img src="/images/gallery/painting/premium-exterior-4.jpg" alt="Premium exterior painting - building tower finish" class="luxe-overview-image">
+                    <img src="/images/gallery/painting/premium-exterior-5.jpg" alt="Premium exterior painting - facade finish" class="luxe-overview-image">
                 </div>
             </div>
         </section>
@@ -128,5 +123,10 @@
             </div>
         </section>
     </main>
+
+    <div id="footer"></div>
+
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
 </body>
 </html>

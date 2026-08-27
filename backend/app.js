@@ -42,22 +42,129 @@ const reviewsCache = {
 // 3. ADMIN PASSWORD & AUTH
 // ============================
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-const activeSessions = new Set(); // Store active session tokens
+const activeSessions = new Map(); // token -> expiresAt (ms)
+const SESSION_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
 
 // Generate a simple session token
 function generateToken() {
   return crypto.randomBytes(32).toString('hex');
 }
 
+function isSessionValid(token) {
+  if (!token) return false;
+  const expiresAt = activeSessions.get(token);
+  if (!expiresAt) return false;
+  if (Date.now() > expiresAt) {
+    activeSessions.delete(token);
+    return false;
+  }
+  return true;
+}
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [token, expiresAt] of activeSessions.entries()) {
+    if (now > expiresAt) activeSessions.delete(token);
+  }
+}, 10 * 60 * 1000).unref();
+
 // Middleware to check if user is authenticated
 function requireAuth(req, res, next) {
   const token = req.headers.authorization?.replace('Bearer ', '');
-  
-  if (token && activeSessions.has(token)) {
+
+  if (isSessionValid(token)) {
     next();
   } else {
     res.status(401).json({ error: 'Unauthorized' });
   }
+}
+
+// Timing-safe password comparison (avoids leaking length/content via response timing)
+function safeCompare(a, b) {
+  const bufA = Buffer.from(String(a));
+  const bufB = Buffer.from(String(b));
+  if (bufA.length !== bufB.length) {
+    crypto.timingSafeEqual(bufB, bufB); // keep timing consistent even on length mismatch
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
+// ============================
+// 3b. LOGIN RATE LIMITING
+// ============================
+const LOGIN_MAX_ATTEMPTS = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const loginAttempts = new Map(); // ip -> { count, windowStart }
+
+function getClientIp(req) {
+  return req.ip || req.connection?.remoteAddress || 'unknown';
+}
+
+function isRateLimited(ip) {
+  const entry = loginAttempts.get(ip);
+  if (!entry) return false;
+  if (Date.now() - entry.windowStart > LOGIN_WINDOW_MS) {
+    loginAttempts.delete(ip);
+    return false;
+  }
+  return entry.count >= LOGIN_MAX_ATTEMPTS;
+}
+
+function recordFailedLogin(ip) {
+  const entry = loginAttempts.get(ip);
+  if (!entry || Date.now() - entry.windowStart > LOGIN_WINDOW_MS) {
+    loginAttempts.set(ip, { count: 1, windowStart: Date.now() });
+  } else {
+    entry.count += 1;
+  }
+}
+
+function clearFailedLogins(ip) {
+  loginAttempts.delete(ip);
+}
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of loginAttempts.entries()) {
+    if (now - entry.windowStart > LOGIN_WINDOW_MS) loginAttempts.delete(ip);
+  }
+}, 10 * 60 * 1000).unref();
+
+// ============================
+// 3c. EMAIL NOTIFICATIONS
+// ============================
+const CHAT_NOTIFY_EMAIL = process.env.CHAT_NOTIFY_EMAIL || process.env.EMAIL_TO;
+
+let mailTransporter = null;
+function getMailTransporter() {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) return null;
+  if (!mailTransporter) {
+    mailTransporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
+      }
+    });
+  }
+  return mailTransporter;
+}
+
+function sendNotificationEmail(to, subject, html) {
+  const transporter = getMailTransporter();
+  if (!transporter || !to) return;
+
+  transporter.sendMail({ from: process.env.EMAIL_USER, to, subject, html })
+    .then(() => console.log(`✅ Notification email sent: ${subject}`))
+    .catch((err) => console.error('⚠️ Notification email failed:', err.message));
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 // ============================
@@ -84,8 +191,70 @@ function getSessionId(req) {
 
 function extractPhone(text) {
   const match = String(text).match(/\+?\d[\d\s\-()]{6,}/);
-  return match ? match[0].trim() : '';
+  if (!match) return '';
+  const candidate = match[0].trim();
+  const digitCount = candidate.replace(/\D/g, '').length;
+  return digitCount >= 7 ? candidate : '';
 }
+
+const LEAD_SESSION_TTL_MS = 30 * 60 * 1000; // 30 minutes
+
+function sweepStaleLeadSessions() {
+  const now = Date.now();
+  for (const [key, session] of leadSessions.entries()) {
+    if (now - (session.updatedAt || 0) > LEAD_SESSION_TTL_MS) {
+      leadSessions.delete(key);
+    }
+  }
+}
+
+setInterval(sweepStaleLeadSessions, 10 * 60 * 1000).unref();
+
+// Keeps the full back-and-forth per session so a transcript can be emailed later,
+// either right away when a lead is captured or once the session goes idle.
+const chatTranscripts = new Map(); // sessionId -> { messages: [{role, text}], updatedAt, emailed }
+
+function recordChatTurn(sessionId, role, text) {
+  if (!text) return;
+  let entry = chatTranscripts.get(sessionId);
+  if (!entry) {
+    entry = { messages: [], updatedAt: Date.now(), emailed: false };
+    chatTranscripts.set(sessionId, entry);
+  }
+  entry.messages.push({ role, text });
+  entry.updatedAt = Date.now();
+}
+
+function transcriptToHtml(messages) {
+  return messages
+    .map((m) => `<p><strong>${m.role === 'user' ? 'Visitor' : 'Ask KAS'}:</strong> ${escapeHtml(m.text)}</p>`)
+    .join('');
+}
+
+function emailTranscript(sessionId, entry, subject) {
+  if (entry.emailed) return;
+  entry.emailed = true;
+  sendNotificationEmail(CHAT_NOTIFY_EMAIL, subject, `<h2>${subject}</h2>${transcriptToHtml(entry.messages)}`);
+}
+
+function sweepChatTranscripts() {
+  const now = Date.now();
+  for (const [sessionId, entry] of chatTranscripts.entries()) {
+    if (entry.emailed) {
+      chatTranscripts.delete(sessionId);
+      continue;
+    }
+    if (now - entry.updatedAt > LEAD_SESSION_TTL_MS) {
+      const hasUserMessage = entry.messages.some((m) => m.role === 'user');
+      if (hasUserMessage) {
+        emailTranscript(sessionId, entry, 'Ask KAS - Chat Conversation');
+      }
+      chatTranscripts.delete(sessionId);
+    }
+  }
+}
+
+setInterval(sweepChatTranscripts, 10 * 60 * 1000).unref();
 
 // ============================
 // 6. DATABASE SETUP
@@ -166,6 +335,10 @@ app.get('/gallery', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'gallery.html'));
 });
 
+app.get('/before-after', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'before-after.html'));
+});
+
 app.get('/projects/professional-waterproofing-application', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-waterproofing-application.html'));
 });
@@ -182,6 +355,10 @@ app.get('/projects/exterior-painting-excellence', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-exterior-painting-excellence.html'));
 });
 
+app.get('/projects/pensacola-commercial-building-restoration', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-pensacola-commercial-building-restoration.html'));
+});
+
 app.get('/projects/modern-construction-work', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-modern-construction-work.html'));
 });
@@ -190,12 +367,36 @@ app.get('/projects/building-project-execution', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-building-project-execution.html'));
 });
 
+const projectPageFiles = {
+  'professional-waterproofing-application': 'project-waterproofing-application.html',
+  'advanced-waterproof-coating-system': 'project-waterproof-coating-system.html',
+  'premium-interior-painting': 'project-premium-interior-painting.html',
+  'exterior-painting-excellence': 'project-exterior-painting-excellence.html',
+  'pensacola-commercial-building-restoration': 'project-pensacola-commercial-building-restoration.html',
+  'modern-construction-work': 'project-modern-construction-work.html',
+  'building-project-execution': 'project-building-project-execution.html'
+};
+
+app.get('/projects/:slug', (req, res, next) => {
+  const pageFile = projectPageFiles[req.params.slug];
+
+  if (!pageFile) {
+    return next();
+  }
+
+  res.sendFile(path.join(FRONTEND_DIR, 'pages', pageFile));
+});
+
 app.get('/contact', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'contact.html'));
 });
 
-app.get('/construction', (req, res) => {
+app.get('/remodeling', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'construction.html'));
+});
+
+app.get('/construction', (req, res) => {
+  res.redirect('/remodeling');
 });
 
 app.get('/painting', (req, res) => {
@@ -222,14 +423,24 @@ app.post('/api/admin/login', (req, res) => {
     return res.status(503).json({ success: false, message: 'Admin login is not configured' });
   }
 
+  const ip = getClientIp(req);
+  if (isRateLimited(ip)) {
+    return res.status(429).json({
+      success: false,
+      message: 'Too many failed login attempts. Please try again in 15 minutes.'
+    });
+  }
+
   const { password } = req.body;
-  
-  if (password === ADMIN_PASSWORD) {
+
+  if (typeof password === 'string' && safeCompare(password, ADMIN_PASSWORD)) {
+    clearFailedLogins(ip);
     const token = generateToken();
-    activeSessions.add(token);
+    activeSessions.set(token, Date.now() + SESSION_TTL_MS);
     console.log('✅ Admin login successful');
     res.json({ success: true, token });
   } else {
+    recordFailedLogin(ip);
     console.log('❌ Admin login failed - incorrect password');
     res.status(401).json({ success: false, message: 'Invalid password' });
   }
@@ -246,8 +457,8 @@ app.post('/api/admin/logout', (req, res) => {
 
 app.get('/api/admin/verify', (req, res) => {
   const token = req.headers.authorization?.replace('Bearer ', '');
-  
-  if (token && activeSessions.has(token)) {
+
+  if (isSessionValid(token)) {
     res.json({ authenticated: true });
   } else {
     res.status(401).json({ authenticated: false });
@@ -268,36 +479,19 @@ app.post('/contact', async (req, res) => {
     console.log(`✅ Contact saved with phone: ${phone}`);
 
     // Send email notification
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD && process.env.EMAIL_TO) {
-      try {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD
-          }
-        });
-
-         transporter.sendMail({
-          from: process.env.EMAIL_USER,
-          to: process.env.EMAIL_TO,
-          subject: `New Contact Form Submission - ${service}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Service:</strong> ${service}</p>
-            <p><strong>Message:</strong></p>
-            <p>${message}</p>
-          `
-        });
-
-        console.log(`✅ Email sent for contact: ${name}`);
-      } catch (emailErr) {
-        console.error("⚠️ Email failed (contact still saved):", emailErr.message);
-      }
-    }
+    sendNotificationEmail(
+      process.env.EMAIL_TO,
+      `New Contact Form Submission - ${service}`,
+      `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        <p><strong>Service:</strong> ${escapeHtml(service)}</p>
+        <p><strong>Message:</strong></p>
+        <p>${escapeHtml(message)}</p>
+      `
+    );
 
     res.redirect('/success.html');
   } catch (err) {
@@ -396,26 +590,39 @@ app.post("/api/chat", async (req, res) => {
     });
   }
 
+  recordChatTurn(sessionId, 'user', userMessage);
+
+  function reply(text) {
+    recordChatTurn(sessionId, 'bot', text);
+    return res.json({ reply: text });
+  }
+
   try {
+    const intent = detectIntent(userMessage);
     const leadState = leadSessions.get(sessionId);
 
     if (leadState) {
+      if (intent === 'cancel') {
+        leadSessions.delete(sessionId);
+        return reply(getResponseForIntent('cancel', knowledgeBase));
+      }
+
+      leadState.updatedAt = Date.now();
+
       if (leadState.step === 'name') {
         leadState.lead.name = userMessage;
         leadState.step = 'phone';
-        return res.json({ reply: `Thanks, ${userMessage}. What's the best phone number to reach you?` });
+        return reply(`Thanks, ${userMessage}. What's the best phone number to reach you? (Say "cancel" anytime to stop.)`);
       }
 
       if (leadState.step === 'phone') {
         const phone = extractPhone(userMessage);
         if (!phone) {
-          return res.json({ reply: 'Please share a phone number (digits only is fine).'});
+          return reply('That doesn\'t look like a complete phone number. Please share a valid phone number (at least 7 digits), or say "cancel" to stop.');
         }
         leadState.lead.phone = phone;
         leadState.step = 'service';
-        return res.json({
-          reply: 'Which service do you need (Construction, Waterproofing, Painting, Remodeling, or Commercial Projects)?'
-        });
+        return reply('Which service do you need (Construction, Waterproofing, Stucco Repair, Pressure Washing, Painting, Remodeling, or Commercial Projects)?');
       }
 
       if (leadState.step === 'service') {
@@ -430,27 +637,35 @@ app.post("/api/chat", async (req, res) => {
         });
 
         leadSessions.delete(sessionId);
-        return res.json({
-          reply: `Thank you! Your request is received. We'll contact you shortly. You can also call ${knowledgeBase.phone}.`
-        });
+
+        const replyText = `Thank you! Your request is received. We'll contact you shortly. You can also call ${knowledgeBase.phone}.`;
+        recordChatTurn(sessionId, 'bot', replyText);
+
+        const transcriptEntry = chatTranscripts.get(sessionId);
+        if (transcriptEntry) {
+          emailTranscript(
+            sessionId,
+            transcriptEntry,
+            `Ask KAS - New Chat Lead (${leadState.lead.name} - ${leadState.lead.service})`
+          );
+        }
+
+        return res.json({ reply: replyText });
       }
     }
 
-    const intent = detectIntent(userMessage);
     if (intent === 'quote_request') {
       leadSessions.set(sessionId, {
         step: 'name',
-        lead: { message: userMessage }
+        lead: { message: userMessage },
+        updatedAt: Date.now()
       });
     }
 
-    const reply = getResponseForIntent(intent, knowledgeBase);
-    return res.json({ reply });
+    return reply(getResponseForIntent(intent, knowledgeBase));
   } catch (err) {
     console.error("❌ Chat Error:", err.message);
-    return res.json({
-      reply: `Please call ${knowledgeBase.phone} for immediate assistance.`
-    });
+    return reply(`Please call ${knowledgeBase.phone} for immediate assistance.`);
   }
 });
 
@@ -466,6 +681,21 @@ app.get('/api/clients', requireAuth, async (req, res) => {
   } catch (err) {
     console.error('Error fetching clients:', err);
     res.status(500).json({ error: 'Failed to fetch clients' });
+  }
+});
+
+// ============================
+// 12b. ADMIN API - Get all chat leads (PROTECTED)
+// ============================
+app.get('/api/leads', requireAuth, async (req, res) => {
+  try {
+    const leads = await Lead.findAll({
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(leads);
+  } catch (err) {
+    console.error('Error fetching leads:', err);
+    res.status(500).json({ error: 'Failed to fetch leads' });
   }
 });
 
@@ -510,4 +740,3 @@ if (require.main === module) {
 }
 
 module.exports = app;
-

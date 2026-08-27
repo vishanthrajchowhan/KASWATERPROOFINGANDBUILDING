@@ -18,6 +18,10 @@
                          "destination":  "/pages/gallery.html"
                      },
                      {
+                         "source":  "/before-after",
+                         "destination":  "/pages/before-after.html"
+                     },
+                     {
                          "source":  "/projects/professional-waterproofing-application",
                          "destination":  "/pages/project-waterproofing-application.html"
                      },
@@ -34,6 +38,10 @@
                          "destination":  "/pages/project-exterior-painting-excellence.html"
                      },
                      {
+                         "source":  "/projects/pensacola-commercial-building-restoration",
+                         "destination":  "/pages/project-pensacola-commercial-building-restoration.html"
+                     },
+                     {
                          "source":  "/projects/modern-construction-work",
                          "destination":  "/pages/project-modern-construction-work.html"
                      },
@@ -43,10 +51,14 @@
                      },
                      {
                          "source":  "/contact",
-                         "destination":  "/pages/contact.html"
+                         "destination":  "/api/index.js"
                      },
                      {
                          "source":  "/construction",
+                         "destination":  "/pages/construction.html"
+                     },
+                     {
+                         "source":  "/remodeling",
                          "destination":  "/pages/construction.html"
                      },
                      {
@@ -60,6 +72,10 @@
                      {
                          "source":  "/admin",
                          "destination":  "/pages/admin.html"
+                     },
+                     {
+                         "source":  "/login",
+                         "destination":  "/pages/login.html"
                      },
                      {
                          "source":  "/carousel",

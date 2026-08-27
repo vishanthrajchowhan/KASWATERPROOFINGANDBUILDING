@@ -3,128 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Painting & Coating Services | KAS Waterproofing & Building Services</title>
+    <title>Painting Services | KAS Waterproofing & Building Services</title>
+    <meta name="description" content="Interior, exterior and commercial painting with professional surface preparation in South Florida. Licensed &amp; insured, free estimates.">
     <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/service-landing.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DH4HQ9VTEZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-DH4HQ9VTEZ');
     </script>
 </head>
-<body>
-    <!-- Common Header Include -->
+<body class="service-landing">
     <div id="header"></div>
-    <script>
-      fetch('/header.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('header').innerHTML = html;
-          // Optionally, set active class based on current page
-          const path = window.location.pathname.split('/').pop();
-          document.querySelectorAll('.nav-links a').forEach(a => {
-            if (a.getAttribute('href') === path) a.classList.add('active');
-          });
-        });
-    </script>
 
-    <header class="hero" style="background: #111;">
-        <div class="hero-box" style="padding-top: 80px;">
-            <h1 style="color:#fff;">Professional Painting & Coating Services</h1>
-            <p style="color:#eee;">Interior, exterior, and industrial painting solutions.</p>
-        </div>
-    </header>
-
-    <section class="intro" style="background:#181818; color:#fff; padding:40px 0;">
-        <div class="container" style="max-width:900px; margin:auto; text-align:center;">
-            <h2>Expert Painting for Every Surface</h2>
-            <p>
-                Our skilled painters deliver flawless finishes for homes, offices, and industrial spaces. We use premium materials and proven techniques to ensure lasting beauty and protection.
-            </p>
-        </div>
-    </section>
-
-    <section class="service-grid" style="background:#111; padding:40px 0;">
-        <div class="container" style="max-width:1100px; margin:auto;">
-            <h2 style="color:#fff; text-align:center;">Our Painting Services</h2>
-            <div class="service-grid" style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center; margin-top:32px;">
-                <div class="card service-card" style="background:#181818; color:#fff;">
-<img 
-  src="images/painting_service/Interior-painting.png"
-  alt="Professional Interior Painting Service"
-  style="width:100%; height:350px; object-fit:cover; border-radius:12px 12px 0 0;"
->
-                    <div style="padding:18px;">
-                        <h3>Interior Painting</h3>
-                        <p>Enhance your living or work space with smooth, vibrant interior finishes tailored to your style.</p>
+    <main>
+        <section class="sl-hero reveal is-visible">
+            <div class="sl-hero-shell">
+                <div class="sl-hero-left">
+                    <span class="sl-label">PAINTING SERVICES</span>
+                    <h1>Premium Interior &amp; Exterior Painting</h1>
+                    <p>Durable, high-quality finishes for homes and businesses, backed by professional surface preparation and meticulous attention to detail.</p>
+                    <div class="sl-hero-actions">
+                        <a class="sl-btn-gold shimmer-btn" href="/contact">Request a Quote</a>
+                        <a class="sl-btn-outline" href="/gallery">View Projects</a>
                     </div>
                 </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-<img 
-  src="images/painting_service/weather.png"
-  alt="Professional Exterior Painting Service"
-  style="width:100%; height:350px; object-fit:cover; border-radius:12px 12px 0 0;"
->
-                    <div style="padding:18px;">
-                        <h3>Exterior Painting</h3>
-                        <p>Weather-resistant coatings that protect and beautify your property’s exterior surfaces.</p>
+                <div class="sl-hero-right">
+                    <div class="sl-hero-image">
+                        <img src="/images/gallery/painting/paint1.jpg" alt="Painting project by KAS">
                     </div>
-                </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-<img src="images/painting_service/Warehouse.png"
-     alt="Industrial Coatings"
-     style="width:100%; height:370px; object-fit:cover; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Industrial Coatings</h3>
-                        <p>Specialized coatings for factories, warehouses, and industrial equipment to resist wear and corrosion.</p>
-                    </div>
-                </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-<img src="images/painting_service/Cleaning.png"
-     alt="Cleaning & Surface Preparation"
-     style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Cleaning & Surface Preparation</h3>
-                        <p>Thorough cleaning and prep work to ensure optimal paint adhesion and a flawless finish.</p>
+                    <div class="sl-hero-stats">
+                        <article class="sl-stat-card glass-panel">
+                            <span class="sl-stat-number">1,000+</span>
+                            <span class="sl-stat-label">Projects Painted</span>
+                        </article>
+                        <article class="sl-stat-card glass-panel">
+                            <span class="sl-stat-number">Licensed</span>
+                            <span class="sl-stat-label">&amp; Insured</span>
+                        </article>
+                        <article class="sl-stat-card glass-panel">
+                            <span class="sl-stat-number">Free</span>
+                            <span class="sl-stat-label">Estimates</span>
+                        </article>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section style="background:#181818; color:#fff; padding:40px 0;">
-        <div class="container" style="max-width:900px; margin:auto; text-align:center;">
-            <h2>Our Painting Process</h2>
-            <p>
-                We start with detailed surface preparation, use high-quality paints, and finish with meticulous attention to detail. Our process ensures a beautiful, long-lasting result every time.
-            </p>
-        </div>
-    </section>
+        <section class="sl-intro reveal">
+            <div class="sl-intro-shell">
+                <h2>Finishes Built to Last</h2>
+                <div class="sl-intro-divider"></div>
+                <p>A great paint job starts with proper preparation. Our crews prep every surface thoroughly, then apply premium coatings for a smooth, long-lasting finish — inside and out.</p>
+            </div>
+        </section>
 
-    <section style="background:#181818; color:#fff; padding:40px 0;">
-        <div class="container" style="max-width:900px; margin:auto; text-align:center;">
-            <h2>Residential & Commercial Painting</h2>
-            <p>
-                From single rooms to entire buildings, we serve homeowners, property managers, and business owners with the same commitment to quality and satisfaction.
-            </p>
-        </div>
-    </section>
+        <section class="sl-block reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/gallery/painting/interiorpainting1.png" alt="Interior painting service">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Interior Painting</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Refresh living rooms, kitchens, offices and more with clean, precise interior painting that transforms any space.</p>
+                    <ul>
+                        <li>Walls, Trim &amp; Ceilings</li>
+                        <li>Cabinet &amp; Door Refinishing</li>
+                        <li>Color Consultation</li>
+                        <li>Low-VOC &amp; Premium Coatings</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
 
-    <section style="background:#111; color:#fff; text-align:center; padding:40px 0;">
-        <a href="/#contact" class="btn-main" style="background:#fff; color:#111; padding:16px 36px; border-radius:24px; font-weight:bold; font-size:1.2rem; text-decoration:none;">Get a Painting Quote</a>
-    </section>
+        <section class="sl-block reverse reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/exterior-painting-service.jpg" alt="Exterior painting service">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Exterior Painting</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Protect and beautify your property's exterior with weather-resistant coatings designed for Florida's climate.</p>
+                    <ul>
+                        <li>Siding, Stucco &amp; Masonry</li>
+                        <li>Fences, Railings &amp; Trim</li>
+                        <li>Weatherproof &amp; UV-Resistant Coatings</li>
+                        <li>Pressure Washing Prep Included</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Footer (copied from index.html) -->
-    <footer>
-        <p>&copy; 2025 KAS Waterproofing & Building Services LLC</p>
-        <p><a href="https://g.page/r/Ce-2aSISsSKhEAE/review" target="_blank" rel="noopener noreferrer">Leave a Review</a></p>
-    </footer>
+        <section class="sl-block reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/painting_service/Warehouse.png" alt="Commercial painting service">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Commercial Painting</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Minimize downtime with efficient, professional painting for offices, retail spaces, warehouses and multi-unit properties.</p>
+                    <ul>
+                        <li>Offices, Retail &amp; Warehouses</li>
+                        <li>Flexible, After-Hours Scheduling</li>
+                        <li>Multi-Unit &amp; HOA Projects</li>
+                        <li>Durable, Commercial-Grade Coatings</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-block reverse reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/painting_service/Residential.png" alt="Residential painting service">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Residential Painting</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Complete painting solutions for homeowners, from single-room refreshes to full interior and exterior makeovers that boost comfort and curb appeal.</p>
+                    <ul>
+                        <li>Whole-Home Interior &amp; Exterior</li>
+                        <li>Move-In &amp; Move-Out Painting</li>
+                        <li>Cabinets, Trim &amp; Accent Walls</li>
+                        <li>Homeowner-Friendly Scheduling</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-process reveal">
+            <div class="sl-process-shell">
+                <h2>How We Work</h2>
+                <div class="sl-process-grid stagger-children">
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">1</span>
+                        <h3>Free Estimate</h3>
+                        <p>We walk your property and provide a clear, itemized quote at no cost.</p>
+                    </article>
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">2</span>
+                        <h3>Surface Preparation</h3>
+                        <p>We clean, patch, sand and prime every surface for a lasting finish.</p>
+                    </article>
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">3</span>
+                        <h3>Professional Application</h3>
+                        <p>Premium coatings applied with precision, protecting furniture and landscaping.</p>
+                    </article>
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">4</span>
+                        <h3>Final Walkthrough</h3>
+                        <p>We inspect every detail with you before calling the job complete.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-trust reveal">
+            <div class="sl-trust-shell">
+                <h2>Why Clients Choose Our Painting Team</h2>
+                <div class="sl-trust-grid stagger-children">
+                    <article class="sl-trust-card glass-panel">
+                        <h3>Meticulous Prep Work</h3>
+                        <p>Every surface is properly prepared for a smooth, durable finish.</p>
+                    </article>
+                    <article class="sl-trust-card glass-panel">
+                        <h3>Licensed &amp; Insured</h3>
+                        <p>Fully licensed painters, backed by warranty on every project.</p>
+                    </article>
+                    <article class="sl-trust-card glass-panel">
+                        <h3>Clean, Respectful Crews</h3>
+                        <p>We protect your property and leave every job site spotless.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-cta reveal">
+            <div class="sl-cta-shell">
+                <h2>Ready for a Fresh Coat?</h2>
+                <p>Get a free, no-obligation painting estimate today.</p>
+                <a class="sl-btn-dark" href="/contact">Request Free Quote</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
 </body>
 </html>
-
-

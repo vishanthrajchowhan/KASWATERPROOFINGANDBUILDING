@@ -3,130 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reliable Construction & Structural Services | KAS Waterproofing & Building Services</title>
+    <title>Remodeling &amp; Property Improvement Services | KAS Waterproofing & Building Services</title>
+    <meta name="description" content="Residential and commercial remodeling, interior renovations, concrete upgrades, pressure washing, and property improvements in South Florida. Licensed &amp; insured, free estimates.">
     <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/service-landing.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DH4HQ9VTEZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-DH4HQ9VTEZ');
     </script>
 </head>
-<body>
-    <!-- Common Header Include -->
+<body class="service-landing">
     <div id="header"></div>
-    <script>
-      fetch('/header.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('header').innerHTML = html;
-          // Optionally, set active class based on current page
-          const path = window.location.pathname.split('/').pop();
-          document.querySelectorAll('.nav-links a').forEach(a => {
-            if (a.getAttribute('href') === path) a.classList.add('active');
-          });
-        });
-    </script>
 
-    <header class="hero" style="background: #111;">
-        <div class="hero-box" style="padding-top: 80px;">
-            <h1 style="color:#fff;">Reliable Construction & Structural Services</h1>
-            <p style="color:#eee;">From renovations to structural repairs, built to last.</p>
-        </div>
-    </header>
-
-    <section class="intro" style="background:#181818; color:#fff; padding:40px 0;">
-        <div class="container" style="max-width:900px; margin:auto; text-align:center;">
-            <h2>Comprehensive Construction Solutions</h2>
-            <p>
-                Our experienced team delivers high-quality construction services for residential and commercial projects. From minor renovations to major structural repairs, we ensure every job meets the highest standards of safety, durability, and compliance.
-            </p>
-        </div>
-    </section>
-
-    <section class="service-grid" style="background:#111; padding:40px 0;">
-        <div class="container" style="max-width:1100px; margin:auto;">
-            <h2 style="color:#fff; text-align:center;">Our Construction Services</h2>
-            <div class="service-grid" style="display:flex; flex-wrap:wrap; gap:32px; justify-content:center; margin-top:32px;">
-                <div class="card service-card" style="background:#181818; color:#fff;">
-                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80" alt="Structural Repairs" style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Structural Repairs</h3>
-                        <p>Restore the integrity of your property with expert repairs to foundations, beams, and load-bearing structures.</p>
+    <main>
+        <section class="sl-hero reveal is-visible">
+            <div class="sl-hero-shell">
+                <div class="sl-hero-left">
+                    <span class="sl-label">REMODELING &amp; PROPERTY IMPROVEMENTS</span>
+                    <h1>Reliable Remodeling &amp; Renovation Services</h1>
+                    <p>From interior upgrades to exterior improvements, our licensed team delivers clean, durable remodeling work built around your property goals.</p>
+                    <div class="sl-hero-actions">
+                        <a class="sl-btn-gold shimmer-btn" href="/contact">Request a Quote</a>
+                        <a class="sl-btn-outline" href="/gallery">View Projects</a>
                     </div>
                 </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-                    <img src="https://images.unsplash.com/photo-1468421870903-4df1664ac249?auto=format&fit=crop&w=400&q=80" alt="Renovations" style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Renovations</h3>
-                        <p>Transform your space with modern renovations for kitchens, bathrooms, offices, and more.</p>
+                <div class="sl-hero-right">
+                    <div class="sl-hero-image">
+                        <img src="/images/gallery/construction/con1.jpg" alt="Remodeling and property improvement project by KAS">
                     </div>
-                </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Concrete Works" style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Concrete Works</h3>
-                        <p>High-quality concrete pouring, finishing, and repairs for driveways, slabs, and structural elements.</p>
-                    </div>
-                </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=80" alt="Demolition" style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Demolition</h3>
-                        <p>Safe and efficient demolition services for residential and commercial properties.</p>
-                    </div>
-                </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-                    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" alt="Interior Remodeling" style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Interior Remodeling</h3>
-                        <p>Upgrade interiors with custom remodeling for improved comfort, style, and functionality.</p>
-                    </div>
-                </div>
-                <div class="card service-card" style="background:#181818; color:#fff;">
-                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Commercial Construction" style="width:100%; border-radius:12px 12px 0 0;">
-                    <div style="padding:18px;">
-                        <h3>Commercial Construction</h3>
-                        <p>Full-service construction for offices, retail, and industrial buildings, from ground-up to fit-outs.</p>
+                    <div class="sl-hero-stats">
+                        <article class="sl-stat-card glass-panel">
+                            <span class="sl-stat-number">120+</span>
+                            <span class="sl-stat-label">Projects Delivered</span>
+                        </article>
+                        <article class="sl-stat-card glass-panel">
+                            <span class="sl-stat-number">Licensed</span>
+                            <span class="sl-stat-label">&amp; Insured</span>
+                        </article>
+                        <article class="sl-stat-card glass-panel">
+                            <span class="sl-stat-number">Free</span>
+                            <span class="sl-stat-label">Estimates</span>
+                        </article>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section style="background:#181818; color:#fff; padding:40px 0;">
-        <div class="container" style="max-width:900px; margin:auto; text-align:center;">
-            <h2>Safety & Compliance</h2>
-            <p>
-                We adhere to strict safety protocols and building codes on every project. Our licensed and insured team ensures your construction is completed safely, on time, and within budget.
-            </p>
-        </div>
-    </section>
+        <section class="sl-intro reveal">
+            <div class="sl-intro-shell">
+                <h2>Comprehensive Remodeling Solutions</h2>
+                <div class="sl-intro-divider"></div>
+                <p>Our experienced team delivers high-quality remodeling services for residential and commercial properties. From interior renovations to concrete repairs and exterior preparation, we keep each project organized, durable, and finished with care.</p>
+            </div>
+        </section>
 
-    <section style="background:#181818; color:#fff; padding:40px 0;">
-        <div class="container" style="max-width:900px; margin:auto; text-align:center;">
-            <h2>Residential & Commercial Expertise</h2>
-            <p>
-                From single-family homes to large commercial facilities, we bring the same level of dedication and craftsmanship to every job.
-            </p>
-        </div>
-    </section>
+        <section class="sl-block reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/structural-repairs-concrete-work.jpg" alt="Structural repair work">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Structural Repairs &amp; Concrete Work</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Restore the integrity of your property with expert repairs to foundations, beams, and load-bearing structures, plus high-quality concrete pouring, finishing, and repairs.</p>
+                    <ul>
+                        <li>Foundation &amp; Structural Repairs</li>
+                        <li>Concrete Pouring, Finishing &amp; Repair</li>
+                        <li>Driveways &amp; Slabs</li>
+                        <li>Beam &amp; Load-Bearing Reinforcement</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
 
-    <section style="background:#111; color:#fff; text-align:center; padding:40px 0;">
-        <a href="/#contact" class="btn-main" style="background:#fff; color:#111; padding:16px 36px; border-radius:24px; font-weight:bold; font-size:1.2rem; text-decoration:none;">Schedule a Construction Consultation</a>
-    </section>
+        <section class="sl-block reverse reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/renovations-interior-remodeling.jpg" alt="Renovation and interior remodeling">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Renovations &amp; Interior Remodeling</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Transform your space with modern renovations for kitchens, bathrooms, offices, and more, upgrading interiors for improved comfort, style, and functionality.</p>
+                    <ul>
+                        <li>Kitchen &amp; Bathroom Renovation</li>
+                        <li>Office &amp; Interior Fit-Outs</li>
+                        <li>Framing &amp; Drywall</li>
+                        <li>Flooring &amp; Finishing</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Footer (copied from index.html) -->
-    <footer>
-        <p>&copy; 2025 KAS Waterproofing & Building Services LLC</p>
-        <p><a href="https://g.page/r/Ce-2aSISsSKhEAE/review" target="_blank" rel="noopener noreferrer">Leave a Review</a></p>
-    </footer>
+        <section class="sl-block reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/All/Ext1.jpg" alt="Commercial construction and demolition">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Demolition &amp; Commercial Remodeling</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Safe and efficient demolition services, plus full-service remodeling for offices, retail, and industrial buildings, from selective removal to complete fit-outs.</p>
+                    <ul>
+                        <li>Safe, Permitted Demolition</li>
+                        <li>Office, Retail &amp; Industrial Remodeling</li>
+                        <li>General Contracting</li>
+                        <li>Project Management &amp; Coordination</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-block reverse reveal">
+            <div class="sl-block-shell">
+                <div class="sl-block-media">
+                    <img src="/images/painting_service/Cleaning.png" alt="Pressure washing service">
+                </div>
+                <div class="sl-block-card glass-panel">
+                    <h3>Pressure Washing</h3>
+                    <div class="sl-title-accent"></div>
+                    <p>Refresh driveways, sidewalks, siding, and building exteriors with professional pressure washing, often the ideal prep step before remodeling, painting, or exterior repairs.</p>
+                    <ul>
+                        <li>Driveways &amp; Walkways</li>
+                        <li>Building Exteriors &amp; Siding</li>
+                        <li>Pre-Paint &amp; Pre-Remodeling Prep</li>
+                        <li>Mold &amp; Mildew Removal</li>
+                    </ul>
+                    <a class="sl-btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-process reveal">
+            <div class="sl-process-shell">
+                <h2>How We Work</h2>
+                <div class="sl-process-grid stagger-children">
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">1</span>
+                        <h3>Free Site Visit</h3>
+                        <p>We assess your property and scope the project in person, at no cost.</p>
+                    </article>
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">2</span>
+                        <h3>Clear Proposal</h3>
+                        <p>You receive a transparent estimate with materials, timeline, and cost.</p>
+                    </article>
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">3</span>
+                        <h3>Safe, Code-Compliant Work</h3>
+                        <p>Our licensed crew executes each remodel following strict safety protocols and building codes.</p>
+                    </article>
+                    <article class="sl-process-card glass-panel">
+                        <span class="sl-process-step">4</span>
+                        <h3>Final Walkthrough</h3>
+                        <p>We review the finished work together and ensure your full satisfaction.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-trust reveal">
+            <div class="sl-trust-shell">
+                <h2>Remodeling Quality, Compliance &amp; Expertise</h2>
+                <div class="sl-trust-grid stagger-children">
+                    <article class="sl-trust-card glass-panel">
+                        <h3>Licensed &amp; Insured</h3>
+                        <p>Remodeling work planned around South Florida building codes and safety regulations.</p>
+                    </article>
+                    <article class="sl-trust-card glass-panel">
+                        <h3>Residential &amp; Commercial</h3>
+                        <p>From single-family homes to commercial facilities, improved with the same dedication.</p>
+                    </article>
+                    <article class="sl-trust-card glass-panel">
+                        <h3>On Time, On Budget</h3>
+                        <p>Disciplined project management keeps your remodel on schedule and within budget.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="sl-cta reveal">
+            <div class="sl-cta-shell">
+                <h2>Schedule a Remodeling Consultation</h2>
+                <p>Get a free, no-obligation estimate for your next remodeling project.</p>
+                <a class="sl-btn-dark" href="/contact">Request Free Quote</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
 </body>
 </html>
-
-

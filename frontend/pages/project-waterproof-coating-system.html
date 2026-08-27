@@ -22,11 +22,6 @@
 </head>
 <body class="luxe-page">
     <div id="header"></div>
-    <script>
-        fetch('/header.html').then(res => res.text()).then(html => {
-            document.getElementById('header').innerHTML = html;
-        });
-    </script>
 
     <main class="luxe-main">
         <section class="luxe-hero" aria-labelledby="project-title" style="--luxe-hero-bg: url('/images/gallery/waterproofing/wp2.jpg');">
@@ -128,5 +123,10 @@
             </div>
         </section>
     </main>
+
+    <div id="footer"></div>
+
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
 </body>
 </html>

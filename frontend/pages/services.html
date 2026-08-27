@@ -22,17 +22,6 @@
 </head>
 <body class="services-premium">
     <div id="header"></div>
-    <script>
-        fetch('/header.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-                const path = window.location.pathname.split('/').pop();
-                document.querySelectorAll('.nav-links a').forEach(a => {
-                    if (a.getAttribute('href') === path) a.classList.add('active');
-                });
-            });
-    </script>
 
     <main>
         <section class="services-hero-premium fade-up">
@@ -42,7 +31,7 @@
                     <h1>Professional Construction, Waterproofing &amp; Painting Services</h1>
                     <p>We deliver durable, high-quality solutions for residential and commercial properties across South Florida.</p>
                     <div class="hero-actions">
-                        <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                        <a class="btn-gold" href="/contact">Request a Quote</a>
                         <a class="btn-outline" href="/gallery">View Projects</a>
                     </div>
                 </div>
@@ -80,7 +69,7 @@
         <section class="service-block fade-up">
             <div class="service-shell">
                 <div class="service-media">
-                    <img src="/images/gallery/painting/interiorpainting2.png?v=3" alt="Interior improvement services">
+                    <img src="/images/construction-support.jpg" alt="Construction support and exterior envelope repair">
                 </div>
                 <div class="service-card glass">
                     <h3>Construction Support</h3>
@@ -92,7 +81,7 @@
                         <li>Concrete &amp; Surface Restoration</li>
                         <li>Project Coordination</li>
                     </ul>
-                    <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
                 </div>
             </div>
         </section>
@@ -100,7 +89,7 @@
         <section class="service-block fade-up reverse">
             <div class="service-shell">
                 <div class="service-media">
-                    <img src="/images/other/waterproofing.webp" alt="Waterproofing services">
+                    <img src="/images/waterproofing-services.jpg" alt="Window waterproofing and sealing services">
                 </div>
                 <div class="service-card glass">
                     <h3>Waterproofing Services</h3>
@@ -109,10 +98,11 @@
                     <ul>
                         <li>Basement Waterproofing</li>
                         <li>Wall Sealing</li>
-                        <li>Roof Waterproofing</li>
                         <li>Window Sealing</li>
+                        <li>Roof Waterproofing</li>
+                        <li>Stucco Repair &amp; Restoration</li>
                     </ul>
-                    <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
                 </div>
             </div>
         </section>
@@ -132,7 +122,7 @@
                         <li>Commercial Painting</li>
                         <li>Surface Preparation</li>
                     </ul>
-                    <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
                 </div>
             </div>
         </section>
@@ -152,7 +142,7 @@
                         <li>Flooring &amp; Tiling</li>
                         <li>Interior Upgrades</li>
                     </ul>
-                    <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
                 </div>
             </div>
         </section>
@@ -172,12 +162,32 @@
                         <li>Facility Maintenance</li>
                         <li>Structural Repairs</li>
                     </ul>
-                    <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
                 </div>
             </div>
         </section>
 
         <section class="service-block fade-up reverse">
+            <div class="service-shell">
+                <div class="service-media">
+                    <img src="/images/other/pressure-washing.png" alt="Pressure washing services">
+                </div>
+                <div class="service-card glass">
+                    <h3>Pressure Washing</h3>
+                    <div class="title-accent"></div>
+                    <p>Restore the look of your property with professional-grade pressure washing that lifts dirt, grime, and buildup safely and effectively.</p>
+                    <ul>
+                        <li>Building &amp; Facility Exteriors</li>
+                        <li>Sidewalks &amp; Walkways</li>
+                        <li>Roof &amp; Gutter Cleaning</li>
+                        <li>Commercial &amp; Industrial Sites</li>
+                    </ul>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="service-block fade-up">
             <div class="service-shell">
                 <div class="service-media">
                     <img src="/images/other/otherrelated.webp" alt="Other services">
@@ -188,10 +198,9 @@
                     <p>Additional services to support ongoing property care and protection.</p>
                     <ul>
                         <li>Property Inspection</li>
-                        <li>Pressure Washing</li>
                         <li>Repairs &amp; Maintenance</li>
                     </ul>
-                    <a class="btn-gold" href="index.html#contact">Request a Quote</a>
+                    <a class="btn-gold" href="/contact">Request a Quote</a>
                 </div>
             </div>
         </section>
@@ -224,25 +233,15 @@
             <div class="cta-shell">
                 <h2>Start Your Project With Confidence</h2>
                 <p>Contact us today for a free consultation and estimate.</p>
-                <a class="btn-dark" href="index.html#contact">Request Free Quote</a>
+                <a class="btn-dark" href="/contact">Request Free Quote</a>
             </div>
         </section>
     </main>
 
-    <div id="chat-toggle">Ask KAS</div>
-    <div id="chat-widget" class="closed">
-        <div id="chat-header">
-            Ask KAS
-            <span id="chat-close">x</span>
-        </div>
-        <div id="chat-messages"></div>
-        <div id="chat-input">
-            <input type="text" id="chat-text" placeholder="Type your question...">
-            <button id="send-btn">Send</button>
-        </div>
-    </div>
+    <div id="footer"></div>
 
     <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
     <script src="../assets/js/services-premium.js"></script>
 </body>
 </html>

@@ -147,14 +147,14 @@ body.services-premium {
   margin-top: -40px;
 }
 
-.stat-card {
+.services-premium .stat-card {
   padding: 16px;
   border-radius: 18px;
   text-align: center;
   backdrop-filter: blur(14px);
 }
 
-.stat-number {
+.services-premium .stat-number {
   display: block;
   font-weight: 700;
   color: var(--gold);
@@ -163,7 +163,7 @@ body.services-premium {
   letter-spacing: 0.02em;
 }
 
-.stat-label {
+.services-premium .stat-label {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -235,19 +235,19 @@ body.services-premium {
   transform: scale(1.04);
 }
 
-.service-card {
+.services-premium .service-card {
   padding: 36px;
   border-radius: 24px;
   box-shadow: var(--shadow-soft);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card:hover {
+.services-premium .service-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32);
 }
 
-.service-card h3 {
+.services-premium .service-card h3 {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 2rem;
   margin-bottom: 14px;
@@ -261,24 +261,24 @@ body.services-premium {
   margin-bottom: 18px;
 }
 
-.service-card p {
+.services-premium .service-card p {
   color: rgba(255, 255, 255, 0.78);
   margin-bottom: 20px;
 }
 
-.service-card ul {
+.services-premium .service-card ul {
   list-style: none;
   padding: 0;
   margin: 0 0 26px;
 }
 
-.service-card li {
+.services-premium .service-card li {
   padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.85);
 }
 
-.service-card li:last-child {
+.services-premium .service-card li:last-child {
   border-bottom: none;
 }
 

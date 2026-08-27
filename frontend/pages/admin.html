@@ -7,163 +7,200 @@
     <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            padding: 20px; 
-            background-color: #f4f4f4; 
-            padding-top: 120px;
+        .admin-shell {
+            padding: 140px 6% 80px;
+            background-color: #f4f6fa;
+            min-height: 100vh;
         }
-        
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            background: white; 
-            margin-top: 20px; 
-            box-shadow: 0 8px 32px rgba(0,64,128,0.08); 
-            border-radius: 12px; 
-            overflow: hidden; 
+
+        .admin-shell h1 {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 2.1em;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
         }
-        
-        th, td { 
-            padding: 15px; 
-            text-align: left; 
-            border-bottom: 1px solid #eaeaea; 
+
+        .admin-shell > p {
+            color: var(--text-light);
         }
-        
-        th { 
-            background: linear-gradient(90deg, #004080 0%, #0074d9 100%); 
-            color: white; 
-            letter-spacing: 1px; 
-            font-size: 1.05em; 
+
+        .admin-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 14px 0;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        
-        tr { 
-            transition: background 0.3s, box-shadow 0.3s; 
+
+        .logout-btn {
+            padding: 10px 22px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: var(--radius-small);
+            cursor: pointer;
+            font-weight: 700;
         }
-        
-        tr:hover { 
-            background-color: #eaf6ff; 
-            box-shadow: 0 2px 12px rgba(0,64,128,0.08); 
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
         }
-        
-        h1 { 
-            color: #004080; 
-            font-weight: 700; 
-            font-size: 2.2em; 
-            margin-bottom: 8px; 
-            letter-spacing: 1px; 
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 18px 0 6px;
         }
-        
+
+        .admin-tab {
+            padding: 10px 22px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: var(--radius-small);
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .admin-tab:hover,
+        .admin-tab.active {
+            background: var(--gradient-navy);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 16px;
+            box-shadow: var(--shadow-soft);
+            border-radius: var(--radius-medium);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        th {
+            background: var(--gradient-navy);
+            color: white;
+            letter-spacing: 0.6px;
+            font-size: 1.02em;
+        }
+
+        tr {
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        tr:hover {
+            background-color: #eef3fb;
+        }
+
         .fade-in-row {
             opacity: 0;
-            transform: translateY(24px);
-            animation: fadeInUp 0.7s cubic-bezier(.4,2,.6,1) forwards;
+            transform: translateY(18px);
+            animation: fadeInUp 0.6s cubic-bezier(.4,2,.6,1) forwards;
         }
-        
+
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Status Badge Styling */
+
         .status-select {
             padding: 8px 12px;
             border-radius: 20px;
             border: 2px solid;
-            font-weight: 600;
-            font-size: 0.9em;
+            font-weight: 700;
+            font-size: 0.85em;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
-        
-        .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
-            border-color: #ffc107;
-        }
-        
-        .status-replied {
-            background-color: #d1ecf1;
-            color: #0c5460;
-            border-color: #17a2b8;
-        }
-        
-        .status-rejected {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-color: #dc3545;
-        }
-        
-        .status-approved {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #28a745;
-        }
-        
-        .status-processing {
-            background-color: #e2e3e5;
-            color: #383d41;
-            border-color: #6c757d;
-        }
-        
+
+        .status-pending { background-color: #fff3cd; color: #856404; border-color: #ffc107; }
+        .status-replied { background-color: #d1ecf1; color: #0c5460; border-color: #17a2b8; }
+        .status-rejected { background-color: #f8d7da; color: #721c24; border-color: #dc3545; }
+        .status-approved { background-color: #d4edda; color: #155724; border-color: #28a745; }
+        .status-processing { background-color: #e2e3e5; color: #383d41; border-color: #6c757d; }
+
         .status-select:hover {
             transform: scale(1.05);
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        
+
         .filter-container {
-            margin: 20px 0;
+            margin: 20px 0 0;
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
-        
+
         .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid #004080;
+            padding: 9px 18px;
+            border: 2px solid var(--primary);
             background: white;
-            color: #004080;
-            border-radius: 8px;
+            color: var(--primary);
+            border-radius: var(--radius-small);
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 0.9em;
         }
-        
+
         .filter-btn:hover, .filter-btn.active {
-            background: #004080;
+            background: var(--primary);
             color: white;
         }
-        
+
         .stats-container {
             display: flex;
             gap: 15px;
             margin: 20px 0;
             flex-wrap: wrap;
         }
-        
+
         .stat-card {
             background: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,64,128,0.08);
-            min-width: 150px;
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-soft);
+            min-width: 140px;
             text-align: center;
         }
-        
+
         .stat-number {
-            font-size: 2em;
-            font-weight: bold;
-            color: #004080;
+            font-size: 1.9em;
+            font-weight: 800;
+            color: var(--primary);
         }
-        
+
         .stat-label {
             color: #666;
-            font-size: 0.9em;
+            font-size: 0.88em;
             margin-top: 5px;
+        }
+
+        .empty-note {
+            padding: 30px;
+            text-align: center;
+            color: var(--text-light);
         }
     </style>
     <!-- Google tag (gtag.js) -->
@@ -172,85 +209,106 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-DH4HQ9VTEZ');
     </script>
 </head>
 <body>
     <div id="header"></div>
-    <script>
-        fetch('/header.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('header').innerHTML = html;
-            });
-    </script>
 
-    <h1>🚀 Admin Dashboard - Leads Management</h1>
-    <p>Manage and track all customer inquiries from your website.</p>
-    
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;">
-        <div></div>
-        <button onclick="logout()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
-            🚪 Logout
-        </button>
+    <div class="admin-shell">
+        <h1>Admin Dashboard</h1>
+        <p>Manage and track all customer inquiries and chat leads from your website.</p>
+
+        <div class="admin-toolbar">
+            <div class="admin-tabs">
+                <button class="admin-tab active" id="tab-clients" onclick="switchTab('clients')">Contact Inquiries</button>
+                <button class="admin-tab" id="tab-leads" onclick="switchTab('leads')">Chat Leads</button>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- CONTACT INQUIRIES PANEL -->
+        <div class="admin-panel active" id="panel-clients">
+            <div class="stats-container" id="stats"></div>
+
+            <div class="filter-container">
+                <button class="filter-btn active" onclick="filterStatus('all')">All</button>
+                <button class="filter-btn" onclick="filterStatus('pending')">Pending</button>
+                <button class="filter-btn" onclick="filterStatus('processing')">Processing</button>
+                <button class="filter-btn" onclick="filterStatus('replied')">Replied</button>
+                <button class="filter-btn" onclick="filterStatus('approved')">Approved</button>
+                <button class="filter-btn" onclick="filterStatus('rejected')">Rejected</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+
+        <!-- CHAT LEADS PANEL -->
+        <div class="admin-panel" id="panel-leads">
+            <div class="stats-container" id="leads-stats"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="leads-table-body"></tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="stats-container" id="stats">
-        <!-- Stats will be populated by JavaScript -->
-    </div>
-
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterStatus('all')">All</button>
-        <button class="filter-btn" onclick="filterStatus('pending')">Pending</button>
-        <button class="filter-btn" onclick="filterStatus('processing')">Processing</button>
-        <button class="filter-btn" onclick="filterStatus('replied')">Replied</button>
-        <button class="filter-btn" onclick="filterStatus('approved')">Approved</button>
-        <button class="filter-btn" onclick="filterStatus('rejected')">Rejected</button>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Service</th>
-                <th>Message</th>
-                <th>Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="table-body">
-        </tbody>
-    </table>
-
+    <script src="../assets/js/site.js"></script>
     <script>
         let allClients = [];
-        
+        let allLeads = [];
+
+        function switchTab(tab) {
+            document.getElementById('tab-clients').classList.toggle('active', tab === 'clients');
+            document.getElementById('tab-leads').classList.toggle('active', tab === 'leads');
+            document.getElementById('panel-clients').classList.toggle('active', tab === 'clients');
+            document.getElementById('panel-leads').classList.toggle('active', tab === 'leads');
+        }
+
         // Check authentication on page load
         async function checkAuth() {
             const token = sessionStorage.getItem('adminToken');
-            
+
             if (!token) {
                 window.location.href = '/login';
                 return false;
             }
-            
+
             try {
                 const response = await fetch('/api/admin/verify', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
+
                 if (!response.ok) {
                     sessionStorage.removeItem('adminToken');
                     window.location.href = '/login';
                     return false;
                 }
-                
+
                 return true;
             } catch (error) {
                 console.error('Auth check failed:', error);
@@ -258,39 +316,35 @@
                 return false;
             }
         }
-        
-        // Logout function
+
         async function logout() {
             const token = sessionStorage.getItem('adminToken');
-            
+
             if (token) {
                 try {
                     await fetch('/api/admin/logout', {
                         method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
+                        headers: { 'Authorization': `Bearer ${token}` }
                     });
                 } catch (error) {
                     console.error('Logout error:', error);
                 }
             }
-            
+
             sessionStorage.removeItem('adminToken');
             window.location.href = '/login';
         }
-        
-        // Fetch and display clients
+
+        // ===== CONTACT INQUIRIES =====
+
         async function loadClients() {
             const token = sessionStorage.getItem('adminToken');
-            
+
             try {
                 const response = await fetch('/api/clients', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
+
                 if (!response.ok) {
                     if (response.status === 401) {
                         window.location.href = '/login';
@@ -298,7 +352,7 @@
                     }
                     throw new Error('Failed to fetch clients');
                 }
-                
+
                 const data = await response.json();
                 allClients = data;
                 displayClients(data);
@@ -307,23 +361,34 @@
                 console.error('Error loading data:', error);
             }
         }
-        
-        // Display clients in table
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
         function displayClients(clients) {
             const table = document.getElementById('table-body');
             table.innerHTML = '';
-            
+
+            if (!clients.length) {
+                table.innerHTML = '<tr><td colspan="8" class="empty-note">No contact form submissions yet.</td></tr>';
+                return;
+            }
+
             clients.forEach((client, i) => {
                 const row = `<tr class="fade-in-row" style="animation-delay:${i * 0.05}s" data-status="${client.status}">
                     <td>${client.id}</td>
-                    <td><strong>${client.name}</strong></td>
-                    <td>${client.email}</td>
-                    <td>${client.phone || 'N/A'}</td>
-                    <td>${client.service}</td>
-                    <td>${client.message}</td>
+                    <td><strong>${escapeHtml(client.name)}</strong></td>
+                    <td>${escapeHtml(client.email)}</td>
+                    <td>${escapeHtml(client.phone) || 'N/A'}</td>
+                    <td>${escapeHtml(client.service)}</td>
+                    <td>${escapeHtml(client.message)}</td>
                     <td>${new Date(client.createdAt).toLocaleDateString()}</td>
                     <td>
-                        <select class="status-select status-${client.status}" 
+                        <select class="status-select status-${client.status}"
                                 onchange="updateStatus(${client.id}, this.value)"
                                 data-client-id="${client.id}">
                             <option value="pending" ${client.status === 'pending' ? 'selected' : ''}>Pending</option>
@@ -337,11 +402,10 @@
                 table.innerHTML += row;
             });
         }
-        
-        // Update status via API
+
         async function updateStatus(clientId, newStatus) {
             const token = sessionStorage.getItem('adminToken');
-            
+
             try {
                 const response = await fetch(`/api/clients/${clientId}/status`, {
                     method: 'PUT',
@@ -351,28 +415,23 @@
                     },
                     body: JSON.stringify({ status: newStatus })
                 });
-                
+
                 if (response.status === 401) {
                     window.location.href = '/login';
                     return;
                 }
-                
+
                 if (response.ok) {
-                    console.log(`Status updated for client ${clientId} to ${newStatus}`);
-                    
-                    // Update the select element styling
                     const selectElement = document.querySelector(`select[data-client-id="${clientId}"]`);
                     if (selectElement) {
                         selectElement.className = `status-select status-${newStatus}`;
                     }
-                    
-                    // Update the row's data attribute
+
                     const row = selectElement.closest('tr');
                     if (row) {
                         row.setAttribute('data-status', newStatus);
                     }
-                    
-                    // Reload data to update stats
+
                     loadClients();
                 } else {
                     alert('Failed to update status');
@@ -382,16 +441,13 @@
                 alert('Error updating status');
             }
         }
-        
-        // Filter by status
+
         function filterStatus(status) {
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
+            document.querySelectorAll('#panel-clients .filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
-            
-            // Filter rows
+
             const rows = document.querySelectorAll('#table-body tr');
             rows.forEach(row => {
                 if (status === 'all') {
@@ -402,8 +458,7 @@
                 }
             });
         }
-        
-        // Update statistics
+
         function updateStats(clients) {
             const stats = {
                 total: clients.length,
@@ -413,46 +468,80 @@
                 approved: clients.filter(c => c.status === 'approved').length,
                 rejected: clients.filter(c => c.status === 'rejected').length
             };
-            
-            const statsHTML = `
-                <div class="stat-card">
-                    <div class="stat-number">${stats.total}</div>
-                    <div class="stat-label">Total Leads</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.pending}</div>
-                    <div class="stat-label">Pending</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.processing}</div>
-                    <div class="stat-label">Processing</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.replied}</div>
-                    <div class="stat-label">Replied</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.approved}</div>
-                    <div class="stat-label">Approved</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">${stats.rejected}</div>
-                    <div class="stat-label">Rejected</div>
-                </div>
+
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card"><div class="stat-number">${stats.total}</div><div class="stat-label">Total Inquiries</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.pending}</div><div class="stat-label">Pending</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.processing}</div><div class="stat-label">Processing</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.replied}</div><div class="stat-label">Replied</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.approved}</div><div class="stat-label">Approved</div></div>
+                <div class="stat-card"><div class="stat-number">${stats.rejected}</div><div class="stat-label">Rejected</div></div>
             `;
-            
-            document.getElementById('stats').innerHTML = statsHTML;
         }
-        
+
+        // ===== CHAT LEADS =====
+
+        async function loadLeads() {
+            const token = sessionStorage.getItem('adminToken');
+
+            try {
+                const response = await fetch('/api/leads', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = '/login';
+                        return;
+                    }
+                    throw new Error('Failed to fetch leads');
+                }
+
+                const data = await response.json();
+                allLeads = data;
+                displayLeads(data);
+                updateLeadsStats(data);
+            } catch (error) {
+                console.error('Error loading leads:', error);
+            }
+        }
+
+        function displayLeads(leads) {
+            const table = document.getElementById('leads-table-body');
+            table.innerHTML = '';
+
+            if (!leads.length) {
+                table.innerHTML = '<tr><td colspan="6" class="empty-note">No chat leads yet. Leads captured through the "Ask KAS" chat widget will appear here.</td></tr>';
+                return;
+            }
+
+            leads.forEach((lead, i) => {
+                const row = `<tr class="fade-in-row" style="animation-delay:${i * 0.05}s">
+                    <td>${lead.id}</td>
+                    <td><strong>${escapeHtml(lead.name)}</strong></td>
+                    <td>${escapeHtml(lead.phone)}</td>
+                    <td>${escapeHtml(lead.service) || 'N/A'}</td>
+                    <td>${escapeHtml(lead.message)}</td>
+                    <td>${new Date(lead.createdAt).toLocaleDateString()}</td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        }
+
+        function updateLeadsStats(leads) {
+            document.getElementById('leads-stats').innerHTML = `
+                <div class="stat-card"><div class="stat-number">${leads.length}</div><div class="stat-label">Total Chat Leads</div></div>
+            `;
+        }
+
         // Initialize on page load
         (async function init() {
             const authenticated = await checkAuth();
             if (authenticated) {
                 loadClients();
+                loadLeads();
             }
         })();
     </script>
-
 </body>
 </html>
-

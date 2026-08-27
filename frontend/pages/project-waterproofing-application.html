@@ -22,11 +22,6 @@
 </head>
 <body class="luxe-page">
     <div id="header"></div>
-    <script>
-        fetch('/header.html').then(res => res.text()).then(html => {
-            document.getElementById('header').innerHTML = html;
-        });
-    </script>
 
     <main class="luxe-main">
         <section class="luxe-hero" aria-labelledby="project-title">
@@ -43,7 +38,7 @@
                         </div>
                     </div>
                     <div class="luxe-collage" aria-label="Project photo collage">
-                        <img src="/images/gallery/waterproofing/wp1.jpg" alt="Facade waterproofing detail" class="luxe-collage-a">
+                        <img src="/images/gallery/waterproofing/professional%20waterproofing%20application%201.png" alt="Facade waterproofing detail" class="luxe-collage-a">
                         <img src="/images/prof1.jpg" alt="Professional waterproofing execution" class="luxe-collage-b">
                         <img src="/images/gallery/waterproofing/wp2.jpg" alt="Waterproof coating application finish" class="luxe-collage-c">
                     </div>
@@ -152,5 +147,10 @@
             </div>
         </section>
     </main>
+
+    <div id="footer"></div>
+
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/site.js"></script>
 </body>
 </html>
