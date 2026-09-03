@@ -48,7 +48,8 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
 }
 
 body {
@@ -57,7 +58,8 @@ body {
   line-height: 1.6;
   background: var(--white);
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   width: 100%;
 }
 
@@ -722,8 +724,8 @@ section {
 }
 
 .service-icon-large {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: #eef3fa;
   display: flex;

@@ -185,7 +185,7 @@
     let items = DEFAULT_SUGGESTIONS;
 
     if (flowStage === "service") {
-      items = ["Waterproofing", "Construction", "Painting", "Remodeling", "Commercial Projects", "Cancel"];
+      items = ["Waterproofing", "Painting", "Remodeling", "Commercial Projects", "Cancel"];
     } else if (flowStage === "name" || flowStage === "phone") {
       items = ["Cancel"];
     }
@@ -248,7 +248,7 @@
     updateFlowStage(history[history.length - 1].type === "bot" ? history[history.length - 1].text : "");
   } else {
     renderMessage(
-      "Hi! I'm the KAS assistant. Ask me about waterproofing, stucco repair, painting, pressure washing, construction, or request a free quote.",
+      "Hi! I'm the KAS assistant. Ask me about waterproofing, stucco repair, painting, pressure washing, remodeling, or request a free quote.",
       "bot",
       true
     );

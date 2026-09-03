@@ -1,12 +1,12 @@
 :root {
   --navy: #0b1f3a;
   --navy-dark: #07172b;
-  --gold: #d4af37;
+  --gold: #e3b23c;
   --white: #ffffff;
   --glass-bg: rgba(255, 255, 255, 0.08);
   --glass-border: rgba(255, 255, 255, 0.18);
   --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.25);
-  --shadow-gold: 0 16px 40px rgba(212, 175, 55, 0.3);
+  --shadow-gold: 0 16px 40px rgba(227, 178, 60, 0.3);
 }
 
 body.services-premium {
@@ -17,12 +17,13 @@ body.services-premium {
 }
 
 .services-premium main {
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .services-hero-premium {
   padding: 148px 6% 108px;
-  background: radial-gradient(900px 480px at 8% 10%, rgba(212, 175, 55, 0.18), transparent 60%),
+  background: radial-gradient(900px 480px at 8% 10%, rgba(227, 178, 60, 0.18), transparent 60%),
     linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
 }
 
@@ -40,7 +41,7 @@ body.services-premium {
   align-items: center;
   padding: 8px 18px;
   border-radius: 999px;
-  background: linear-gradient(130deg, var(--gold), #e6c55a);
+  background: var(--gradient-gold);
   color: var(--navy-dark);
   font-weight: 700;
   font-size: 0.75rem;
@@ -79,14 +80,14 @@ body.services-premium {
 }
 
 .btn-gold {
-  background: linear-gradient(130deg, var(--gold), #e9c66a);
+  background: var(--gradient-gold);
   color: var(--navy-dark);
   box-shadow: var(--shadow-gold);
 }
 
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 22px 42px rgba(212, 175, 55, 0.38);
+  box-shadow: 0 22px 42px rgba(227, 178, 60, 0.38);
 }
 
 .btn-outline {
@@ -284,7 +285,7 @@ body.services-premium {
 
 .services-trust {
   padding: 90px 6% 110px;
-  background: radial-gradient(600px 320px at 80% 10%, rgba(212, 175, 55, 0.16), transparent 60%),
+  background: radial-gradient(600px 320px at 80% 10%, rgba(227, 178, 60, 0.16), transparent 60%),
     var(--navy);
 }
 
@@ -331,7 +332,7 @@ body.services-premium {
 
 .services-cta {
   padding: 98px 6% 116px;
-  background: linear-gradient(135deg, var(--gold), #e9c66a);
+  background: var(--gradient-gold);
   color: var(--navy-dark);
   text-align: center;
 }
@@ -355,17 +356,6 @@ body.services-premium {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(18px);
-}
-
-.fade-up {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-up.is-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 @media (max-width: 980px) {

@@ -10,7 +10,8 @@ body.service-landing {
 }
 
 .service-landing main {
-  overflow-x: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .sl-hero {
@@ -394,6 +395,69 @@ body.service-landing {
   color: rgba(255, 255, 255, 0.75);
 }
 
+.sl-faq {
+  padding: 90px 6% 100px;
+  text-align: center;
+}
+
+.sl-faq-shell {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.sl-faq h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+.sl-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.sl-faq-item {
+  padding: 4px 28px;
+}
+
+.sl-faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 40px 20px 0;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+  position: relative;
+}
+
+.sl-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.sl-faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 18px;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--secondary);
+  transition: transform 0.25s ease;
+}
+
+.sl-faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.sl-faq-item p {
+  margin: 0 0 24px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.7;
+}
+
 .sl-cta {
   padding: 98px 6% 116px;
   background: var(--gradient-gold);
@@ -451,8 +515,13 @@ body.service-landing {
   .sl-block,
   .sl-process,
   .sl-trust,
+  .sl-faq,
   .sl-cta {
     padding-left: 5%;
     padding-right: 5%;
+  }
+
+  .sl-faq-item {
+    padding: 4px 20px;
   }
 }

@@ -359,10 +359,6 @@ app.get('/projects/pensacola-commercial-building-restoration', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-pensacola-commercial-building-restoration.html'));
 });
 
-app.get('/projects/modern-construction-work', (req, res) => {
-  res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-modern-construction-work.html'));
-});
-
 app.get('/projects/building-project-execution', (req, res) => {
   res.sendFile(path.join(FRONTEND_DIR, 'pages', 'project-building-project-execution.html'));
 });
@@ -373,7 +369,6 @@ const projectPageFiles = {
   'premium-interior-painting': 'project-premium-interior-painting.html',
   'exterior-painting-excellence': 'project-exterior-painting-excellence.html',
   'pensacola-commercial-building-restoration': 'project-pensacola-commercial-building-restoration.html',
-  'modern-construction-work': 'project-modern-construction-work.html',
   'building-project-execution': 'project-building-project-execution.html'
 };
 
@@ -622,7 +617,7 @@ app.post("/api/chat", async (req, res) => {
         }
         leadState.lead.phone = phone;
         leadState.step = 'service';
-        return reply('Which service do you need (Construction, Waterproofing, Stucco Repair, Pressure Washing, Painting, Remodeling, or Commercial Projects)?');
+        return reply('Which service do you need (Waterproofing, Stucco Repair, Pressure Washing, Painting, Remodeling, or Commercial Projects)?');
       }
 
       if (leadState.step === 'service') {

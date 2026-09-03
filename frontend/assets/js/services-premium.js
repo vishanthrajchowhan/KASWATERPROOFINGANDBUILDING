@@ -1,28 +1,11 @@
+// Subtle parallax on the services hero image.
+// Scroll-reveal (.reveal/.stagger-children) is handled by site.js.
 document.addEventListener('DOMContentLoaded', () => {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fadeItems = document.querySelectorAll('.fade-up');
-
-  if (prefersReduced) {
-    fadeItems.forEach(item => item.classList.add('is-visible'));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
-
-  fadeItems.forEach(item => observer.observe(item));
-
   const heroImage = document.querySelector('.hero-image');
   if (!heroImage) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
 
   const parallax = () => {
     const rect = heroImage.getBoundingClientRect();

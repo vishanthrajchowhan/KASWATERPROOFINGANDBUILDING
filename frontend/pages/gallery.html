@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="/images/logo/logo-dark.png">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/gallery-luxe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,13 +26,13 @@
 
     <main class="portfolio-container">
         
-        <!-- 1️⃣ CINEMATIC HERO SECTION -->
-        <section class="hero-portfolio">
+        <!-- 1️⃣ HERO SECTION -->
+        <section class="hero-portfolio reveal is-visible">
             <div class="hero-content">
                 <div class="hero-left">
                     <span class="hero-label">PROJECT PORTFOLIO</span>
                     <h1 class="hero-headline">Our Signature Work</h1>
-                    <p class="hero-subtext">Explore completed waterproofing, painting and construction projects delivered with precision and long-term durability.</p>
+                    <p class="hero-subtext">Explore completed waterproofing, painting and remodeling projects delivered with precision and long-term durability.</p>
                     <div class="hero-buttons">
                         <a href="/contact" class="btn-primary-gold">Request a Quote</a>
                         <a href="#projects" class="btn-ghost-white">Browse Projects</a>
@@ -44,15 +45,15 @@
                     </div>
                     <div class="hero-stats-float">
                         <div class="stat-card glass-effect">
-                            <div class="stat-number">120+</div>
+                            <div class="stat-number" data-counter="500+">500+</div>
                             <div class="stat-label">Projects Completed</div>
                         </div>
                         <div class="stat-card glass-effect">
-                            <div class="stat-number">98%</div>
+                            <div class="stat-number" data-counter="98%">98%</div>
                             <div class="stat-label">Client Satisfaction</div>
                         </div>
                         <div class="stat-card glass-effect">
-                            <div class="stat-number">3</div>
+                            <div class="stat-number" data-counter="3">3</div>
                             <div class="stat-label">Core Services</div>
                         </div>
                     </div>
@@ -64,116 +65,90 @@
         <section class="filter-section" id="projects">
             <div class="filter-container">
                 <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All Projects</button>
-                    <button class="filter-btn" data-filter="waterproofing">Waterproofing</button>
-                    <button class="filter-btn" data-filter="painting">Painting</button>
-                    <button class="filter-btn" data-filter="construction">Construction</button>
+                    <button type="button" class="filter-btn active" data-filter="all">All Projects</button>
+                    <button type="button" class="filter-btn" data-filter="waterproofing">Waterproofing</button>
+                    <button type="button" class="filter-btn" data-filter="painting">Painting</button>
+                    <button type="button" class="filter-btn" data-filter="remodeling">Remodeling</button>
                 </div>
             </div>
         </section>
 
-        <!-- 3️⃣ PREMIUM PROJECT GRID -->
+        <!-- 3️⃣ PROJECT GRID -->
         <section class="projects-grid-section">
-            <div class="projects-grid">
-                
+            <div class="projects-grid stagger-children">
+
                 <!-- Waterproofing Projects -->
-                <article class="project-card-premium" data-category="waterproofing">
-                    <div class="project-image-container">
-                        <img src="/images/gallery/waterproofing/wp1.jpg" alt="Professional Waterproofing Application">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Waterproofing</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Professional Waterproofing Application</h3>
-                                <p class="project-excerpt">Precision waterproofing for critical joints and facade transitions</p>
-                                <a href="/projects/professional-waterproofing-application" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                <article class="gallery-card" data-category="waterproofing">
+                    <div class="gallery-card-media">
+                        <img src="/images/gallery/waterproofing/wp1.jpg" alt="Facade envelope restoration">
+                        <span class="gallery-card-badge">Waterproofing</span>
+                    </div>
+                    <div class="gallery-card-body">
+                        <h3 class="gallery-card-title">Facade Envelope Restoration</h3>
+                        <p class="gallery-card-excerpt">Precision waterproofing for critical joints and facade transitions</p>
+                        <a href="/projects/professional-waterproofing-application" class="gallery-card-link">View Project <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
 
-                <article class="project-card-premium" data-category="waterproofing">
-                    <div class="project-image-container">
-                        <img src="/images/gallery/waterproofing/wp2.jpg" alt="Advanced Waterproof Coating System">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Waterproofing</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Advanced Waterproof Coating System</h3>
-                                <p class="project-excerpt">Engineered coating delivering durable moisture resistance</p>
-                                <a href="/projects/advanced-waterproof-coating-system" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                <article class="gallery-card" data-category="waterproofing">
+                    <div class="gallery-card-media">
+                        <img src="/images/gallery/waterproofing/wp2.jpg" alt="Multi-layer moisture barrier coating">
+                        <span class="gallery-card-badge">Waterproofing</span>
+                    </div>
+                    <div class="gallery-card-body">
+                        <h3 class="gallery-card-title">Multi-Layer Moisture Barrier</h3>
+                        <p class="gallery-card-excerpt">Engineered coating delivering durable moisture resistance</p>
+                        <a href="/projects/advanced-waterproof-coating-system" class="gallery-card-link">View Project <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
 
                 <!-- Painting Projects -->
-                <article class="project-card-premium" data-category="painting">
-                    <div class="project-image-container">
-                        <img src="/images/projects/pensacola/gallery-thumbnail.png" alt="Commercial Building Exterior Restoration Pensacola">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Painting</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Pensacola Commercial Building Restoration</h3>
-                                <p class="project-excerpt">Exterior painting, waterproofing, and weatherproofing for a commercial facade upgrade.</p>
-                                <a href="/projects/pensacola-commercial-building-restoration" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                <article class="gallery-card" data-category="painting">
+                    <div class="gallery-card-media">
+                        <img src="/images/projects/pensacola/gallery-thumbnail.png" alt="Commercial exterior restoration in Pensacola">
+                        <span class="gallery-card-badge">Painting</span>
+                    </div>
+                    <div class="gallery-card-body">
+                        <h3 class="gallery-card-title">Commercial Exterior Restoration &ndash; Pensacola</h3>
+                        <p class="gallery-card-excerpt">Exterior painting, waterproofing, and weatherproofing for a commercial facade upgrade.</p>
+                        <a href="/projects/pensacola-commercial-building-restoration" class="gallery-card-link">View Project <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
 
-                <article class="project-card-premium" data-category="painting">
-                    <div class="project-image-container">
-                        <img src="/images/gallery/painting/premium-interior-1.jpg" alt="Premium Interior Painting">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Painting</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Premium Interior Painting</h3>
-                                <p class="project-excerpt">High-end interior repaint with premium coatings and seamless finish</p>
-                                <a href="/projects/premium-interior-painting" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                <article class="gallery-card" data-category="painting">
+                    <div class="gallery-card-media">
+                        <img src="/images/gallery/painting/premium-interior-1.jpg" alt="Elevated interior transformation">
+                        <span class="gallery-card-badge">Painting</span>
+                    </div>
+                    <div class="gallery-card-body">
+                        <h3 class="gallery-card-title">Elevated Interior Transformation</h3>
+                        <p class="gallery-card-excerpt">High-end interior repaint with premium coatings and seamless finish</p>
+                        <a href="/projects/premium-interior-painting" class="gallery-card-link">View Project <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
 
-                <article class="project-card-premium" data-category="painting">
-                    <div class="project-image-container">
-                        <img src="/images/gallery/painting/premium-exterior-1.jpg" alt="Exterior Painting Excellence">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Painting</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Exterior Painting Excellence</h3>
-                                <p class="project-excerpt">Weather-resilient exterior coating with elevated curb appeal</p>
-                                <a href="/projects/exterior-painting-excellence" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                <article class="gallery-card" data-category="painting">
+                    <div class="gallery-card-media">
+                        <img src="/images/gallery/painting/premium-exterior-1.jpg" alt="Weather-resilient facade refresh">
+                        <span class="gallery-card-badge">Painting</span>
+                    </div>
+                    <div class="gallery-card-body">
+                        <h3 class="gallery-card-title">Weather-Resilient Facade Refresh</h3>
+                        <p class="gallery-card-excerpt">Durable coatings built to withstand the elements while elevating curb appeal</p>
+                        <a href="/projects/exterior-painting-excellence" class="gallery-card-link">View Project <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
 
-                <!-- Construction Projects -->
-                <article class="project-card-premium" data-category="construction">
-                    <div class="project-image-container">
-                        <img src="/images/gallery/construction/con1.jpg" alt="Modern Construction Work">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Construction</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Modern Construction Work</h3>
-                                <p class="project-excerpt">Structured build delivery with technical workmanship excellence</p>
-                                <a href="/projects/modern-construction-work" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                <!-- Remodeling Projects -->
+                <article class="gallery-card" data-category="remodeling">
+                    <div class="gallery-card-media">
+                        <img src="/images/gallery/construction/con2.jpg" alt="Full-scope property remodel">
+                        <span class="gallery-card-badge">Remodeling</span>
                     </div>
-                </article>
-
-                <article class="project-card-premium" data-category="construction">
-                    <div class="project-image-container">
-                        <img src="/images/gallery/construction/con2.jpg" alt="Building Project Execution">
-                        <div class="project-overlay">
-                            <span class="project-category-badge">Construction</span>
-                            <div class="project-info">
-                                <h3 class="project-title">Building Project Execution</h3>
-                                <p class="project-excerpt">Comprehensive lifecycle management with strict quality oversight</p>
-                                <a href="/projects/building-project-execution" class="project-cta">View Project →</a>
-                            </div>
-                        </div>
+                    <div class="gallery-card-body">
+                        <h3 class="gallery-card-title">Full-Scope Property Remodel</h3>
+                        <p class="gallery-card-excerpt">Comprehensive lifecycle management with strict quality oversight</p>
+                        <a href="/projects/building-project-execution" class="gallery-card-link">View Project <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
 
@@ -181,7 +156,7 @@
         </section>
 
         <!-- 4️⃣ FEATURED PROJECT SECTION -->
-        <section class="featured-project-section">
+        <section class="featured-project-section reveal">
             <div class="featured-content">
                 <div class="featured-left">
                     <img src="/images/gallery/waterproofing/wp1.jpg" alt="Commercial Roof Waterproofing">
@@ -191,23 +166,23 @@
                     <h2 class="featured-title">Commercial Roof Waterproofing – Plantation FL</h2>
                     <div class="featured-details">
                         <div class="detail-item">
-                            <div class="detail-icon">📋</div>
+                            <div class="detail-icon"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i></div>
                             <div class="detail-content">
-                                <h4>Scope of Work</h4>
+                                <h3>Scope of Work</h3>
                                 <p>Complete membrane installation, joint sealing, and protective coating application</p>
                             </div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-icon">🛠️</div>
+                            <div class="detail-icon"><i class="fa-solid fa-toolbox" aria-hidden="true"></i></div>
                             <div class="detail-content">
-                                <h4>Materials Used</h4>
+                                <h3>Materials Used</h3>
                                 <p>Premium elastomeric membranes, polyurethane sealants, and UV-resistant coatings</p>
                             </div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-icon">⏱️</div>
+                            <div class="detail-icon"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i></div>
                             <div class="detail-content">
-                                <h4>Completion Time</h4>
+                                <h3>Completion Time</h3>
                                 <p>Delivered in 3 weeks with zero weather delays</p>
                             </div>
                         </div>
@@ -218,21 +193,21 @@
         </section>
 
         <!-- 5️⃣ TRUST SECTION -->
-        <section class="trust-section">
-            <h2 class="trust-title">Trusted by Homeowners & Businesses Across South Florida</h2>
-            <div class="trust-cards">
+        <section class="trust-section reveal">
+            <h2 class="trust-title">Trusted by Homeowners &amp; Businesses Nationwide</h2>
+            <div class="trust-cards stagger-children">
                 <div class="trust-card glass-effect">
-                    <div class="trust-icon">🏡</div>
+                    <div class="trust-icon"><i class="fa-solid fa-house" aria-hidden="true"></i></div>
                     <h3>Residential Projects</h3>
                     <p>Homes protected with precision waterproofing and premium finishes</p>
                 </div>
                 <div class="trust-card glass-effect">
-                    <div class="trust-icon">🏢</div>
+                    <div class="trust-icon"><i class="fa-solid fa-building" aria-hidden="true"></i></div>
                     <h3>Commercial Projects</h3>
                     <p>Business facilities built to last with professional-grade materials</p>
                 </div>
                 <div class="trust-card glass-effect">
-                    <div class="trust-icon">✅</div>
+                    <div class="trust-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
                     <h3>Licensed & Insured</h3>
                     <p>Fully certified with comprehensive liability and workers' compensation coverage</p>
                 </div>
@@ -240,8 +215,7 @@
         </section>
 
         <!-- 6️⃣ FINAL CTA SECTION -->
-        <section class="final-cta-section">
-            <div class="cta-background-pattern"></div>
+        <section class="final-cta-section reveal">
             <div class="cta-content">
                 <h2 class="cta-headline">Ready to Start Your Project?</h2>
                 <p class="cta-subtext">Get a detailed quote tailored to your specific needs. Our team will work with you from planning to completion.</p>

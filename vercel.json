@@ -76,10 +76,6 @@
                      {
                          "source":  "/login",
                          "destination":  "/pages/login.html"
-                     },
-                     {
-                         "source":  "/carousel",
-                         "destination":  "/pages/carousel.html"
                      }
                  ],
     "cleanUrls":  true
